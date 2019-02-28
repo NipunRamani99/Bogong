@@ -9,9 +9,10 @@
 #include<string>
 namespace Init {
 	void LogError(std::string p_ErrMsg);
-	void initGLFW();
-	void SetGLFWWindow(short samples, short major, short minor, int profile, bool forwardCompatibility);
+	void InitGLFW();
+	void SetGLFWWindow(GLFWwindow & window,short samples, short major, short minor, int profile, bool forwardCompatibility);
 	GLFWwindow * CreateWindow(int p_Width, int p_Height, std::string title);
+	void InitGLEW();
 
 }
 

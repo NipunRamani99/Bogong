@@ -9,26 +9,24 @@
 #include <glm/glm.hpp>
 #include <cuda_runtime.h>
 #include <cuda_gl_interop.h>
-/****************************[ GL Variables ]***************************************/
 static const GLfloat g_vertex_buffer_data[] = {
-	-1.0f, -1.0f, 0.0f,
-	0.0f, 1.0f, 0.0f,
-	1.0f, -1.0f, 0.0f,
+	-0.50f, 0.0f, 0.0f,
+	-0.50f, 0.50f, 0.0f,
+	 0.50f, 0.50f, 0.0f,
+	 0.50f, 0.0f, 0.0f
 };
 static const GLfloat g_fragment_buffer_data[] =
 {
 	0.0f,0.0f,0.0f,
 	1.0f,-1.0f,0.0f,
-	0.0f,1.0f,0.0f
+	0.0f,1.0f,0.0f,
+
 };
 GLuint VertexArrayID;
 GLuint vertexbuff;
-/****************************[ /GL Variables ]***************************************/
 
-/****************************[ EZ-PZ Functions ]***********************************/
 void CheckGLError();
 void makeTriangle();
-/****************************[ /EZ-PZ Functions ]***********************************/
 
 int main()
 {
@@ -38,11 +36,10 @@ int main()
 	int device_count = 0;
 	cudaGetDeviceCount(&device_count);
 
-	Init::initGLFW();
+	Init::InitGLFW();
 	auto window = Init::CreateWindow(500, 500, "Mic Check.");
-	Init::SetGLFWWindow(4, 3, 3, GLFW_OPENGL_CORE_PROFILE,true);
+	Init::SetGLFWWindow(*window,4, 3, 3, GLFW_OPENGL_CORE_PROFILE,true);
 
-	glfwMakeContextCurrent(window);
 	glewExperimental = true;
 
 	if (glewInit() != GLEW_OK) {
@@ -66,7 +63,17 @@ int main()
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuff);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+	glEnableVertexArrayAttrib(VertexArrayID, 0);
+	glVertexAttribPointer(
+		0,
+		3,
+		GL_FLOAT,
+		GL_FALSE,
+		sizeof(float)*3,
+		(void*)0
+	);
 	cudaGLRegisterBufferObject(vertexbuff);
+	
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 	glUseProgram(programID);
 	glPointSize(12);
@@ -87,10 +94,8 @@ int main()
 void makeTriangle()
 {
 	// Draw the tringle !
-	glVertexPointer(3, GL_FLOAT, sizeof(float) * 3, 0);
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glDrawArrays(GL_TRIANGLES, 0, 3); // Starting from vertex 0; 3 vertices total -> 1 triangle
-	glDisableClientState(GL_VERTEX_ARRAY);
+
+	glDrawArrays(GL_TRIANGLES, 0, 4); // Starting from vertex 0; 3 vertices total -> 1 triangle
 }
 
 

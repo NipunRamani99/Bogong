@@ -7,7 +7,7 @@ void Init::LogError(std::string p_ErrMsg)
 	std::cout << "\nContinue?(Y/N)..";
 
 }
-void Init::initGLFW()
+void Init::InitGLFW()
 {
 	if (!glfwInit())
 	{
@@ -15,7 +15,7 @@ void Init::initGLFW()
 	}
 
 }
-void Init::SetGLFWWindow(short samples, short major, short minor, int profile, bool forwardCompatibility)
+void Init::SetGLFWWindow(GLFWwindow & window, short samples, short major, short minor, int profile, bool forwardCompatibility)
 {
 	glfwWindowHint(GLFW_SAMPLES, samples);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, major);
@@ -26,6 +26,7 @@ void Init::SetGLFWWindow(short samples, short major, short minor, int profile, b
 		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_FALSE);
 
 	glfwWindowHint(GLFW_OPENGL_PROFILE, profile);
+	glfwMakeContextCurrent(&window);
 
 }
 GLFWwindow * Init::CreateWindow(int p_Width, int p_Height, std::string title)
