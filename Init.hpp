@@ -16,6 +16,5 @@ namespace Init {
 	void SetGLFWWindow(GLFWwindow & window, short samples, short major, short minor, int profile, bool forwardCompatibility);
 	GLFWwindow * CreateWindow(int p_Width, int p_Height, std::string title);
 	void InitGLEW();
-
 }
 

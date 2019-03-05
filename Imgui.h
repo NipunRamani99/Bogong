@@ -31,17 +31,7 @@ namespace Init {
 
 		static float f = 0.0f;
 		static int counter = 0;
-
-		ImGui::Begin("Project Sarvik");
-
-
-		ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
-
-		if (ImGui::Button("Button"))
-			counter++;
-		ImGui::SameLine();
-		ImGui::Text("counter = %d", counter);
-
+		ImGui::Begin("Bogong");
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 
 	}

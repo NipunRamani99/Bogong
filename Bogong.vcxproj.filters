@@ -65,6 +65,9 @@
       <Filter>Imgui</Filter>
     </ClInclude>
     <ClInclude Include="ErrorLog.h" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="Vertex.h" />
+    <ClInclude Include="Object.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Imgui">

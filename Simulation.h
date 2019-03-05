@@ -10,15 +10,23 @@ private:
 	GuideLines m_gl;
 	Shader m_Shader;
 public:
-	Simulation()
+	Simulation() = default;
+	Simulation(Shader p_Shader)
+		:
+		m_gl(glm::vec3(0.0f,0.0f,0.0f))
+	{
+		m_Shader = p_Shader;
+		m_gl.SetShader(m_Shader);
+	}
+	Simulation(Simulation && simulation)
 	{
 	
 	}
-	Simulation(Shader p_Shader)
+	Simulation & operator=(Simulation&&p_Simulation)
 	{
-		m_Shader = p_Shader;
-		m_gl = GuideLines(glm::vec3(0.0f, 0.0f, 0.0f));
-		m_gl.SetShader(m_Shader);
+		m_Shader = p_Simulation.m_Shader;
+		m_gl = std::move(p_Simulation.m_gl);
+		return *this;
 	}
 	void Begin()
 	{

@@ -3,23 +3,29 @@
 #include "Shaders.hpp"
 #include "VertexArray.hpp"
 #include "VertexBuffer.hpp"
-class GuideLines
+#include "Model.h"
+class GuideLines :public Model 
 {
-	VAO vao;
+	VertexArray vao;
 	VertexBuffer vbo;
 	Shader shader;
-	glm::vec3 pos = glm::vec3(0,0,0);
-	glm::mat4 model = glm::mat4(1.0f);
+
 public:
-	GuideLines() = default;
-	GuideLines(glm::vec3 p_Pos)
+	GuideLines()
 	{
-		Vertex posX;
-		Vertex negX;
-		Vertex posY;
-		Vertex negY;
-		Vertex posZ;
-		Vertex negZ;
+		m_IsConstructed = false;
+	}
+	GuideLines(glm::vec3 p_Pos)
+		:
+		Model(p_Pos)
+	{
+		
+		Vertex<float> posX;
+		Vertex<float> negX;
+		Vertex<float> posY;
+		Vertex<float> negY;
+		Vertex<float> posZ;
+		Vertex<float> negZ;
 	
 		posX.x = 100.0f;
 		posX.r = 1.0f;
@@ -41,11 +47,44 @@ public:
 		negZ.r = 100.0f;
 		negZ.a = 1.0f;
 
+		m_Vertices.push_back(posX);
+		m_Vertices.push_back(negX);
+		m_Vertices.push_back(posY);
+		m_Vertices.push_back(negY);
+		m_Vertices.push_back(posZ);
+		m_Vertices.push_back(negZ);
+		vbo = VertexBuffer(m_Vertices.data(), m_Vertices.size()*sizeof(Vertex<float>));
+		    
+	}
+	GuideLines & operator=(GuideLines && p_GuideLines)
+	{
 
-		Vertex  GuideVertex[] = { posX,negX,posY,negY,posZ,negZ };
-		pos = p_Pos;
-		vbo = VertexBuffer(GuideVertex, sizeof(GuideVertex));
-		model = glm::translate(model, pos);
+		m_Model = std::move( p_GuideLines.m_Model );
+		m_Position = std::move( p_GuideLines.m_Position );
+		vao = std::move( p_GuideLines.vao );
+		vbo =std::move( p_GuideLines.vbo );
+		m_Vertices = std::move(p_GuideLines.m_Vertices);
+		m_Indices = std::move(p_GuideLines.m_Indices);
+		p_GuideLines.m_IsConstructed = false;
+		m_IsConstructed = true;
+	    shader = std::move(p_GuideLines.shader);
+		id = p_GuideLines.id;
+		return *this;
+		
+	}
+	GuideLines & operator=(GuideLines & p_GuideLines)
+	{		
+		m_Indices = std::move(p_GuideLines.m_Indices);
+		m_Vertices = std::move(p_GuideLines.m_Vertices);
+		m_Position = std::move(p_GuideLines.m_Position);
+		m_Model = std::move(p_GuideLines.m_Model);
+		vao = std::move(p_GuideLines.vao);
+		vbo = std::move(p_GuideLines.vbo);
+		shader = std::move(p_GuideLines.shader);
+		p_GuideLines.m_IsConstructed = false;
+		m_IsConstructed = true;
+		id = p_GuideLines.id;
+		return *this;
 	}
 	void SetShader(Shader p_Shader)
 	{
@@ -71,10 +110,15 @@ public:
 	void Draw()
 	{
 		Bind();
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
-		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(float)*3));
-		shader.setMat4("model", model);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex<float>), (void*)0);
+		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex<float>), (void*)(sizeof(float)*3));
+		shader.setMat4("model", m_Model);
 		glDrawArrays(GL_LINES, 0, 6);
 		Unbind();
+	}
+    ~GuideLines()
+	{
+		if (m_IsConstructed)
+			std::cout << "Guide Lines with Model ID: " << id << " has been destroyed.";
 	}
 };

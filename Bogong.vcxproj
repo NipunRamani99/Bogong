@@ -97,10 +97,13 @@
     <ClInclude Include="Imgui\imstb_truetype.h" />
     <ClInclude Include="IndexBuffer.h" />
     <ClInclude Include="Init.hpp" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="Object.h" />
     <ClInclude Include="Render.h" />
     <ClInclude Include="Shaders.hpp" />
     <ClInclude Include="Simulation.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="Vertex.h" />
     <ClInclude Include="VertexArray.hpp" />
     <ClInclude Include="VertexBuffer.hpp" />
   </ItemGroup>

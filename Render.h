@@ -88,12 +88,12 @@ public:
 		programID = shader.GetProgramID();
 		error();
 		glUseProgram(programID);
-		sim = Simulation(shader);
+		sim = std::move(Simulation(shader));
 		int display_w, display_h;
 		glfwMakeContextCurrent(window);
 		glfwGetFramebufferSize(window, &display_w, &display_h);
 		glClearColor(Init::clear_color.x, Init::clear_color.y, Init::clear_color.z, Init::clear_color.w);
-
+		
 		glViewport(0, 0, display_w, display_h);
 		cam->setShader(shader);
 		free->SetShader(shader);
