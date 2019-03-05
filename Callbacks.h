@@ -11,23 +11,34 @@ namespace Callbacks {
 	float zoom = 1.0f;
 	int width = 800;
 	int height = 600;
-	Camera * camera;
+	FreeCamera *freecam;
+	IsoCamera * cam;
+	int camID = 0;
 	void updateCamera() {
-		camera->updateCamera(theta, phi);
+		//camera->updateCamera(theta, phi);
+		if (camID == 0)
+			cam->updateCamera(theta, phi);
+		else
+			freecam->updateCamera();
 	}
 
 	void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-		if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-			glfwSetWindowShouldClose(window, GL_TRUE);
+
+		if (camID == 0) {
+			if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
+				glfwSetWindowShouldClose(window, GL_TRUE);
+			}
+			if (key == GLFW_KEY_UP && action == GLFW_PRESS)
+			{
+				cam->ZoomIn();
+			}
+			if (key == GLFW_KEY_DOWN && action == GLFW_PRESS)
+			{
+				cam->ZoomOut();
+			}
 		}
-		if (key == GLFW_KEY_UP && action == GLFW_PRESS)
-		{
-			camera->ZoomIn();
-		}
-		if (key == GLFW_KEY_DOWN && action == GLFW_PRESS)
-		{
-			camera->ZoomOut();
-		}
+		else
+			freecam->ProcessInputs(window);
 	}
 
 	void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
@@ -36,20 +47,26 @@ namespace Callbacks {
 	}
 
 	void mousePositionCallback(GLFWwindow* window, double xpos, double ypos) {
-		if (leftMousePressed) {
-			// compute new camera parameters
-			phi += (lastX - xpos)*1.2 / width;
-			theta -= (ypos - lastY)*1.2 / height;
-			theta = std::fmax(0.01f, std::fmin(theta, 3.14f));
-			updateCamera();
-		}
-		else if (rightMousePressed) {
-			zoom += (ypos - lastY) / height;
-			zoom = std::fmax(0.1f, std::fmin(zoom, 5.0f));
-			updateCamera();
-		}
 
-		lastX = xpos;
-		lastY = ypos;
+		if (camID == 0) {
+			if (leftMousePressed) {
+				// compute new camera parameters
+				phi += (lastX - xpos)*1.2 / width;
+				theta -= (ypos - lastY)*1.2 / height;
+				theta = std::fmax(0.01f, std::fmin(theta, 3.14f));
+				updateCamera();
+			}
+			else if (rightMousePressed) {
+				zoom += (ypos - lastY) / height;
+				zoom = std::fmax(0.1f, std::fmin(zoom, 5.0f));
+				updateCamera();
+			}
+
+			lastX = xpos;
+			lastY = ypos;
+		}
+		else
+			freecam->mouse_callback(window, xpos, ypos);
+
 	}
 }

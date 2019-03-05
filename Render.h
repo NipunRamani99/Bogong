@@ -30,11 +30,11 @@ class Render
 {
 private:
 	GLFWwindow * window;
-	VAO * vao;
-	VertexBuffer buff;
 	GLuint programID;
-	Camera * cam;
-	Simulation simulation;
+	IsoCamera * cam;
+	FreeCamera * free;
+	Simulation sim;
+	int camID = 0;
 public:
 
 	bool KeepRendering = true;
@@ -57,13 +57,18 @@ public:
 		}
 		cudaGLSetGLDevice(0);
 
-		cam = new Camera(window);
-		Callbacks::camera = cam;
+		cam = new IsoCamera(window, 800, 600);
+		free = new FreeCamera(800, 600);
+
+		Callbacks::camID = camID;
+		Callbacks::freecam = free;
+		Callbacks::cam = cam;
 
 		glfwSetKeyCallback(window, Callbacks::keyCallback);
 		glfwSetCursorPosCallback(window, Callbacks::mousePositionCallback);
 		glfwSetMouseButtonCallback(window, Callbacks::mouseButtonCallback);
-		glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+
+
 		Init::InitImgui(*window);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -83,42 +88,67 @@ public:
 		programID = shader.GetProgramID();
 		error();
 		glUseProgram(programID);
-		simulation = Simulation(shader);
-		
-
+		sim = Simulation(shader);
 		int display_w, display_h;
 		glfwMakeContextCurrent(window);
 		glfwGetFramebufferSize(window, &display_w, &display_h);
-		glViewport(0, 0, display_w, display_h);
 		glClearColor(Init::clear_color.x, Init::clear_color.y, Init::clear_color.z, Init::clear_color.w);
+
+		glViewport(0, 0, display_w, display_h);
 		cam->setShader(shader);
+		free->SetShader(shader);
 		glm::mat4 model = glm::mat4(1.0f);
 		shader.setMat4("model", model);
 		shader.setBool("isTextured", false);
-		
-		simulation.Begin();
+
 	}
 	void makeTriangle()
 	{
 	}
 	void Update()
 	{
-		simulation.Update();
+		sim.Update();
+		if (ImGui::InputFloat("View Radius: ", &cam->radius, 0.5, 0.5, 4))
+		{
+			cam->updateCamera();
+		}
+		if (ImGui::ColorEdit3("clear color", (float*)&Init::clear_color))
+		{
+			glClearColor(Init::clear_color.x, Init::clear_color.y, Init::clear_color.z, Init::clear_color.w);
+		}
+		if (camID == 0) {
+			if (ImGui::Button("Switch Camera"))
+			{
+				if (camID == 0)
+				{
+					Callbacks::camID = 1;
+					camID = 1;
+					glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+
+				}
+			}
+		}
+		else {
+			ImGui::Text("Press K to switch back.");
+			if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS)
+			{
+
+				Callbacks::camID = 0;
+				camID = 0;
+				glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+
+			}
+		}
 	}
 	void DrawCalls()
 	{
-		simulation.Draw();
+		sim.Draw();
 	}
 	void RenderEverything()
 	{
-		glfwPollEvents();
-		//Clear the screen. Can cause flickering if not done
-		//Draw Nothing, not yet.
-		Init::StartImguiFrame();
-		Init::PrepareImguiFrame();
-		glClear(GL_COLOR_BUFFER_BIT);
-		glfwPollEvents();
 		DrawCalls();
+		Init::Render();
 		Init::EndImguiFrame();
 		glfwSwapBuffers(window);
 		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -128,6 +158,12 @@ public:
 	}
 	void Loop()
 	{
+		glfwPollEvents();
+		Init::StartImguiFrame();
+		Init::PrepareImguiFrame();
+		glClear(GL_COLOR_BUFFER_BIT);
+		glfwPollEvents();
+
 		Update();
 		RenderEverything();
 	}
@@ -141,19 +177,3 @@ public:
 
 	}
 };
-//vao->Bind();
-//buff = VertexBuffer(g_vertex_buffer_data, sizeof(g_vertex_buffer_data));
-//buff.Bind();
-//cudaGLRegisterBufferObject(buff.getID());
-//glEnable(GL_DEPTH_TEST);
-//glEnableVertexArrayAttrib(vao->GetID(), 0);
-//glVertexAttribPointer(
-//	0,
-//	3,
-//	GL_FLOAT,
-//	GL_FALSE,
-//	sizeof(float) * 3,
-//	(void*)0
-//);
-//glUseProgram(programID);
-//glPointSize(12);*/

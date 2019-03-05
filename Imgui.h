@@ -4,7 +4,7 @@
 #include "Imgui/imgui_impl_opengl3.h"
 
 namespace Init {
-	bool show_demo_window = false;
+	bool show_demo_window = true;
 	bool show_another_window = false;
 	ImVec4 clear_color = ImVec4(1.0f, 1.0f, 1.00f, 1.00f);
 
@@ -28,27 +28,31 @@ namespace Init {
 	}
 	void PrepareImguiFrame()
 	{
-		if (show_demo_window)
-			ImGui::ShowDemoWindow(&show_demo_window);
 
-		{
-			static float f = 0.0f;
-			static int counter = 0;
+		static float f = 0.0f;
+		static int counter = 0;
 
-			ImGui::Begin("Variables");                          
+		ImGui::Begin("Project Sarvik");
 
-			ImGui::Text("This is some useful text.");               
 
-			ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-			ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
+		ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
 
-			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-			ImGui::End();
-		}
+		if (ImGui::Button("Button"))
+			counter++;
+		ImGui::SameLine();
+		ImGui::Text("counter = %d", counter);
+
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+
+	}
+	void Render()
+	{
+		ImGui::End();
 		ImGui::Render();
 	}
 	void EndImguiFrame()
 	{
+
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 	}
