@@ -10,6 +10,7 @@ private:
 	unsigned int m_ID;
 	bool m_IsBound;
 	unsigned int m_BufferSize = 0;
+
 public:
 	VertexBuffer() = default;
 	VertexBuffer(const void * p_Data, unsigned int p_Size, unsigned int p_Draw = GL_DYNAMIC_DRAW)

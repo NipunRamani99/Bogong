@@ -14,6 +14,8 @@
     <ProjectGuid>{10EEB476-87C2-484F-BE3C-15FE9AB7F01B}</ProjectGuid>
     <RootNamespace>Bogong</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <CudaToolkitCustomDir>
+    </CudaToolkitCustomDir>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -42,12 +44,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(CUDA_PATH_V10_0)\common\inc</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(CUDA_PATH_V10_0)\common\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -56,6 +60,7 @@
     </Link>
     <CudaCompile>
       <TargetMachinePlatform>64</TargetMachinePlatform>
+      <Include>$(CUDA_PATH_V10_0)\common\inc\</Include>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -83,6 +88,35 @@
   <ItemGroup>
     <ClInclude Include="Callbacks.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CudaVBO.h" />
+    <ClInclude Include="CUDA\drvapi_error_string.h" />
+    <ClInclude Include="CUDA\dynlink_d3d10.h" />
+    <ClInclude Include="CUDA\dynlink_d3d11.h" />
+    <ClInclude Include="CUDA\exception.h" />
+    <ClInclude Include="CUDA\helper_cuda.h" />
+    <ClInclude Include="CUDA\helper_cuda_drvapi.h" />
+    <ClInclude Include="CUDA\helper_cusolver.h" />
+    <ClInclude Include="CUDA\helper_functions.h" />
+    <ClInclude Include="CUDA\helper_gl.h" />
+    <ClInclude Include="CUDA\helper_image.h" />
+    <ClInclude Include="CUDA\helper_math.h" />
+    <ClInclude Include="CUDA\helper_string.h" />
+    <ClInclude Include="CUDA\helper_timer.h" />
+    <ClInclude Include="CUDA\multithreading.h" />
+    <ClInclude Include="CUDA\nvMath.h" />
+    <ClInclude Include="CUDA\nvMatrix.h" />
+    <ClInclude Include="CUDA\nvQuaternion.h" />
+    <ClInclude Include="CUDA\nvrtc_helper.h" />
+    <ClInclude Include="CUDA\nvShaderUtils.h" />
+    <ClInclude Include="CUDA\nvVector.h" />
+    <ClInclude Include="CUDA\param.h" />
+    <ClInclude Include="CUDA\paramgl.h" />
+    <ClInclude Include="CUDA\rendercheck_d3d10.h" />
+    <ClInclude Include="CUDA\rendercheck_d3d11.h" />
+    <ClInclude Include="CUDA\rendercheck_d3d9.h" />
+    <ClInclude Include="CUDA\rendercheck_gl.h" />
+    <ClInclude Include="CUDA\rendercheck_gles.h" />
+    <ClInclude Include="CUDA\timer.h" />
     <ClInclude Include="ErrorLog.h" />
     <ClInclude Include="GLIntferace.h" />
     <ClInclude Include="GuideLines.h" />

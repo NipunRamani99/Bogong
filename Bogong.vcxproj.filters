@@ -68,10 +68,98 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="CudaVBO.h" />
+    <ClInclude Include="CUDA\drvapi_error_string.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="CUDA\dynlink_d3d10.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="CUDA\dynlink_d3d11.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="CUDA\exception.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="CUDA\helper_cuda.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="CUDA\helper_cuda_drvapi.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="CUDA\helper_cusolver.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="CUDA\helper_functions.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="CUDA\helper_gl.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="CUDA\helper_image.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="CUDA\helper_math.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="CUDA\helper_string.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="CUDA\helper_timer.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="CUDA\multithreading.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="CUDA\nvMath.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="CUDA\nvMatrix.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="CUDA\nvQuaternion.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="CUDA\nvrtc_helper.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="CUDA\nvShaderUtils.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="CUDA\nvVector.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="CUDA\param.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="CUDA\paramgl.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="CUDA\rendercheck_d3d9.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="CUDA\rendercheck_d3d10.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="CUDA\rendercheck_d3d11.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="CUDA\rendercheck_gl.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="CUDA\rendercheck_gles.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="CUDA\timer.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Imgui">
       <UniqueIdentifier>{cf8a9269-7896-4b20-b041-21c8e499dbac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extra">
+      <UniqueIdentifier>{19035f4b-f77b-4ab3-ae52-1dfa36ec90af}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
