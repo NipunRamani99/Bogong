@@ -1,12 +1,11 @@
-
-#include "headers/Engine.h"
+#include "Render.h"
 int main()
 {		
-	Engine engine;
-    engine.Start();
+	Render render;
+	render.Start();
 	do {
-	   engine.Loop();
-	} while (engine.KeepRendering);
-	engine.End();
+		render.Loop();
+	} while (render.KeepRendering);
+	render.End();
 	return 0;
 }
