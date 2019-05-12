@@ -6,7 +6,7 @@
 
 class VertexBuffer
 {
-private:
+protected:
 	unsigned int m_ID;
 	bool m_IsBound;
 	unsigned int m_BufferSize = 0;
