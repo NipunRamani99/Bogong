@@ -53,7 +53,7 @@ public:
 		m_Vertices.push_back(negY);
 		m_Vertices.push_back(posZ);
 		m_Vertices.push_back(negZ);
-		vbo = VertexBuffer(m_Vertices.data(), m_Vertices.size()*sizeof(Vertex<float>));
+		vbo = VertexBuffer(m_Vertices.data(),(unsigned int) m_Vertices.size()*sizeof(Vertex<float>));
 		    
 	}
 	GuideLines & operator=(GuideLines && p_GuideLines)

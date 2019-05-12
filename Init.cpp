@@ -29,7 +29,7 @@ void Init::SetGLFWWindow(GLFWwindow & window, short samples, short major, short 
 	glfwMakeContextCurrent(&window);
 
 }
-GLFWwindow * Init::CreateWindow(int p_Width, int p_Height, std::string title)
+GLFWwindow * Init::CreateGLWindow(int p_Width, int p_Height, std::string title)
 {
 	GLFWmonitor* primary = glfwGetPrimaryMonitor();
 	const GLFWvidmode* mode = glfwGetVideoMode(primary);

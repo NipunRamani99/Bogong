@@ -153,6 +153,8 @@
     <ClInclude Include="CUDA\timer.h">
       <Filter>Extra</Filter>
     </ClInclude>
+    <ClInclude Include="WaveMesh.h" />
+    <ClInclude Include="RunKernel.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Imgui">

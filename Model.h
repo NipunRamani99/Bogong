@@ -88,8 +88,8 @@ private:
 	std::string GenerateRandomString(int p_NumChars)
 	{
 		std::string str="";
-		unsigned seed = std::chrono::steady_clock::now().time_since_epoch().count();
-		std::default_random_engine rd(seed);
+		long long seed = std::chrono::steady_clock::now().time_since_epoch().count();
+		std::default_random_engine rd((unsigned int)seed);
 		std::uniform_int_distribution<int> intDist(0,26);
 		for (int i = 0; i < p_NumChars;i++)
 		{

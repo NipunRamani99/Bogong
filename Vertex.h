@@ -1,5 +1,5 @@
 #pragma once
-
+#include<glm/vec3.hpp>
 template<typename T>
 struct Vertex
 {
