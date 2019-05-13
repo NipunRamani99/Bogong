@@ -27,19 +27,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Init.hpp" />
-    <ClInclude Include="Shaders.hpp" />
-    <ClInclude Include="Callbacks.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="GLIntferace.h" />
-    <ClInclude Include="GuideLines.h" />
-    <ClInclude Include="Imgui.h" />
-    <ClInclude Include="IndexBuffer.h" />
-    <ClInclude Include="Render.h" />
-    <ClInclude Include="Simulation.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="VertexArray.hpp" />
-    <ClInclude Include="VertexBuffer.hpp" />
     <ClInclude Include="Imgui\imconfig.h">
       <Filter>Imgui</Filter>
     </ClInclude>
@@ -64,14 +51,82 @@
     <ClInclude Include="Imgui\imstb_truetype.h">
       <Filter>Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="ErrorLog.h" />
-    <ClInclude Include="Model.h" />
-    <ClInclude Include="Vertex.h" />
-    <ClInclude Include="Object.h" />
+    <ClInclude Include="Callbacks.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ErrorLog.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GLIntferace.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GuideLines.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="IndexBuffer.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Init.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Lights.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Render.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Simulation.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexArray.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBuffer.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ICallbacks.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube_norm.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Globals.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Imgui">
       <UniqueIdentifier>{cf8a9269-7896-4b20-b041-21c8e499dbac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{67122679-f42d-40d4-af67-c2c0acc0f1dd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

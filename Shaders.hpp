@@ -29,6 +29,7 @@ public:
 	{
 
 	}
+	// ------------------------------------------------------------------------
 	void LoadProgram()
 	{
 		std::cout << "Linking the program.\n";
@@ -61,6 +62,7 @@ public:
 		if (m_GeomID != 0)
 			glDetachShader(m_ProgID, m_GeomID);
 	}
+	//------------------------------------------------------------------------
 	void LoadShader(const char * p_Path, ShaderType p_Type)
 	{
 		std::ifstream l_InFileStream(p_Path, std::ios::in);
@@ -116,18 +118,22 @@ public:
 			std::cout << "Shader created..\n";
 		}
 	}
+	// ------------------------------------------------------------------------
 	unsigned int GetProgramID() const
 	{
 		return m_ProgID;
 	}
+	// ------------------------------------------------------------------------
 	void Bind()
 	{
 		glUseProgram(m_ProgID);
 	}
+	// ------------------------------------------------------------------------
 	inline unsigned int GetLocation(std::string p_Variable)
 	{
 		glGetUniformLocation(m_ProgID, p_Variable.c_str());
 	}
+	// ------------------------------------------------------------------------
 	inline void setBool(const std::string &name, bool value) const
 	{
 		glUniform1i(glGetUniformLocation(m_ProgID, name.c_str()), (int)value);
@@ -184,7 +190,7 @@ public:
 	{
 		glUniformMatrix4fv(glGetUniformLocation(m_ProgID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 	}
-
+	// ------------------------------------------------------------------------
 	unsigned int GetShader(ShaderType p_Type) const
 	{
 		unsigned int l_RetnVal = -1;
@@ -202,4 +208,5 @@ public:
 		}
 		return l_RetnVal;
 	}
+	// ------------------------------------------------------------------------
 };

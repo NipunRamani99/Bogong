@@ -10,7 +10,6 @@ private:
 	unsigned int m_ID;
 	bool m_IsBound;
 	unsigned int m_BufferSize = 0;
-	
 public:
 	VertexBuffer() = default;
 	VertexBuffer(const void * p_Data, unsigned int p_Size, unsigned int p_Draw = GL_DYNAMIC_DRAW)
@@ -20,10 +19,6 @@ public:
 		glBindBuffer(GL_ARRAY_BUFFER, m_ID);
 		glBufferData(GL_ARRAY_BUFFER, p_Size, p_Data, p_Draw);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
-	}
-	unsigned int GetSize() const
-	{
-		return m_BufferSize;
 	}
 	void Bind() const
 	{

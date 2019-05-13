@@ -8,7 +8,23 @@
 #include "Camera.h"
 #include "GuideLines.h"
 #include "Simulation.h"
-
+void error()
+{
+	GLenum err = glGetError();
+	if (err != GL_NO_ERROR)
+	{
+		std::string error;
+		switch (err) {
+		case GL_INVALID_OPERATION:      error = "INVALID_OPERATION";      break;
+		case GL_INVALID_ENUM:           error = "INVALID_ENUM";           break;
+		case GL_INVALID_VALUE:          error = "INVALID_VALUE";          break;
+		case GL_OUT_OF_MEMORY:          error = "OUT_OF_MEMORY";          break;
+		case GL_INVALID_FRAMEBUFFER_OPERATION:  error = "INVALID_FRAMEBUFFER_OPERATION";  break;
+		}
+		std::cout << "GL_" << error.c_str();
+		err = glGetError();
+	}
+}
 
 class Render
 {
@@ -51,12 +67,14 @@ public:
 		glfwSetKeyCallback(window, Callbacks::keyCallback);
 		glfwSetCursorPosCallback(window, Callbacks::mousePositionCallback);
 		glfwSetMouseButtonCallback(window, Callbacks::mouseButtonCallback);
+
+
 		Init::InitImgui(*window);
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_CULL_FACE);
-	
+		glCullFace(GL_BACK);
 		glFrontFace(GL_CCW);
 
 	}
@@ -68,12 +86,9 @@ public:
 		shader.LoadShader("fragmentShader.glsl", ShaderType::FRAGMENT);
 		shader.LoadProgram();
 		programID = shader.GetProgramID();
-		glUseProgram(programID);
-		ICallbacks::AddShader(shader);
-		assert(( bool )error());
-		sim = std::move(Simulation(shader));
 		error();
-
+		glUseProgram(programID);
+		sim = std::move(Simulation(shader));
 		int display_w, display_h;
 		glfwMakeContextCurrent(window);
 		glfwGetFramebufferSize(window, &display_w, &display_h);
@@ -93,9 +108,7 @@ public:
 	void Update()
 	{
 		sim.Update();
-		glm::vec3 pos = free->GetCameraPos();
-		ImGui::Text("X: %.1f Y: %.1f Z: %.1f", pos.x, pos.y, pos.z);
-		if(ImGui::InputFloat("View Radius: ", &cam->radius, 0.5, 0.5, 4))
+		if (ImGui::InputFloat("View Radius: ", &cam->radius, 0.5, 0.5, 4))
 		{
 			cam->updateCamera();
 		}

@@ -7,41 +7,24 @@ out vec4 color;
 uniform bool isTextured;
 uniform sampler2D image;
 uniform bool horizontal;
-uniform float weight[7] = float[] (0.827027, 0.8945946, 0.1216216, 0.054054, 0.016216, 0.01,0.01);
-uniform vec4 prevColor;
-
+uniform vec3 lightColor;
 float Opacity=1.0;
 void main()
 {
-    if(isTextured){
-	vec2 tex_offset = 1.0 / textureSize(image, 0); // gets size of single texel
-    vec3 result = texture(image, texCoords).rgb * weight[0]; // current fragment's contribution
-    if(horizontal)
-    {
-        for(int i = 1; i < 7; ++i)
-        {
-            result += texture(image, texCoords + vec2(tex_offset.x * i, 0.0)).rgb * weight[i];
-            result += texture(image, texCoords - vec2(tex_offset.x * i, 0.0)).rgb * weight[i];
-        }
-    }
-    else
-    {
-        for(int i = 1; i < 7; ++i)
-        {
-            result += texture(image, texCoords + vec2(0.0, tex_offset.y * i)).rgb * weight[i];
-            result += texture(image, texCoords - vec2(0.0, tex_offset.y * i)).rgb * weight[i];
-        }
-    }
+    float ambientStrength = 0.1;
+    vec3 ambient = ambientStrength * lightColor;
 
-    color = vec4(result, Opacity);
+    if(isTextured){
+	vec3 result = texture(image, texCoords).rgb;
+    result = result * ambient;
+    color = vec4(result,1.0);
   }
   else
   {
-    color = fragColor;
+    color = fragColor*vec4(ambient,1.0);
   }
 }
 /*
-
 void main()
 {             
     vec2 tex_offset = 1.0 / textureSize(image, 0); // gets size of single texel

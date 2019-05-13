@@ -48,6 +48,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ShowIncludes>true</ShowIncludes>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -83,9 +84,13 @@
   <ItemGroup>
     <ClInclude Include="Callbacks.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Cube.h" />
+    <ClInclude Include="Cube_norm.h" />
     <ClInclude Include="ErrorLog.h" />
     <ClInclude Include="GLIntferace.h" />
+    <ClInclude Include="Globals.h" />
     <ClInclude Include="GuideLines.h" />
+    <ClInclude Include="ICallbacks.h" />
     <ClInclude Include="Imgui.h" />
     <ClInclude Include="Imgui\imconfig.h" />
     <ClInclude Include="Imgui\imgui.h" />
@@ -97,11 +102,13 @@
     <ClInclude Include="Imgui\imstb_truetype.h" />
     <ClInclude Include="IndexBuffer.h" />
     <ClInclude Include="Init.hpp" />
+    <ClInclude Include="Lights.hpp" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
-    <ClInclude Include="Object.h" />
     <ClInclude Include="Render.h" />
     <ClInclude Include="Shaders.hpp" />
     <ClInclude Include="Simulation.h" />
+    <ClInclude Include="stb_image.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="VertexArray.hpp" />
