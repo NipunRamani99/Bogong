@@ -8,23 +8,7 @@
 #include "Camera.h"
 #include "GuideLines.h"
 #include "Simulation.h"
-void error()
-{
-	GLenum err = glGetError();
-	if (err != GL_NO_ERROR)
-	{
-		std::string error;
-		switch (err) {
-		case GL_INVALID_OPERATION:      error = "INVALID_OPERATION";      break;
-		case GL_INVALID_ENUM:           error = "INVALID_ENUM";           break;
-		case GL_INVALID_VALUE:          error = "INVALID_VALUE";          break;
-		case GL_OUT_OF_MEMORY:          error = "OUT_OF_MEMORY";          break;
-		case GL_INVALID_FRAMEBUFFER_OPERATION:  error = "INVALID_FRAMEBUFFER_OPERATION";  break;
-		}
-		std::cout << "GL_" << error.c_str();
-		err = glGetError();
-	}
-}
+
 
 class Render
 {
@@ -71,9 +55,7 @@ public:
 		Init::InitImgui(*window);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glEnable(GL_CULL_FACE);
-		glCullFace(GL_BACK);
-		glFrontFace(GL_CW);
+	
 
 
 	}
