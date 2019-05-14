@@ -1,102 +1,102 @@
 #pragma once
-#include<vector>
-#include<glm/gtx/transform.hpp>
-#include "Vertex.h"
-#include <random>
-#include <chrono>
-#include <iostream>
-#include <string>
-#include "VertexArray.hpp"
-#include "VertexBuffer.hpp"
-#include "Texture.h"
-#include "IndexBuffer.h"
+#include "Mesh.h"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-
 class Model
 {
 protected:
-	std::vector<Vertex<float>>  m_Vertices;
-	std::vector<unsigned int>   m_Indices;
-	glm::vec3 m_Position=glm::vec3(0.0f,0.0f,0.0f);
-	glm::mat4 m_Model = glm::mat4(1.0f);
-	std::string id = "";
-	bool m_IsConstructed = false;
+	std::vector<Mesh> m_Meshes;
 public:
+
 	Model()
+		:
+		m_Meshes()
 	{
-		m_IsConstructed = false;
+
 	}
-	Model(Model && p_Model)
-	{
-		p_Model.m_IsConstructed = false;
-		m_Vertices = std::move(p_Model.m_Vertices);
-		m_Indices = std::move(p_Model.m_Indices);
-		m_Position = p_Model.m_Position;
-		m_Model = p_Model.m_Model;
-		id = p_Model.id;
-		
-	}
-	Model(std::vector<Vertex<float>> & p_Vertices, std::vector<unsigned int> & p_Indices)
-	{
-		m_Vertices = p_Vertices;
-		m_Indices = p_Indices;
-		id = GenerateRandomString(10);
-		m_IsConstructed = true;
-	}
-	Model(glm::vec3 p_Position)
-	{
-		m_Position = p_Position;
-		m_Model = glm::translate(m_Model, m_Position);
-		id = GenerateRandomString(10);
-		m_IsConstructed = true;
-	}
-    virtual ~Model()
-	{
-		if (m_IsConstructed)
-			std::cout << "Model ID: " << id << " has been destroyed.";
-	}
-	void SetPosition(glm::vec3 p_Position)
-	{
-		m_Position = p_Position;
-		m_Model = glm::mat4(1.0f);
-		
-	}
-	void SetVertices(std::vector<Vertex<float>> & p_Vertices)
-	{
-		m_Vertices = p_Vertices;
-	}
-	void SetVertices(std::vector<unsigned int> & p_Indices)
-	{
-		m_Indices = p_Indices;
-	}
-	void ImportModel(std::string p_Path)
+	Model(const std::string p_Path)
 	{
 		Assimp::Importer importer;
-		const aiScene * scene = importer.ReadFile(p_Path, aiProcess_CalcTangentSpace |
+		const aiScene* scene = importer.ReadFile(p_Path,
+			aiProcess_CalcTangentSpace |
 			aiProcess_Triangulate |
 			aiProcess_JoinIdenticalVertices |
 			aiProcess_SortByPType);
 		if (!scene)
 		{
-			std::cout << "Error.";
+			std::cout << (importer.GetErrorString());
 
 		}
-	}
-private:
-	std::string GenerateRandomString(int p_NumChars)
-	{
-		std::string str="";
-		unsigned seed = std::chrono::steady_clock::now().time_since_epoch().count();
-		std::default_random_engine rd(seed);
-		std::uniform_int_distribution<int> intDist(0,26);
-		for (int i = 0; i < p_NumChars;i++)
+		aiMesh ** mesh = (scene->mMeshes);
+		int num = scene->mNumMeshes;
+		for (int i = 0; i < num; i++)
 		{
-			str += 'A' + (char)intDist(rd);
+
+			std::cout << "Mesh #" << i + 1 << ":" << "\n";
+			DisplayMeshDetails(*mesh[i]);
+			std::cout << "Mesh Name: ";
+			m_Meshes.push_back(std::move(*mesh[i]));
+			m_Meshes[i].SetTexture("assets/models/textures");
+			std::cout << "\n";
 		}
-		return str;
-		
+		for (auto & v : m_Meshes)
+		{
+			v.SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
+		}
+
 	}
-	
+	void Draw()
+	{
+		for (auto&v : m_Meshes)
+		{
+			v.Draw();
+		}
+	}
+	void _Draw()
+	{
+		for (auto & v : m_Meshes)
+		{
+			v._Draw();
+		}
+	}
+	void DisplayMeshDetails(const aiMesh & mesh)
+	{
+		std::cout << "1. Has bones: " << mesh.HasBones() << "\n";
+		std::cout << "2. Has faces: " << mesh.HasFaces() << "\n";
+		std::cout << "3. Has normals: " << mesh.HasNormals() << "\n";
+		std::cout << "4. Has positions: " << mesh.HasPositions() << "\n";
+		std::cout << "5. Has Tangents and Bitangents: " << mesh.HasTangentsAndBitangents() << "\n";
+		std::cout << "6. Has Texture coordinates: " << mesh.HasTextureCoords(0) << "\n";
+		std::cout << "8. # of Animated Meshes " << mesh.mNumAnimMeshes << "\n";
+		std::cout << "9. # of Bones " << mesh.mNumBones << "\n";
+		std::cout << "10. # of Faces " << mesh.mNumFaces << "\n";
+		std::cout << "11. # of UV Components ";
+		for (int i = 0; i < 8; i++)
+		{
+			std::cout << i + 1 << "." << mesh.mNumUVComponents[i] << " ";
+		}
+		std::cout << "\n";
+		std::cout << "12. # of Vertices " << mesh.mNumVertices << "\n";
+
+	}
+	inline void SetScale(const glm::vec3 p_Scale)
+	{
+		for (auto & m : m_Meshes)
+		{
+			m.SetScale(p_Scale);
+		}
+	}
+	void SetShader(const Shader p_Shader)
+	{
+		for (auto & m : m_Meshes)
+		{
+			m.SetShader(p_Shader);
+		}
+	}
+	Model & operator=(Model && p_Object)
+	{
+		m_Meshes = std::move(p_Object.m_Meshes);
+		return *this;
+	}
 };
