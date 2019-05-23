@@ -89,6 +89,7 @@
     <ClInclude Include="ErrorLog.h" />
     <ClInclude Include="GLIntferace.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="GL_Calls.h" />
     <ClInclude Include="GuideLines.h" />
     <ClInclude Include="ICallbacks.h" />
     <ClInclude Include="Imgui.h" />
@@ -102,10 +103,12 @@
     <ClInclude Include="Imgui\imstb_truetype.h" />
     <ClInclude Include="IndexBuffer.h" />
     <ClInclude Include="Init.hpp" />
+    <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Lights.hpp" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
-    <ClInclude Include="Render.h" />
+    <ClInclude Include="Engine.h" />
+    <ClInclude Include="Mouse.h" />
     <ClInclude Include="Shaders.hpp" />
     <ClInclude Include="Simulation.h" />
     <ClInclude Include="stb_image.h" />
@@ -113,6 +116,7 @@
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="VertexArray.hpp" />
     <ClInclude Include="VertexBuffer.hpp" />
+    <ClInclude Include="VertexBufferLayout.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GLInterface.cpp" />
@@ -123,7 +127,9 @@
     <ClCompile Include="Imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="Imgui\imgui_widgets.cpp" />
     <ClCompile Include="Init.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Mouse.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -53,6 +53,7 @@ public:
 		id         = p_Model.id;
 		name       = std::move(p_Model.name);
 		m_Tex      = std::move(p_Model.m_Tex);
+		m_Mode = std::move(p_Model.m_Mode);
 		m_IsConstructed = true;
 	}
 	Mesh(std::vector<Vertex<float>> & p_Vertices, std::vector<unsigned int> & p_Indices)
@@ -113,6 +114,7 @@ public:
 		m_Tex      = std::move(p_Mesh.m_Tex);
 		name       = std::move(p_Mesh.name);
 		id         = std::move(p_Mesh.id);
+		m_Shader = std::move(p_Mesh.m_Shader);
 		p_Mesh.m_IsConstructed = false;
 		m_IsConstructed = true;
 		return *this;
@@ -203,20 +205,30 @@ public:
 	{
 		glDisableVertexArrayAttrib(m_VAO.GetID(), 0);
 		glDisableVertexArrayAttrib(m_VAO.GetID(), 1);
+		error(); 
 		glDisableVertexArrayAttrib(m_VAO.GetID(), 2);
+		error();
 		m_Shader.setBool("isTextured", false);
+		error();
+		if(m_Tex.m_TexID != 0)
 		m_Tex.Unbind();
+		error();
 		m_VBO.Unbind();
+		error();
 		m_IBO.Unbind();
 		m_VAO.Unbind();
-	
+		error();
 	}
 	void Draw()
 	{
 		Bind();
+		error();
 		m_Shader.setMat4("model", m_Model);
+		error();
 		glDrawElements(m_Mode, m_Indices.size(), GL_UNSIGNED_INT, 0);
+		error();
 		Unbind();
+		error();
 	}
 	void _Draw()
 	{

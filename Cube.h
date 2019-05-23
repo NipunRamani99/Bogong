@@ -68,16 +68,6 @@ public:
 		m_Meshes[0].SetIndices(std::move(vecIndices));
 		m_Meshes[0].SetDrawMode(GL_TRIANGLES);
 	}
-	void BindNormals()
-	{
-		float normals[] = {  0,0,-1, 0,0,-1, 0,0,1,
-				             0,0,1,  1,0,0,  1,0,0,
-		                     0,-1,0, 0,-1,0, 0,1,0,
-			                 0,1,0, -1,0,0, -1,0,0};
-
-		GLuint shaderId = m_Meshes[0].GetShaderId();
-
-		
-	}
+	
 };
 

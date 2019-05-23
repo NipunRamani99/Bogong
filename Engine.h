@@ -6,11 +6,11 @@
 #include "Imgui.h"
 #include "Callbacks.h"
 #include "Camera.h"
-#include "GuideLines.h"
 #include "Simulation.h"
+#include "Keyboard.h"
+#include "Mouse.h"
 
-
-class Render
+class Engine
 {
 private:
 	GLFWwindow * window;
@@ -18,17 +18,15 @@ private:
 	IsoCamera * cam;
 	FreeCamera * free;
 	Simulation sim;
+	Keyboard kbd;
 	int camID = 0;
 public:
 
 	bool KeepRendering = true;
-	Render()
+	Engine()
 	{
-		int err = 0;
-		cudaDeviceProp deviceProp;
 		int gpuDevice = 0;
 		int device_count = 0;
-		cudaGetDeviceCount(&device_count);
 		Init::InitGLFW();
 		window = Init::CreateWindow(800, 600, "Mic Check.");
 		Init::SetGLFWWindow(*window, 4, 3, 3, GLFW_OPENGL_CORE_PROFILE, true);
@@ -36,19 +34,13 @@ public:
 		if (glewInit() != GLEW_OK) {
 			std::cout << "Couldn't init glew.";
 		}
-		if (err != 0)
-		{
-		}
-		cudaGLSetGLDevice(0);
-
 		cam = new IsoCamera(window, 800, 600);
 		free = new FreeCamera(800, 600);
 
 		Callbacks::camID = camID;
 		Callbacks::freecam = free;
 		Callbacks::cam = cam;
-
-		glfwSetKeyCallback(window, Callbacks::keyCallback);
+		kbd.SetCallback(window);
 		glfwSetCursorPosCallback(window, Callbacks::mousePositionCallback);
 		glfwSetMouseButtonCallback(window, Callbacks::mouseButtonCallback);
 		Init::InitImgui(*window);
@@ -56,7 +48,6 @@ public:
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_CULL_FACE);
-	
 		glFrontFace(GL_CCW);
 
 	}
@@ -70,7 +61,7 @@ public:
 		programID = shader.GetProgramID();
 		glUseProgram(programID);
 		ICallbacks::AddShader(shader);
-		assert(( bool )error());
+		assert(( bool )!error());
 		sim = std::move(Simulation(shader));
 		error();
 
@@ -86,9 +77,6 @@ public:
 		shader.setMat4("model", model);
 		shader.setBool("isTextured", false);
 
-	}
-	void makeTriangle()
-	{
 	}
 	void Update()
 	{
@@ -145,12 +133,26 @@ public:
 	}
 	void Loop()
 	{
+		kbd.Flush();
+	
 		glfwPollEvents();
+		if (kbd.KeyIsPressed(KEY_A))
+		{
+			std::cout << "KEY A Is Pressed.";
+		}
+		if (kbd.KeyIsRepeating(KEY_A))
+		{
+			std::cout<< "KEY A Is Repeating.";
+		}
+		if (kbd.KeyIsReleased(KEY_A))
+		{
+			std::cout << "KEY A Is Released.";
+		}
 		Init::StartImguiFrame();
 		Init::PrepareImguiFrame();
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 		glfwPollEvents();
-
+		
 		Update();
 		RenderEverything();
 	}

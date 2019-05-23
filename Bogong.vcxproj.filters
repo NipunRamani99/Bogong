@@ -25,6 +25,12 @@
     <ClCompile Include="Imgui\imgui_widgets.cpp">
       <Filter>Imgui</Filter>
     </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>Headers</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>Headers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Imgui\imconfig.h">
@@ -87,9 +93,6 @@
     <ClInclude Include="Model.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Render.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Shaders.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
@@ -118,6 +121,21 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Globals.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBufferLayout.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GL_Calls.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
