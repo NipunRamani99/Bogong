@@ -29,7 +29,7 @@ public:
 		int device_count = 0;
 		cudaGetDeviceCount(&device_count);
 		Init::InitGLFW();
-		window = Init::CreateGLWindow(800, 600, "Mic Check.");
+		window = Init::CreateGLWindow(1366, 768, "Mic Check.");
 		Init::SetGLFWWindow(*window, 4, 3, 3, GLFW_OPENGL_CORE_PROFILE, true);
 		glewExperimental = true;
 		if (glewInit() != GLEW_OK) {

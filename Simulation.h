@@ -65,7 +65,7 @@ public:
 	}
 	void Draw()
 	{
-		//m_gl.Draw();
+		m_gl.Draw();
 		wavemesh.Draw();
 		error();
 	}
