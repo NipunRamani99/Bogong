@@ -2,6 +2,9 @@
 #include<glm/gtx/transform.hpp>
 #include<GLFW/glfw3.h>
 #include "Shaders.hpp"
+namespace CamGlobal {
+	glm::vec3 viewPos = glm::vec3(1.0f);
+};
 class IsoCamera
 {
 	glm::vec3 cameraPos = glm::vec3(3.0f, 3.0f, 3.0f);
@@ -15,9 +18,10 @@ class IsoCamera
 	int width = 800;
 	int height = 600;
 	GLFWwindow * window;
-	Shader shader;
+	Shader m_Shader;
 	float currPhi = glm::radians(45.0f);
 	float currTheta = glm::radians(45.0f);
+	std::vector<Shader> shaders;
 public:
 	bool isIsometric = true;
 	float radius = 3.0f;
@@ -30,12 +34,14 @@ public:
 		projection = glm::perspective(glm::radians(55.0f), (float)width / height, 0.1f, 100.0f);
 		width = p_Width;
 		height = p_Height;
+		CamGlobal::viewPos = cameraPos;
 	}
 	void setShader(Shader p_shader)
 	{
-		shader = p_shader;
-		shader.setMat4("projection", projection);
-		shader.setMat4("view", view);
+		glUseProgram(p_shader.GetProgramID());
+		m_Shader = p_shader;
+		m_Shader.setMat4("projection", projection);
+		m_Shader.setMat4("view", view);
 	}
 	void ZoomIn()
 	{
@@ -47,16 +53,26 @@ public:
 		radius += 0.05f;
 		updateCamera(currPhi, currTheta);
 	}
+	void AddShader(Shader p_Shader)
+	{
+		glUseProgram(p_Shader.GetProgramID());
+		p_Shader.setMat4("projection", projection);
+		p_Shader.setMat4("view", view);
+		shaders.push_back(p_Shader);
+	}
 	void updateCamera(float phi, float theta)
 	{
 		currTheta = theta;
 		currPhi = phi;
-		float camX = radius * sin(currTheta) * sin(currPhi);
-		float camY = radius * cos(currPhi);
-		float camZ = radius * cos(currTheta) * sin(currPhi);
-		cameraPos = glm::vec3(camX, camY, camZ);
-		view = glm::lookAt(cameraPos, cameraTarget, up);
-		shader.setMat4("view", view);
+		updateCamera();
+	}
+	inline const glm::mat4 & GetView() const
+	{
+		return view;
+	}
+	inline const glm::mat4 & GetProjection() const
+	{
+		return projection;
 	}
 	void updateCamera()
 	{
@@ -65,14 +81,20 @@ public:
 		float camZ = radius * cos(currTheta) * sin(currPhi);
 		cameraPos = glm::vec3(camX, camY, camZ);
 		view = glm::lookAt(cameraPos, cameraTarget, up);
-		shader.setMat4("view", view);
+		for (auto & shader : shaders)
+		{
+			glUseProgram(shader.GetProgramID());
+			shader.setMat4("projection", projection);
+			shader.setMat4("view", view);
+		}
+		CamGlobal::viewPos = cameraPos;
+		glUseProgram(m_Shader.GetProgramID());
 	}
 
 };
 class FreeCamera
 {
 	// camera
-	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
@@ -88,6 +110,9 @@ class FreeCamera
 	int width = 0;
 	int height = 0;
 	Shader m_Shader;
+	std::vector<Shader> shaders;
+	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+
 public:
 	bool firstMouse = true;
 
@@ -117,14 +142,26 @@ public:
 	{
 		m_Shader = p_Shader;
 	}
+	void AddShader(Shader p_Shader)
+	{
+		shaders.push_back(p_Shader);
+	}
+	glm::vec3 GetCameraPos()
+	{
+		return cameraPos;
+	}
 	void updateCamera()
 	{
 		glm::mat4 projection = glm::perspective(glm::radians(fov), (float)width / (float)height, 0.1f, 100.0f);
-		m_Shader.setMat4("projection", projection);
-		// camera/view transformation
 		glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-		m_Shader.setMat4("view", view);
 
+		for (auto & shader : shaders)
+		{
+			glUseProgram(shader.GetProgramID());
+			shader.setMat4("projection", projection);
+			shader.setMat4("view", view);
+		}
+		glUseProgram(m_Shader.GetProgramID());
 	}
 	void mouse_callback(GLFWwindow * window, double xpos, double ypos)
 	{

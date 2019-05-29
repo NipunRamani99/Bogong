@@ -13,10 +13,9 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+#include "ICallbacks.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
-
-#pragma message ("Test")
 
 
 class Mesh
@@ -54,6 +53,7 @@ public:
 		id         = p_Model.id;
 		name       = std::move(p_Model.name);
 		m_Tex      = std::move(p_Model.m_Tex);
+		m_Mode = std::move(p_Model.m_Mode);
 		m_IsConstructed = true;
 	}
 	Mesh(std::vector<Vertex<float>> & p_Vertices, std::vector<unsigned int> & p_Indices)
@@ -114,6 +114,7 @@ public:
 		m_Tex      = std::move(p_Mesh.m_Tex);
 		name       = std::move(p_Mesh.name);
 		id         = std::move(p_Mesh.id);
+		m_Shader = std::move(p_Mesh.m_Shader);
 		p_Mesh.m_IsConstructed = false;
 		m_IsConstructed = true;
 		return *this;
@@ -139,6 +140,12 @@ public:
 		m_VBO = VertexBuffer(m_Vertices.data(), m_Vertices.size() * sizeof(Vertex<float>));
 
 	}
+	void SetVertices(float vertices[])
+	{
+		
+		m_VBO = VertexBuffer(vertices,sizeof(float)*360);
+
+	}
 	void SetIndices(std::vector<unsigned int> & p_Indices)
 	{
 		m_Indices = p_Indices;
@@ -147,6 +154,10 @@ public:
 	void SetShader(Shader p_Shader)
 	{
 		m_Shader = p_Shader;
+	}
+	GLuint GetShaderId()
+	{
+		return m_Shader.GetProgramID();
 	}
 	void SetDrawMode(GLenum p_DrawMode)
 	{
@@ -194,20 +205,49 @@ public:
 	{
 		glDisableVertexArrayAttrib(m_VAO.GetID(), 0);
 		glDisableVertexArrayAttrib(m_VAO.GetID(), 1);
+		error(); 
 		glDisableVertexArrayAttrib(m_VAO.GetID(), 2);
+		error();
 		m_Shader.setBool("isTextured", false);
+		error();
+		if(m_Tex.m_TexID != 0)
 		m_Tex.Unbind();
+		error();
 		m_VBO.Unbind();
+		error();
 		m_IBO.Unbind();
 		m_VAO.Unbind();
-	
+		error();
 	}
 	void Draw()
 	{
 		Bind();
+		error();
 		m_Shader.setMat4("model", m_Model);
+		error();
 		glDrawElements(m_Mode, m_Indices.size(), GL_UNSIGNED_INT, 0);
+		error();
 		Unbind();
+		error();
+	}
+	void _Draw()
+	{
+		m_VAO.Bind();
+		m_VBO.Bind();
+		m_Shader.Bind();
+		glEnableVertexArrayAttrib(m_VAO.GetID(), 0);
+		glEnableVertexArrayAttrib(m_VAO.GetID(), 1);
+		glEnableVertexArrayAttrib(m_VAO.GetID(), 3);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE,  10*sizeof(float), (void*)(sizeof(float) * 0));
+		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 10*sizeof(float), (void*)(sizeof(float) * 3));
+		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 10*sizeof(float), (void*)(sizeof(float) * 7));
+		m_Shader.setMat4("model", m_Model);
+		glDrawArrays(GL_TRIANGLES, 0, m_VBO.GetSize() / (sizeof(float) * 10));
+		glDisableVertexArrayAttrib(m_VAO.GetID(), 0);
+		glDisableVertexArrayAttrib(m_VAO.GetID(), 1);
+		glDisableVertexArrayAttrib(m_VAO.GetID(), 3);
+		m_VBO.Unbind();
+		m_VAO.Unbind();
 	}
 private:
 	std::string GenerateRandomString(int p_NumChars)

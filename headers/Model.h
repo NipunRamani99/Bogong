@@ -3,7 +3,7 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-class Model 
+class Model
 {
 protected:
 	std::vector<Mesh> m_Meshes;
@@ -25,14 +25,14 @@ public:
 			aiProcess_SortByPType);
 		if (!scene)
 		{
-			std::cout<<(importer.GetErrorString());
-			
+			std::cout << (importer.GetErrorString());
+
 		}
-	    aiMesh ** mesh = (scene->mMeshes);
+		aiMesh ** mesh = (scene->mMeshes);
 		int num = scene->mNumMeshes;
 		for (int i = 0; i < num; i++)
 		{
-			
+
 			std::cout << "Mesh #" << i + 1 << ":" << "\n";
 			DisplayMeshDetails(*mesh[i]);
 			std::cout << "Mesh Name: ";
@@ -53,6 +53,13 @@ public:
 			v.Draw();
 		}
 	}
+	void _Draw()
+	{
+		for (auto & v : m_Meshes)
+		{
+			v._Draw();
+		}
+	}
 	void DisplayMeshDetails(const aiMesh & mesh)
 	{
 		std::cout << "1. Has bones: " << mesh.HasBones() << "\n";
@@ -67,7 +74,7 @@ public:
 		std::cout << "11. # of UV Components ";
 		for (int i = 0; i < 8; i++)
 		{
-			std::cout<<i+1<<"." << mesh.mNumUVComponents[i] << " ";
+			std::cout << i + 1 << "." << mesh.mNumUVComponents[i] << " ";
 		}
 		std::cout << "\n";
 		std::cout << "12. # of Vertices " << mesh.mNumVertices << "\n";

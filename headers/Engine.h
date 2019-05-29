@@ -5,28 +5,12 @@
 #include "IndexBuffer.h"
 #include "Imgui.h"
 #include "Callbacks.h"
-#include "Camera.h"
-#include "GuideLines.h"
 #include "Simulation.h"
-void error()
-{
-	GLenum err = glGetError();
-	if (err != GL_NO_ERROR)
-	{
-		std::string error;
-		switch (err) {
-		case GL_INVALID_OPERATION:      error = "INVALID_OPERATION";      break;
-		case GL_INVALID_ENUM:           error = "INVALID_ENUM";           break;
-		case GL_INVALID_VALUE:          error = "INVALID_VALUE";          break;
-		case GL_OUT_OF_MEMORY:          error = "OUT_OF_MEMORY";          break;
-		case GL_INVALID_FRAMEBUFFER_OPERATION:  error = "INVALID_FRAMEBUFFER_OPERATION";  break;
-		}
-		std::cout << "GL_" << error.c_str();
-		err = glGetError();
-	}
-}
+#include "Camera.h"
+#include "Keyboard.h"
+#include "Mouse.h"
 
-class App
+class Engine
 {
 private:
 	GLFWwindow * window;
@@ -34,17 +18,15 @@ private:
 	IsoCamera * cam;
 	FreeCamera * free;
 	Simulation sim;
+	Keyboard kbd;
 	int camID = 0;
 public:
 
 	bool KeepRendering = true;
-	App()
+	Engine()
 	{
-		int err = 0;
-		cudaDeviceProp deviceProp;
 		int gpuDevice = 0;
 		int device_count = 0;
-		cudaGetDeviceCount(&device_count);
 		Init::InitGLFW();
 		window = Init::CreateWindow(800, 600, "Mic Check.");
 		Init::SetGLFWWindow(*window, 4, 3, 3, GLFW_OPENGL_CORE_PROFILE, true);
@@ -52,28 +34,20 @@ public:
 		if (glewInit() != GLEW_OK) {
 			std::cout << "Couldn't init glew.";
 		}
-		if (err != 0)
-		{
-		}
-		cudaGLSetGLDevice(0);
-
 		cam = new IsoCamera(window, 800, 600);
 		free = new FreeCamera(800, 600);
 
 		Callbacks::camID = camID;
 		Callbacks::freecam = free;
 		Callbacks::cam = cam;
-
-		glfwSetKeyCallback(window, Callbacks::keyCallback);
+		kbd.SetCallback(window);
 		glfwSetCursorPosCallback(window, Callbacks::mousePositionCallback);
 		glfwSetMouseButtonCallback(window, Callbacks::mouseButtonCallback);
-
-
 		Init::InitImgui(*window);
 		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_CULL_FACE);
-		glCullFace(GL_BACK);
 		glFrontFace(GL_CCW);
 
 	}
@@ -85,13 +59,17 @@ public:
 		shader.LoadShader("fragmentShader.glsl", ShaderType::FRAGMENT);
 		shader.LoadProgram();
 		programID = shader.GetProgramID();
-		error();
 		glUseProgram(programID);
-		sim = std::move(Simulation(shader,*free, *cam));
+		ICallbacks::AddShader(shader);
+		assert(( bool )!error());
+		sim = std::move(Simulation(shader));
+		error();
+
 		int display_w, display_h;
 		glfwMakeContextCurrent(window);
 		glfwGetFramebufferSize(window, &display_w, &display_h);
 		glClearColor(Init::clear_color.x, Init::clear_color.y, Init::clear_color.z, Init::clear_color.w);
+		
 		glViewport(0, 0, display_w, display_h);
 		cam->setShader(shader);
 		free->SetShader(shader);
@@ -100,13 +78,12 @@ public:
 		shader.setBool("isTextured", false);
 
 	}
-	void makeTriangle()
-	{
-	}
 	void Update()
 	{
 		sim.Update();
-		if (ImGui::InputFloat("View Radius: ", &cam->radius, 0.5, 0.5, 4))
+		glm::vec3 pos = free->GetCameraPos();
+		ImGui::Text("X: %.1f Y: %.1f Z: %.1f", pos.x, pos.y, pos.z);
+		if(ImGui::InputFloat("View Radius: ", &cam->radius, 0.5, 0.5, 4))
 		{
 			cam->updateCamera();
 		}
@@ -156,12 +133,26 @@ public:
 	}
 	void Loop()
 	{
+		kbd.Flush();
+	
 		glfwPollEvents();
+		if (kbd.KeyIsPressed(KEY_A))
+		{
+			std::cout << "KEY A Is Pressed.";
+		}
+		if (kbd.KeyIsRepeating(KEY_A))
+		{
+			std::cout<< "KEY A Is Repeating.";
+		}
+		if (kbd.KeyIsReleased(KEY_A))
+		{
+			std::cout << "KEY A Is Released.";
+		}
 		Init::StartImguiFrame();
 		Init::PrepareImguiFrame();
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 		glfwPollEvents();
-
+		
 		Update();
 		RenderEverything();
 	}

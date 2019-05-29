@@ -2,45 +2,50 @@
 #include "Shaders.hpp"
 #include "VertexArray.hpp"
 #include "VertexBuffer.hpp"
-#include "Cube.h"
-#include "Model.h"
-#include "GuideLines.h"
+#include "ICallbacks.h"
+#include "../Lines.hpp"
+
 
 class Simulation
 {
 private:
-	GuideLines m_gl;
-	Model obj;
+
 	Shader m_Shader;
-	Cube cube;
+	Lines line;
+	Lines line2;
+	Lines line3;
 	float m_Scale = 0.895f;
 public:
 	Simulation() = default;
 	Simulation(Shader p_Shader)
 		:
-		m_gl(glm::vec3(0.0f, 0.0f, 0.0f)),
-		obj("assets/models/BMD-3/sprut.obj"),
-		cube(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f), 0.2f)
-	{
-		m_Shader = p_Shader;
-		m_gl.SetShader(m_Shader);
-		obj.SetShader(m_Shader);
-		obj.SetScale(glm::vec3(0.001f,0.001f,0.001f));
-		m_Scale = 0.001f;
-		cube.SetShader(m_Shader);
+		line(glm::vec3(-100.0f,0.0f,0.0f),glm::vec3(100.0f,0.0f,0.0f)),
+		line2(glm::vec3(0.0f,-100.0f,0.0f),glm::vec3(0.0f,100.0f,0.0f)),
+	    line3(glm::vec3(0.0f,0.0f,-100.0f),glm::vec3(0.0f,0.0f,100.0f))
+	{  
+		m_Shader      = p_Shader;
+		m_Scale       = 0.001f;
+		ICallbacks::SetShader(m_Shader);
+		line.SetShader(m_Shader);
+		line2.SetShader(m_Shader);
+		line3.SetShader(m_Shader);
 	}
 	Simulation(Simulation && simulation)
 	{
-	
+		m_Shader = std::move(simulation.m_Shader);
+		m_Scale = std::move(simulation.m_Scale);
+		line = std::move(simulation.line);
+		line2 = std::move(simulation.line2);
+		line3 = std::move(simulation.line3);
 	}
 
 	Simulation & operator=(Simulation&&p_Simulation)
 	{
 		m_Shader = p_Simulation.m_Shader;
-		m_gl = std::move(p_Simulation.m_gl);
-		obj = std::move(p_Simulation.obj);
 		m_Scale = std::move(p_Simulation.m_Scale);
-		cube = std::move(p_Simulation.cube);
+		line  = std::move(p_Simulation.line);
+		line2 = std::move(p_Simulation.line2);
+		line3 = std::move(p_Simulation.line3);
 		return *this;
 	}
 	void Begin()
@@ -49,16 +54,13 @@ public:
 	}
 	void Update()
 	{
-		if (ImGui::DragFloat("Scale: ", &m_Scale, 0.0001f, 0.0001, 1.0f))
-		{
-			obj.SetScale(glm::vec3(m_Scale, m_Scale, m_Scale));
-		}
+		
 	}
 	void Draw()
 	{
-
-		cube.Draw();
-		m_gl.Draw();
-		obj.Draw();
+		line.Draw();
+		line2.Draw();
+		line3.Draw();
+		error();
 	}
 };

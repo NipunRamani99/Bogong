@@ -1,7 +1,7 @@
 #pragma once
-#include "Imgui/imgui.h"
-#include "Imgui/imgui_impl_glfw.h"
-#include "Imgui/imgui_impl_opengl3.h"
+#include "../Imgui/imgui.h"
+#include "../Imgui/imgui_impl_glfw.h"
+#include "../Imgui/imgui_impl_opengl3.h"
 
 namespace Init {
 	bool show_demo_window = true;

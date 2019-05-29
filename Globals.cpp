@@ -1,15 +1,11 @@
-#pragma once
-#include <glm/vec3.hpp>
-namespace Globals
-{
-	glm::vec3 viewPos;
-}
+#include "headers/Globals.h"
+
 bool error()
 {
 	GLenum err = glGetError();
 	if (err != GL_NO_ERROR)
 	{
-		std::string error;
+		std::string error = "";
 		switch (err) {
 		case GL_INVALID_OPERATION:      error = "INVALID_OPERATION";      break;
 		case GL_INVALID_ENUM:           error = "INVALID_ENUM";           break;

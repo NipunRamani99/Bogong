@@ -22,19 +22,27 @@ private:
 	std::vector<BufferElement> m_Elements;
 	int m_Stride = 0;
 public:
-	VertexBufferLayout() = default;
+	VertexBufferLayout()
+	{
+
+	}
 
 	template<typename ElemType>
 	void AddElement(int p_Count)
 	{
-		if (ElemType == float)
+		if (typeid(ElemType) == typeid(float))
 			m_Elements.push_back({ GL_FLOAT,GL_FALSE,p_Count });
-		if (ElemType == unsigned int)
+		if (typeid(ElemType) == typeid(unsigned int))
 			m_Elements.push_back({ GL_UNSIGNED_INT,GL_FALSE,p_Count });
+
 		m_Stride += sizeof(ElemType) * p_Count;
 	}
-	std::vector<BufferElement> & getElements()
+	std::vector<BufferElement> & GetElements()
 	{
 		return m_Elements;
+	}
+	int GetStride()
+	{
+		return m_Stride;
 	}
 };

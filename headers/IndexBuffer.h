@@ -4,7 +4,7 @@
 class IndexBuffer
 {
 private:
-	unsigned int m_IndexID;
+	unsigned int m_IndexID=0;
 	bool m_IsBound=false;
 public:
 	IndexBuffer() = default;
@@ -24,5 +24,9 @@ public:
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		m_IsBound = false;
+	}
+	unsigned int GetID()
+	{
+		return m_IndexID;
 	}
 };
