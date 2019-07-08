@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -14,6 +14,8 @@
     <ProjectGuid>{10EEB476-87C2-484F-BE3C-15FE9AB7F01B}</ProjectGuid>
     <RootNamespace>Bogong</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <CudaToolkitCustomDir>
+    </CudaToolkitCustomDir>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -42,13 +44,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ShowIncludes>true</ShowIncludes>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -57,6 +60,7 @@
     </Link>
     <CudaCompile>
       <TargetMachinePlatform>64</TargetMachinePlatform>
+      <Include>$(CUDA_PATH_V10_0)\common\inc\</Include>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -79,39 +83,45 @@
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CudaCompile Include="headers\kernel.cu" />
+    <CudaCompile Include="kernel.cu" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="headers\Callbacks.h" />
-    <ClInclude Include="headers\Camera.h" />
-    <ClInclude Include="headers\Cube.h" />
-    <ClInclude Include="headers\Cube.hpp" />
-    <ClInclude Include="headers\Cube_norm.h" />
-    <ClInclude Include="headers\Engine.h" />
-    <ClInclude Include="headers\ErrorLog.h" />
-    <ClInclude Include="headers\GLIntferace.h" />
-    <ClInclude Include="headers\Globals.h" />
-    <ClInclude Include="headers\GL_Calls.h" />
-    <ClInclude Include="headers\GuideLines.h" />
-    <ClInclude Include="headers\ICallbacks.h" />
-    <ClInclude Include="headers\Imgui.h" />
-    <ClInclude Include="headers\IndexBuffer.h" />
-    <ClInclude Include="headers\Init.hpp" />
-    <ClInclude Include="headers\Keyboard.h" />
-    <ClInclude Include="headers\Lights.hpp" />
-    <ClInclude Include="headers\Model.h" />
-    <ClInclude Include="headers\Mouse.h" />
-    <ClInclude Include="headers\Rendering\Mesh.hpp" />
-    <ClInclude Include="headers\Rendering\Renderer.hpp" />
-    <ClInclude Include="headers\Rendering\ShapeMesh.hpp" />
-    <ClInclude Include="headers\Shaders.hpp" />
-    <ClInclude Include="headers\Simulation.h" />
-    <ClInclude Include="headers\stb_image.h" />
-    <ClInclude Include="headers\Texture.h" />
-    <ClInclude Include="headers\Vertex.h" />
-    <ClInclude Include="headers\VertexArray.hpp" />
-    <ClInclude Include="headers\VertexBuffer.hpp" />
-    <ClInclude Include="headers\VertexBufferLayout.hpp" />
+    <ClInclude Include="Callbacks.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Cone.h" />
+    <ClInclude Include="CudaVBO.h" />
+    <ClInclude Include="CUDA\drvapi_error_string.h" />
+    <ClInclude Include="CUDA\dynlink_d3d10.h" />
+    <ClInclude Include="CUDA\dynlink_d3d11.h" />
+    <ClInclude Include="CUDA\exception.h" />
+    <ClInclude Include="CUDA\helper_cuda.h" />
+    <ClInclude Include="CUDA\helper_cuda_drvapi.h" />
+    <ClInclude Include="CUDA\helper_cusolver.h" />
+    <ClInclude Include="CUDA\helper_functions.h" />
+    <ClInclude Include="CUDA\helper_gl.h" />
+    <ClInclude Include="CUDA\helper_image.h" />
+    <ClInclude Include="CUDA\helper_math.h" />
+    <ClInclude Include="CUDA\helper_string.h" />
+    <ClInclude Include="CUDA\helper_timer.h" />
+    <ClInclude Include="CUDA\multithreading.h" />
+    <ClInclude Include="CUDA\nvMath.h" />
+    <ClInclude Include="CUDA\nvMatrix.h" />
+    <ClInclude Include="CUDA\nvQuaternion.h" />
+    <ClInclude Include="CUDA\nvrtc_helper.h" />
+    <ClInclude Include="CUDA\nvShaderUtils.h" />
+    <ClInclude Include="CUDA\nvVector.h" />
+    <ClInclude Include="CUDA\param.h" />
+    <ClInclude Include="CUDA\paramgl.h" />
+    <ClInclude Include="CUDA\rendercheck_d3d10.h" />
+    <ClInclude Include="CUDA\rendercheck_d3d11.h" />
+    <ClInclude Include="CUDA\rendercheck_d3d9.h" />
+    <ClInclude Include="CUDA\rendercheck_gl.h" />
+    <ClInclude Include="CUDA\rendercheck_gles.h" />
+    <ClInclude Include="CUDA\timer.h" />
+    <ClInclude Include="ErrorLog.h" />
+    <ClInclude Include="GLIntferace.h" />
+    <ClInclude Include="GuideLines.h" />
+    <ClInclude Include="Imgui.h" />
     <ClInclude Include="Imgui\imconfig.h" />
     <ClInclude Include="Imgui\imgui.h" />
     <ClInclude Include="Imgui\imgui_impl_glfw.h" />
@@ -120,27 +130,33 @@
     <ClInclude Include="Imgui\imstb_rectpack.h" />
     <ClInclude Include="Imgui\imstb_textedit.h" />
     <ClInclude Include="Imgui\imstb_truetype.h" />
-    <ClInclude Include="Lines.hpp" />
-    <ClInclude Include="Ripple.hpp" />
-    <ClInclude Include="Sphere.hpp" />
+    <ClInclude Include="include\Cone.h" />
+    <ClInclude Include="include\Defs.h" />
+    <ClInclude Include="IndexBuffer.h" />
+    <ClInclude Include="Init.hpp" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="Render.h" />
+    <ClInclude Include="RunKernel.h" />
+    <ClInclude Include="Shaders.hpp" />
+    <ClInclude Include="Simulation.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="Vertex.h" />
+    <ClInclude Include="VertexArray.hpp" />
+    <ClInclude Include="VertexBuffer.hpp" />
+    <ClInclude Include="WaveMesh.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GLInterface.cpp" />
-    <ClCompile Include="Globals.cpp" />
-    <ClCompile Include="headers\Rendering\Renderer.cpp" />
     <ClCompile Include="Imgui\imgui.cpp" />
     <ClCompile Include="Imgui\imgui_demo.cpp" />
     <ClCompile Include="Imgui\imgui_draw.cpp" />
     <ClCompile Include="Imgui\imgui_impl_glfw.cpp" />
     <ClCompile Include="Imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="Imgui\imgui_widgets.cpp" />
+    <ClCompile Include="include\Arrow.h" />
     <ClCompile Include="Init.cpp" />
-    <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Mouse.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="headers\LightFragmentShader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
