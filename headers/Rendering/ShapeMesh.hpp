@@ -16,6 +16,8 @@ public:
 	{
 		m_Vertices = std::move(p_Vertices);
 		m_Indices  = std::move(p_Indices);
+		m_VBO = VertexBuffer(m_Vertices.data(), m_Vertices.size() * sizeof(Vertex<float>));
+		m_IBO = IndexBuffer(m_Indices.data(), m_Indices.size() * sizeof(unsigned int));
 		m_Count = m_Indices.size();
 	}
 	

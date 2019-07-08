@@ -35,7 +35,7 @@ void Renderer::BindBuffers()
 	m_Shader.setMat4("model", m_Model);
 	error();
 	int count = m_Mesh.GetCount();
-	glDrawArrays(m_DrawMode, 0, count);
+	m_DrawCall(m_DrawMode, count);
 	error();
 }
 void Renderer::UnbindBuffers()

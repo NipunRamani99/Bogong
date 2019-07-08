@@ -150,6 +150,10 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Lines.hpp" />
+    <ClInclude Include="Ripple.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Imgui">

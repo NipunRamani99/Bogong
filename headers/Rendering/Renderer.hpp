@@ -1,11 +1,13 @@
+#pragma once 
 #include <iostream>
 #include "../VertexArray.hpp"
 #include "../Shaders.hpp"
 #include "../VertexBufferLayout.hpp"
 #include "Mesh.hpp"
 #include "../Globals.h"
+#include <string>
 #include <functional>
-
+#include <map>
 class Renderer
 {
 private:
@@ -17,6 +19,7 @@ private:
 	GLenum   m_DrawMode=GL_LINES;
 	DrawCall  m_DrawCall = [](GLenum,int)-> void {};
 	glm::mat4 m_Model=glm::mat4(1.0);
+	
 public:
 	Renderer() = default;
 	
@@ -45,7 +48,7 @@ public:
 		m_DrawMode = std::move(p_Renderer.m_DrawMode);
 		m_Shader   = std::move(p_Renderer.m_Shader);
 		
-		return *this;
+	    return *this;
 	}
 	Renderer(Renderer && renderer)
 		:
@@ -70,7 +73,10 @@ public:
 	{
 		m_Mesh  = p_Mesh;
 	}
-
+	void SetDrawMode(GLenum p_DrawMode)
+	{
+		m_DrawMode = p_DrawMode;
+	}
 	void RenderMesh();
 	void BindBuffers();
 	void UnbindBuffers();
