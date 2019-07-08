@@ -17,6 +17,7 @@
 //4.Unmap it after using it in kernels.
 //5.Use shaders to render the 
 ////////////////////////////////////////////////////////////////////
+
 template<typename T>
 class CudaVBO : public VertexBuffer
 {

@@ -1,9 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CudaCompile Include="headers\kernel.cu">
-      <Filter>Headers</Filter>
-    </CudaCompile>
+    <CudaCompile Include="kernel.cu" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Init.cpp" />
@@ -27,14 +25,24 @@
     <ClCompile Include="Imgui\imgui_widgets.cpp">
       <Filter>Imgui</Filter>
     </ClCompile>
-    <ClCompile Include="headers\Rendering\Renderer.cpp">
-      <Filter>Headers\Rendering</Filter>
+    <ClCompile Include="include\Arrow.h">
+      <Filter>include</Filter>
     </ClCompile>
-    <ClCompile Include="Keyboard.cpp" />
-    <ClCompile Include="Mouse.cpp" />
-    <ClCompile Include="Globals.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Init.hpp" />
+    <ClInclude Include="Shaders.hpp" />
+    <ClInclude Include="Callbacks.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="GLIntferace.h" />
+    <ClInclude Include="GuideLines.h" />
+    <ClInclude Include="Imgui.h" />
+    <ClInclude Include="IndexBuffer.h" />
+    <ClInclude Include="Render.h" />
+    <ClInclude Include="Simulation.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="VertexArray.hpp" />
+    <ClInclude Include="VertexBuffer.hpp" />
     <ClInclude Include="Imgui\imconfig.h">
       <Filter>Imgui</Filter>
     </ClInclude>
@@ -59,116 +67,112 @@
     <ClInclude Include="Imgui\imstb_truetype.h">
       <Filter>Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="headers\Rendering\Mesh.hpp">
-      <Filter>Headers\Rendering</Filter>
+    <ClInclude Include="ErrorLog.h" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="Vertex.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="CudaVBO.h" />
+    <ClInclude Include="CUDA\drvapi_error_string.h">
+      <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="headers\Rendering\ShapeMesh.hpp">
-      <Filter>Headers\Rendering</Filter>
+    <ClInclude Include="CUDA\dynlink_d3d10.h">
+      <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="headers\Rendering\Renderer.hpp">
-      <Filter>Headers\Rendering</Filter>
+    <ClInclude Include="CUDA\dynlink_d3d11.h">
+      <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="headers\Callbacks.h">
-      <Filter>Headers</Filter>
+    <ClInclude Include="CUDA\exception.h">
+      <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="headers\Camera.h">
-      <Filter>Headers</Filter>
+    <ClInclude Include="CUDA\helper_cuda.h">
+      <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="headers\Cube.h">
-      <Filter>Headers</Filter>
+    <ClInclude Include="CUDA\helper_cuda_drvapi.h">
+      <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="headers\Cube.hpp">
-      <Filter>Headers</Filter>
+    <ClInclude Include="CUDA\helper_cusolver.h">
+      <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="headers\Cube_norm.h">
-      <Filter>Headers</Filter>
+    <ClInclude Include="CUDA\helper_functions.h">
+      <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="headers\Engine.h">
-      <Filter>Headers</Filter>
+    <ClInclude Include="CUDA\helper_gl.h">
+      <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="headers\ErrorLog.h">
-      <Filter>Headers</Filter>
+    <ClInclude Include="CUDA\helper_image.h">
+      <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="headers\GL_Calls.h">
-      <Filter>Headers</Filter>
+    <ClInclude Include="CUDA\helper_math.h">
+      <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="headers\GLIntferace.h">
-      <Filter>Headers</Filter>
+    <ClInclude Include="CUDA\helper_string.h">
+      <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="headers\Globals.h">
-      <Filter>Headers</Filter>
+    <ClInclude Include="CUDA\helper_timer.h">
+      <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="headers\GuideLines.h">
-      <Filter>Headers</Filter>
+    <ClInclude Include="CUDA\multithreading.h">
+      <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="headers\ICallbacks.h">
-      <Filter>Headers</Filter>
+    <ClInclude Include="CUDA\nvMath.h">
+      <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="headers\Imgui.h">
-      <Filter>Headers</Filter>
+    <ClInclude Include="CUDA\nvMatrix.h">
+      <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="headers\IndexBuffer.h">
-      <Filter>Headers</Filter>
+    <ClInclude Include="CUDA\nvQuaternion.h">
+      <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="headers\Init.hpp">
-      <Filter>Headers</Filter>
+    <ClInclude Include="CUDA\nvrtc_helper.h">
+      <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="headers\Keyboard.h">
-      <Filter>Headers</Filter>
+    <ClInclude Include="CUDA\nvShaderUtils.h">
+      <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="headers\Lights.hpp">
-      <Filter>Headers</Filter>
+    <ClInclude Include="CUDA\nvVector.h">
+      <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="headers\Model.h">
-      <Filter>Headers</Filter>
+    <ClInclude Include="CUDA\param.h">
+      <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="headers\Mouse.h">
-      <Filter>Headers</Filter>
+    <ClInclude Include="CUDA\paramgl.h">
+      <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="headers\Shaders.hpp">
-      <Filter>Headers</Filter>
+    <ClInclude Include="CUDA\rendercheck_d3d9.h">
+      <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="headers\Simulation.h">
-      <Filter>Headers</Filter>
+    <ClInclude Include="CUDA\rendercheck_d3d10.h">
+      <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="headers\stb_image.h">
-      <Filter>Headers</Filter>
+    <ClInclude Include="CUDA\rendercheck_d3d11.h">
+      <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="headers\Texture.h">
-      <Filter>Headers</Filter>
+    <ClInclude Include="CUDA\rendercheck_gl.h">
+      <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="headers\Vertex.h">
-      <Filter>Headers</Filter>
+    <ClInclude Include="CUDA\rendercheck_gles.h">
+      <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="headers\VertexArray.hpp">
-      <Filter>Headers</Filter>
+    <ClInclude Include="CUDA\timer.h">
+      <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="headers\VertexBuffer.hpp">
-      <Filter>Headers</Filter>
+    <ClInclude Include="WaveMesh.h" />
+    <ClInclude Include="RunKernel.h" />
+    <ClInclude Include="Cone.h">
+      <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="headers\VertexBufferLayout.hpp">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Lines.hpp" />
-    <ClInclude Include="Ripple.hpp">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Sphere.hpp" />
+    <ClInclude Include="include\Cone.h" />
+    <ClInclude Include="include\Defs.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Imgui">
       <UniqueIdentifier>{cf8a9269-7896-4b20-b041-21c8e499dbac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headers">
-      <UniqueIdentifier>{67122679-f42d-40d4-af67-c2c0acc0f1dd}</UniqueIdentifier>
+    <Filter Include="Extra">
+      <UniqueIdentifier>{19035f4b-f77b-4ab3-ae52-1dfa36ec90af}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headers\Rendering">
-      <UniqueIdentifier>{bad71f99-7f78-48f8-8800-19f80f27d95c}</UniqueIdentifier>
+    <Filter Include="include">
+      <UniqueIdentifier>{daf6e288-625e-4bff-8753-4529cdef6952}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="headers\LightFragmentShader.glsl">
-      <Filter>Headers</Filter>
-    </None>
   </ItemGroup>
 </Project>
