@@ -1,5 +1,5 @@
 #include "headers/Globals.h"
-
+namespace bogong{
 bool error()
 {
 	GLenum err = glGetError();
@@ -17,4 +17,5 @@ bool error()
 		return true;
 	}
 	return false;
+}
 }

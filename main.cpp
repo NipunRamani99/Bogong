@@ -1,11 +1,11 @@
-#include "Render.h"
+#include "headers/Engine.h"
 int main()
 {		
-	Render render;
-	render.Start();
+	bogong::Engine engine;
+	engine.Start();
 	do {
-		render.Loop();
-	} while (render.KeepRendering);
-	render.End();
+		engine.Loop();
+	} while (engine.KeepRendering);
+	engine.End();
 	return 0;
 }

@@ -10,11 +10,12 @@
 #include<glm/glm.hpp>
 #include<iostream>
 #include<string>
-namespace Init {
-	void LogError(std::string p_ErrMsg);
-	void InitGLFW();
-	void SetGLFWWindow(GLFWwindow & window, short samples, short major, short minor, int profile, bool forwardCompatibility);
-	GLFWwindow * CreateGLWindow(int p_Width, int p_Height, std::string title);
-	void InitGLEW();
+namespace bogong {
+	namespace Init {
+		void LogError(std::string p_ErrMsg);
+		void InitGLFW();
+		void SetGLFWWindow(GLFWwindow & window, short samples, short major, short minor, int profile, bool forwardCompatibility);
+		GLFWwindow * CreateWindowGL(int p_Width, int p_Height, std::string title);
+		void InitGLEW();
+	}
 }
-
