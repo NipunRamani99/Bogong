@@ -1,12 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CudaCompile Include="kernel.cu" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Init.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="GLInterface.cpp" />
     <ClCompile Include="Imgui\imgui.cpp">
       <Filter>Imgui</Filter>
     </ClCompile>
@@ -28,21 +22,28 @@
     <ClCompile Include="include\Arrow.h">
       <Filter>include</Filter>
     </ClCompile>
+    <ClCompile Include="Globals.cpp">
+      <Filter>include</Filter>
+    </ClCompile>
+    <ClCompile Include="headers\Rendering\Renderer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Init.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="headers\Rendering\RendererBase.hpp" />
+    <ClCompile Include="headers\WaveMeshTest.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Init.hpp" />
-    <ClInclude Include="Shaders.hpp" />
-    <ClInclude Include="Callbacks.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="GLIntferace.h" />
-    <ClInclude Include="GuideLines.h" />
-    <ClInclude Include="Imgui.h" />
-    <ClInclude Include="IndexBuffer.h" />
-    <ClInclude Include="Render.h" />
-    <ClInclude Include="Simulation.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="VertexArray.hpp" />
-    <ClInclude Include="VertexBuffer.hpp" />
     <ClInclude Include="Imgui\imconfig.h">
       <Filter>Imgui</Filter>
     </ClInclude>
@@ -67,11 +68,6 @@
     <ClInclude Include="Imgui\imstb_truetype.h">
       <Filter>Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="ErrorLog.h" />
-    <ClInclude Include="Model.h" />
-    <ClInclude Include="Vertex.h" />
-    <ClInclude Include="Object.h" />
-    <ClInclude Include="CudaVBO.h" />
     <ClInclude Include="CUDA\drvapi_error_string.h">
       <Filter>Extra</Filter>
     </ClInclude>
@@ -156,13 +152,104 @@
     <ClInclude Include="CUDA\timer.h">
       <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="WaveMesh.h" />
-    <ClInclude Include="RunKernel.h" />
     <ClInclude Include="Cone.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\Cone.h" />
-    <ClInclude Include="include\Defs.h" />
+    <ClInclude Include="headers\Callbacks.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Camera.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Cone.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Defs.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Engine.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\ErrorLog.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Globals.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\ICallbacks.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Imgui.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\IndexBuffer.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Init.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Keyboard.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Lights.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Rendering\Mesh.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Mouse.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Rendering\Renderer.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Shaders.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Rendering\ShapeMesh.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Simulation.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\stb_image.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Texture.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Vertex.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\VertexArray.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\VertexBuffer.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\VertexBufferLayout.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\CudaVBO.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\WaveMesh.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Ripple.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Sphere.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Lines.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\RunKernel.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Rendering\CudaMesh.hpp" />
+    <ClInclude Include="headers\Rendering\CudaRenderer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Imgui">
@@ -174,5 +261,18 @@
     <Filter Include="include">
       <UniqueIdentifier>{daf6e288-625e-4bff-8753-4529cdef6952}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{89d9e3e4-5717-47a8-86e6-891347b31bc3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="imgui.ini">
+      <Filter>include</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="headers\kernel.cu">
+      <Filter>src</Filter>
+    </CudaCompile>
   </ItemGroup>
 </Project>

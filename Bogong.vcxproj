@@ -48,7 +48,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -57,10 +57,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>cudart_static.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>NotSet</ShowProgress>
     </Link>
     <CudaCompile>
       <TargetMachinePlatform>64</TargetMachinePlatform>
-      <Include>$(CUDA_PATH_V10_0)\common\inc\</Include>
+      <Include>
+      </Include>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -83,13 +85,11 @@
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CudaCompile Include="kernel.cu" />
+    <CudaCompile Include="headers\kernel.cu" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Callbacks.h" />
-    <ClInclude Include="Camera.h" />
     <ClInclude Include="Cone.h" />
-    <ClInclude Include="CudaVBO.h" />
+    <ClInclude Include="headers\CudaVBO.h" />
     <ClInclude Include="CUDA\drvapi_error_string.h" />
     <ClInclude Include="CUDA\dynlink_d3d10.h" />
     <ClInclude Include="CUDA\dynlink_d3d11.h" />
@@ -118,10 +118,31 @@
     <ClInclude Include="CUDA\rendercheck_gl.h" />
     <ClInclude Include="CUDA\rendercheck_gles.h" />
     <ClInclude Include="CUDA\timer.h" />
-    <ClInclude Include="ErrorLog.h" />
-    <ClInclude Include="GLIntferace.h" />
-    <ClInclude Include="GuideLines.h" />
-    <ClInclude Include="Imgui.h" />
+    <ClInclude Include="headers\Callbacks.h" />
+    <ClInclude Include="headers\Camera.h" />
+    <ClInclude Include="headers\Engine.h" />
+    <ClInclude Include="headers\ErrorLog.h" />
+    <ClInclude Include="headers\Globals.h" />
+    <ClInclude Include="headers\ICallbacks.h" />
+    <ClInclude Include="headers\Imgui.h" />
+    <ClInclude Include="headers\IndexBuffer.h" />
+    <ClInclude Include="headers\Init.hpp" />
+    <ClInclude Include="headers\Keyboard.h" />
+    <ClInclude Include="headers\Lights.hpp" />
+    <ClInclude Include="headers\Mouse.h" />
+    <ClInclude Include="headers\Rendering\CudaMesh.hpp" />
+    <ClInclude Include="headers\Rendering\Mesh.hpp" />
+    <ClInclude Include="headers\Rendering\CudaRenderer.hpp" />
+    <ClInclude Include="headers\Rendering\Renderer.hpp" />
+    <ClInclude Include="headers\Rendering\ShapeMesh.hpp" />
+    <ClInclude Include="headers\Shaders.hpp" />
+    <ClInclude Include="headers\Simulation.h" />
+    <ClInclude Include="headers\stb_image.h" />
+    <ClInclude Include="headers\Texture.h" />
+    <ClInclude Include="headers\Vertex.h" />
+    <ClInclude Include="headers\VertexArray.hpp" />
+    <ClInclude Include="headers\VertexBuffer.hpp" />
+    <ClInclude Include="headers\VertexBufferLayout.hpp" />
     <ClInclude Include="Imgui\imconfig.h" />
     <ClInclude Include="Imgui\imgui.h" />
     <ClInclude Include="Imgui\imgui_impl_glfw.h" />
@@ -132,22 +153,17 @@
     <ClInclude Include="Imgui\imstb_truetype.h" />
     <ClInclude Include="include\Cone.h" />
     <ClInclude Include="include\Defs.h" />
-    <ClInclude Include="IndexBuffer.h" />
-    <ClInclude Include="Init.hpp" />
-    <ClInclude Include="Model.h" />
-    <ClInclude Include="Object.h" />
-    <ClInclude Include="Render.h" />
-    <ClInclude Include="RunKernel.h" />
-    <ClInclude Include="Shaders.hpp" />
-    <ClInclude Include="Simulation.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="Vertex.h" />
-    <ClInclude Include="VertexArray.hpp" />
-    <ClInclude Include="VertexBuffer.hpp" />
-    <ClInclude Include="WaveMesh.h" />
+    <ClInclude Include="headers\Lines.hpp" />
+    <ClInclude Include="headers\Ripple.hpp" />
+    <ClInclude Include="headers\RunKernel.h" />
+    <ClInclude Include="headers\Sphere.hpp" />
+    <ClInclude Include="headers\WaveMesh.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GLInterface.cpp" />
+    <ClCompile Include="Globals.cpp" />
+    <ClCompile Include="headers\Rendering\Renderer.cpp" />
+    <ClCompile Include="headers\Rendering\RendererBase.hpp" />
+    <ClCompile Include="headers\WaveMeshTest.h" />
     <ClCompile Include="Imgui\imgui.cpp" />
     <ClCompile Include="Imgui\imgui_demo.cpp" />
     <ClCompile Include="Imgui\imgui_draw.cpp" />
@@ -156,7 +172,12 @@
     <ClCompile Include="Imgui\imgui_widgets.cpp" />
     <ClCompile Include="include\Arrow.h" />
     <ClCompile Include="Init.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Mouse.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="imgui.ini" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
