@@ -18,13 +18,13 @@ namespace bogong {
 			glm::mat4 m_Model = glm::mat4(1.0);
 
 		public:
-			CudaRenderer() = default;
-
-			CudaRenderer(CudaMesh & p_Mesh)
+			CudaRenderer() 
+			{};
+			CudaRenderer(CudaMesh && p_Mesh)
 				:
-				m_cuMesh(p_Mesh)
-			{
-				m_cuMesh = p_Mesh;
+				m_cuMesh(std::move(p_Mesh))
+		    {
+
 				if (m_cuMesh.GetIndexBuffer().GetID() != 0)
 				{
 					m_DrawCall = [](GLenum DrawMode, int count) { glDrawElements(DrawMode, count, GL_UNSIGNED_INT, 0); };
@@ -38,27 +38,18 @@ namespace bogong {
 			CudaRenderer & operator=(CudaRenderer && p_Renderer)
 			{
 				m_cuMesh = std::move(p_Renderer.m_cuMesh);
-				m_DrawCall = std::move(p_Renderer.m_DrawCall);
-				m_Model = std::move(p_Renderer.m_Model);
 				m_VAO = std::move(p_Renderer.m_VAO);
-				m_DrawMode = std::move(p_Renderer.m_DrawMode);
 				m_Shader = std::move(p_Renderer.m_Shader);
+				m_DrawCall = std::move(p_Renderer.m_DrawCall);
+				m_DrawMode = std::move(p_Renderer.m_DrawMode);
 				return *this;
 			}
-			CudaRenderer(CudaRenderer && renderer)
-				:
-				m_cuMesh(std::move(renderer.m_cuMesh)),
-				m_VAO(std::move(renderer.m_VAO))
-			{
-
-			}
-			
 			void RenderMesh()
 			{
 				BindBuffer();
-				
 				int count = m_cuMesh.GetCount();
-				m_DrawCall(m_DrawMode, count);
+				m_Shader.setMat4("model",m_Model);
+				glDrawArrays(GL_POINTS, 0, count);
 				error();
 				UnbindBuffer();
 			}
@@ -66,42 +57,21 @@ namespace bogong {
 			{
 				m_VAO.Bind();
 				m_Shader.Bind();
-				auto buffvertex = m_cuMesh.GetBufferVertex();
-				int i = 0;
-				error();
-				for (auto & pair : buffvertex)
-				{
-					for (auto & elem : pair.second.GetElements())
-					{
-						glEnableVertexAttribArray(i);
-						i++;
-					}
-				}
-				i = 0;
-				error();
-				for (auto & pair : buffvertex)
-				{
-					auto buffer = *pair.first;
-					buffer.Bind();
-					int offset = 0;
-					for (auto & elem : pair.second.GetElements())
-					{
-
-						glVertexAttribPointer(i, elem.count, elem.type, elem.isNormalized, buffer.GetStride(), (void*)offset);
-						offset += elem.count * sizeof(elem.type);
-					}
-				}
+				m_cuMesh.Bind();
 				error();
 			}
 			void UnbindBuffer()
 			{
-				for(auto & vp : m_cuMesh.GetBufferVertex())
-				{
-					auto buffer = *vp.first;
-					buffer.Unbind();
-				}
-				m_cuMesh.GetIndexBuffer().Unbind();
-			    m_VAO.Unbind();
+				m_cuMesh.Unbind();
+				m_VAO.Unbind();
+			}
+			void Update()
+			{
+				m_cuMesh.Update();
+			}
+			std::vector<Buffer> & GetBuffer()
+			{
+				return m_cuMesh.GetBufferVertex();
 			}
 		};
 	}

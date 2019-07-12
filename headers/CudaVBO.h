@@ -44,6 +44,17 @@ namespace bogong {
 		{
 			RegisterVBO(m_ID, &cuda_vbo_resource, cudaGraphicsMapFlagsWriteDiscard);
 		}
+		CudaVBO<T> & operator=(CudaVBO<T> & vbo)
+		{
+			dataptr = vbo.dataptr;
+			num_bytes = vbo.num_bytes;
+			cuda_vbo_resource = vbo.cuda_vbo_resource;
+			vbo.dataptr = nullptr;
+			vbo.cuda_vbo_resource = nullptr;
+			m_ID = vbo.m_ID;
+			m_IsBound = vbo.m_IsBound;
+			return *this;
+		}
 		void RegisterVBO(GLuint id, cudaGraphicsResource **vbo_res, unsigned int flag)
 		{
 			glBindBuffer(GL_ARRAY_BUFFER, 0);

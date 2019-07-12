@@ -15,20 +15,13 @@ namespace bogong {
 		glm::vec3 lightPos = glm::vec3(-1.0f, 0.2f, 0.0f);
 		Shader m_Shader;
 		Shader m_RiplShader;
-		Lines line;
-		Lines line2;
-		Lines line3;
-		Ripple ripple;
 		cuda::Wave wave;
 		float m_Scale = 0.895f;
+		float time = 0.01;
 	public:
 		Simulation() = default;
 		Simulation(Shader p_Shader)
 			:
-			line(glm::vec3(-100.0f, 0.0f, 0.0f), glm::vec3(100.0f, 0.0f, 0.0f)),
-			line2(glm::vec3(0.0f, -100.0f, 0.0f), glm::vec3(0.0f, 100.0f, 0.0f)),
-			line3(glm::vec3(0.0f, 0.0f, -100.0f), glm::vec3(0.0f, 0.0f, 100.0f)),
-			ripple(glm::vec3(0, 0, 0), 1),
 			wave(100)
 		{
 			m_Shader = p_Shader;
@@ -39,39 +32,23 @@ namespace bogong {
 			error();
 			ICallbacks::AddShader(m_RiplShader);
 			ICallbacks::SetShader(m_Shader);
-			line.SetShader(m_Shader);
-			line2.SetShader(m_Shader);
-			line3.SetShader(m_Shader);
 			wave.SetShader(m_Shader);
-			ripple.SetShader(m_RiplShader);
-			m_RiplShader.Bind();
-			m_RiplShader.setVec3("lightLocation", lightPos);
 			error();
 		}
 		Simulation(Simulation && simulation)
 		{
 			m_Shader = std::move(simulation.m_Shader);
-			m_Scale = std::move(simulation.m_Scale);
-			line = std::move(simulation.line);
-			line2 = std::move(simulation.line2);
-			line3 = std::move(simulation.line3);
-			ripple = std::move(simulation.ripple);
-			lightPos = std::move(simulation.lightPos);
 			m_RiplShader = std::move(simulation.m_RiplShader);
 			wave = std::move(simulation.wave);
+			time = simulation.time;
 		}
 
 		Simulation & operator=(Simulation&&p_Simulation)
 		{
 			m_Shader = p_Simulation.m_Shader;
-			m_Scale = std::move(p_Simulation.m_Scale);
-			line = std::move(p_Simulation.line);
-			line2 = std::move(p_Simulation.line2);
-			line3 = std::move(p_Simulation.line3);
-			ripple = std::move(p_Simulation.ripple);
-			lightPos = std::move(p_Simulation.lightPos);
 			m_RiplShader = std::move(p_Simulation.m_RiplShader);
 			wave = std::move(p_Simulation.wave);
+			time = p_Simulation.time;
 			return *this;
 		}
 		void Begin()
@@ -80,12 +57,8 @@ namespace bogong {
 		}
 		void Update()
 		{
-			if (ImGui::DragFloat3("Light Position", (float*)&lightPos, 0.002f, -10.0f, 10.0f))
-			{
-				m_RiplShader.Bind();
-				m_RiplShader.setVec3("lightLocation", lightPos);
-				error();
-			}
+			wave.Test(time);
+			time += 0.01;
 		}
 		void Draw()
 		{

@@ -1,84 +1,108 @@
 #pragma once
 #include "Rendering/CudaRenderer.hpp"
-
+#include "RunKernel.h"
 namespace bogong {
 	namespace cuda {
 		
+
 		class WaveMesh : public CudaMesh
 		{
 		private:
 			int width =100;
 			float freq = 0.5f;
-
+			
 		public:
+			VertexBuffer vbo;
+			VertexBuffer vbo2;
 			WaveMesh(int n,float freq)
 				:
 				width(n),
 				freq(freq)
 			{
-				m_VertPos.resize(width*width);
 				m_Color.resize(width*width);
-				for (int x = 0; x < width; x++)
+				for (int i = 0; i < width*width; i++)
 				{
-					for (int y = 0; y < width; y++)
-					{
-						m_VertPos[x + y * width].x = float(x) / float(width);
-						m_VertPos[x + y * width].y = 0.0f;
-						m_VertPos[x + y * width].z = float(y) / float(width);
-						m_Color[x + y * width].x = 1.0f;
-						m_Color[x + y * width].w = 1.0f;
-					}
+					m_Color[i].x = 1.0f;
+					m_Color[i].y = 0.0f;
+					m_Color[i].z = 0.0f;
+					m_Color[i].w = 1.0f;
 				}
-				CudaVBO<float3> vbo = CudaVBO<float3>(m_VertPos.data(),m_VertPos.size()*sizeof(float3));
-				VertexBuffer vbo2 = VertexBuffer(m_Color.data(), m_Color.size() * sizeof(float4));
+				count = width * width;
+				CudaVBO<float3> * cvbo = new CudaVBO<float3>( width  * width * sizeof(float3));
+				cvbo->Map();
+				cvbo->GetMappedPointer();
+				UpdateMesh(cvbo->GetData(), width, width, 4);
+				cvbo->UnMap();
+                vbo2 = VertexBuffer(m_Color.data(), m_Color.size() * sizeof(float4));
 				VertexBufferLayout layout1;
 				layout1.AddElement<float>(3);
 				VertexBufferLayout layout2;
 				layout2.AddElement<float>(4);
-				auto ptr1 = std::make_shared<VertexBuffer>(vbo);
-				auto ptr2 = std::make_shared<VertexBuffer>(vbo2);
-				m_BufferVertex.push_back(std::make_pair(ptr1, layout1));
-				m_BufferVertex.push_back(std::make_pair(ptr2, layout2));
+				std::unique_ptr<VertexBuffer> ptr1{ cvbo };
+				std::unique_ptr<VertexBuffer> ptr2 = std::make_unique<VertexBuffer>(vbo2);
+				
+			    m_BufferVertex.push_back(std::make_pair(std::move(ptr1), layout1));
+				m_BufferVertex.push_back(std::make_pair(std::move(ptr2), layout2));
+			}
+			WaveMesh & operator=(WaveMesh & wave)
+			{
+				m_BufferVertex = std::move(wave.m_BufferVertex);
+				return *this;
 			}
 			WaveMesh()
 			{
 				
 			}
-			
+			void Update() override
+			{
+				CudaVBO<float3>* t = (CudaVBO<float3>*)m_BufferVertex[0].first.get();
+				t->Map();
+				t->GetMappedPointer();
+				UpdateMesh(t->GetData(), width,width,3);
+				t->UnMap();
+			}
 		};
 		class Wave
 		{
 		private:
-			WaveMesh mesh;
 			CudaRenderer renderer;
+			int n;
 		public:
 			Wave()
 			{
 			}
 			Wave(int n)
+				:
+				n(n)
 			{
-				mesh = std::move(WaveMesh(n, 0.5));
-				renderer = std::move(CudaRenderer(mesh));
+				renderer = std::move(CudaRenderer(WaveMesh(n, 0.5)));
 				renderer.SetDrawMode(GL_POINTS);
-			}
-			Wave(Wave && wave)
-			{
-				mesh = std::move(wave.mesh);
-				renderer = std::move(wave.renderer);
+				
 			}
 			Wave & operator=(Wave && wave)
 			{
-				mesh = std::move(wave.mesh);
 				renderer = std::move(wave.renderer);
+				n = wave.n;
 				return *this;
 			}
 			void Draw()
 			{
+				glPointSize(2.0f);
 				renderer.RenderMesh();
+			}
+			void Test(float time)
+			{
+				auto &m_BufferVertex = renderer.GetBuffer();
+				CudaVBO<float3>* t = (CudaVBO<float3>*)m_BufferVertex[0].first.get();
+				t->Map();
+				t->GetMappedPointer();
+				UpdateMesh(t->GetData(), n, n, time);
+				t->UnMap();
 			}
 			void SetShader(Shader p_Shader)
 			{
 				renderer.SetShader(p_Shader);
+				p_Shader.setBool("isTextured", false);
 			}
 		};
 	}

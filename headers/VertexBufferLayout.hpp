@@ -26,7 +26,11 @@ namespace bogong {
 		{
 
 		}
-
+		VertexBufferLayout(const VertexBufferLayout & vbl)
+		{
+			this->m_Elements = vbl.m_Elements;
+			this->m_Stride = vbl.m_Stride;
+		}
 		template<typename ElemType>
 		void AddElement(int p_Count)
 		{
@@ -36,6 +40,18 @@ namespace bogong {
 				m_Elements.push_back({ GL_UNSIGNED_INT,GL_FALSE,p_Count });
 
 			m_Stride += sizeof(ElemType) * p_Count;
+		}
+		VertexBufferLayout & operator=(VertexBufferLayout & layout)
+		{
+			this->m_Elements = layout.m_Elements;
+			this->m_Stride = layout.m_Stride;
+			return *this;
+		}
+		VertexBufferLayout & operator=(const VertexBufferLayout & layout)
+		{
+			this->m_Elements = layout.m_Elements;
+			this->m_Stride = layout.m_Stride;
+			return *this;
 		}
 		std::vector<BufferElement> & GetElements()
 		{

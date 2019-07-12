@@ -9,7 +9,7 @@
 namespace bogong {
 	class Mesh
 	{
-	protected:
+	public:
 		std::vector<Vertex<float>> m_Vertices = std::vector<Vertex<float>>();
 		std::vector<unsigned int> m_Indices = std::vector<unsigned int>();
 		IndexBuffer m_IBO;
