@@ -6,5 +6,6 @@ Firin' on all threads(CUDA-GL-Interop).
   - Organize namespace
   - Add more examples from CUDA Samples.
 ### FOR TESTING:
+
 For testing purposes I have used the simpleGL sample code from CUDA toolkit.
-![Alt Text](https://i.imgur.com/FDAdMw1.gif)
+<img src="https://i.imgur.com/FDAdMw1.gif" width="666" height="500" />
