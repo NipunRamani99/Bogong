@@ -1,5 +1,5 @@
 #include <cuda_runtime.h>
-#include "RunKernel.h"
+#include "../include/RunKernel.h"
 /////////////////////////////////////////////////////////////////////////////////
 ////! Simple kernel to modify vertex positions in sine wave pattern
 ////! @param data  data in global memory

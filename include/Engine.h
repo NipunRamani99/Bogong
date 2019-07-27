@@ -57,8 +57,8 @@ namespace bogong
 		{
 			glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 			Shader shader;
-			shader.LoadShader("vertexShader.glsl", ShaderType::VERTEX);
-			shader.LoadShader("fragmentShader.glsl", ShaderType::FRAGMENT);
+			shader.LoadShader("shaders/vertexShader.glsl", ShaderType::VERTEX);
+			shader.LoadShader("shaders/fragmentShader.glsl", ShaderType::FRAGMENT);
 			shader.LoadProgram();
 			programID = shader.GetProgramID();
 			glUseProgram(programID);

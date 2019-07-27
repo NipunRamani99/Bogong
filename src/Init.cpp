@@ -1,4 +1,4 @@
-#include "headers/Init.hpp"
+#include "../include/Init.hpp"
 namespace bogong {
 	namespace Init {
 		void Init::LogError(std::string p_ErrMsg)

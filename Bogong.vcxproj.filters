@@ -22,26 +22,16 @@
     <ClCompile Include="include\Arrow.h">
       <Filter>include</Filter>
     </ClCompile>
-    <ClCompile Include="Globals.cpp">
-      <Filter>include</Filter>
-    </ClCompile>
     <ClCompile Include="headers\Rendering\Renderer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="Mouse.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="Keyboard.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="Init.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="headers\Rendering\RendererBase.hpp" />
     <ClCompile Include="headers\WaveMeshTest.h" />
+    <ClCompile Include="src\Mouse.cpp" />
+    <ClCompile Include="src\Globals.cpp" />
+    <ClCompile Include="src\Init.cpp" />
+    <ClCompile Include="src\Keyboard.cpp" />
+    <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Imgui\imconfig.h">
@@ -152,9 +142,6 @@
     <ClInclude Include="CUDA\timer.h">
       <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="Cone.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="headers\Callbacks.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -250,6 +237,33 @@
     </ClInclude>
     <ClInclude Include="headers\Rendering\CudaMesh.hpp" />
     <ClInclude Include="headers\Rendering\CudaRenderer.hpp" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\ErrorLog.h" />
+    <ClInclude Include="include\Globals.h" />
+    <ClInclude Include="include\ICallbacks.h" />
+    <ClInclude Include="include\Imgui.h" />
+    <ClInclude Include="include\IndexBuffer.h" />
+    <ClInclude Include="include\Init.hpp" />
+    <ClInclude Include="include\Keyboard.h" />
+    <ClInclude Include="include\Lights.hpp" />
+    <ClInclude Include="include\Lines.hpp" />
+    <ClInclude Include="include\Mouse.h" />
+    <ClInclude Include="include\Ripple.hpp" />
+    <ClInclude Include="include\RunKernel.h" />
+    <ClInclude Include="include\Shaders.hpp" />
+    <ClInclude Include="include\Simulation.h" />
+    <ClInclude Include="include\Sphere.hpp" />
+    <ClInclude Include="include\stb_image.h" />
+    <ClInclude Include="include\Texture.h" />
+    <ClInclude Include="include\Vertex.h" />
+    <ClInclude Include="include\VertexArray.hpp" />
+    <ClInclude Include="include\VertexBuffer.hpp" />
+    <ClInclude Include="include\VertexBufferLayout.hpp" />
+    <ClInclude Include="include\WaveMesh.h" />
+    <ClInclude Include="include\WaveMeshTest.h" />
+    <ClInclude Include="include\Callbacks.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\CudaVBO.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Imgui">
@@ -269,10 +283,12 @@
     <None Include="imgui.ini">
       <Filter>include</Filter>
     </None>
+    <None Include="include\LightFragmentShader.glsl" />
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="headers\kernel.cu">
       <Filter>src</Filter>
     </CudaCompile>
+    <CudaCompile Include="src\kernel.cu" />
   </ItemGroup>
 </Project>

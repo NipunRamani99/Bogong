@@ -15,7 +15,7 @@ namespace bogong {
 		IndexBuffer m_IBO;
 		VertexBuffer m_VBO;
 
-		int m_Count = 0;
+		size_t m_Count = 0;
 	public:
 		Mesh() = default;
 		Mesh(Mesh && p_Mesh)

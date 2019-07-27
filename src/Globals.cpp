@@ -1,4 +1,4 @@
-#include "headers/Globals.h"
+#include "../include/Globals.h"
 namespace bogong{
 bool error()
 {
