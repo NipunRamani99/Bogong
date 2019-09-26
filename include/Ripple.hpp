@@ -11,8 +11,8 @@ namespace bogong {
 	{
 		std::vector<Vertex<float>> m_Vertices;
 		std::vector<unsigned int> m_Indices;
-		ShapeMesh m_Mesh;
-		Renderer m_Renderer;
+		std::shared_ptr<ShapeMesh> m_Mesh;
+		std::shared_ptr<Renderer> m_Renderer;
 		VertexBufferLayout m_Layout;
 		glm::vec3 m_Center = glm::vec3(0, 0, 0);
 	public:
@@ -82,15 +82,15 @@ namespace bogong {
 			}
 
 
-			m_Mesh = ShapeMesh(m_Vertices, m_Indices);
+			m_Mesh = std::make_shared<ShapeMesh>(ShapeMesh(m_Vertices, m_Indices));
 
 			m_Layout.AddElement<float>(3);
 			m_Layout.AddElement<float>(4);
 			m_Layout.AddElement<float>(3);
-			m_Renderer = Renderer(m_Mesh, m_Layout);
-			m_Renderer.SetDrawMode(GL_QUADS);
+			m_Renderer = std::make_shared<Renderer>(m_Layout);
+			m_Renderer->SetDrawMode(GL_QUADS);
 		}
-		Ripple(Ripple && p_Ripple)
+	/*	Ripple(Ripple && p_Ripple)
 		{
 			m_Vertices = std::move(p_Ripple.m_Vertices);
 			m_Mesh = std::move(p_Ripple.m_Mesh);
@@ -104,14 +104,14 @@ namespace bogong {
 			m_Renderer = std::move(p_Ripple.m_Renderer);
 			m_Layout = std::move(p_Ripple.m_Layout);
 			return *this;
-		}
+		}*/
 		void SetShader(Shader & p_Shader)
 		{
-			m_Renderer.SetShader(p_Shader);
+			m_Renderer->SetShader(p_Shader);
 		}
 		void Draw()
 		{
-			m_Renderer.RenderMesh();
+			m_Renderer->RenderMesh(m_Mesh);
 		}
 	};
 }

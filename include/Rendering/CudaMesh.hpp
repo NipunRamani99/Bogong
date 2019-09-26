@@ -20,15 +20,11 @@ namespace bogong {
 			IndexBuffer m_IBO;
 			long int count = 0;
 		public:
-			VertexBuffer m_VBO1;
-			VertexBuffer m_VBO2;
-			VertexBufferLayout vbl1;
-			VertexBufferLayout vbl2;
 			CudaMesh()
 			{
 
 			}
-			CudaMesh(CudaMesh && mesh)
+			/*CudaMesh(CudaMesh && mesh)
 			{
 				m_VertPos = std::move(mesh.m_VertPos);
 				m_Color = std::move(mesh.m_Color);
@@ -51,7 +47,7 @@ namespace bogong {
 				m_VBO2 = std::move(mesh.m_VBO2);
 				count = mesh.count;
 				return *this;
-			}
+			}*/
 			virtual void Update()
 			{
 			}
@@ -110,7 +106,6 @@ namespace bogong {
 			{
 				return m_IBO;
 			}
-
 			int GetCount()
 			{
 				return count;

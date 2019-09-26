@@ -18,7 +18,7 @@ namespace bogong
 		GLuint programID;
 		IsoCamera * cam;
 		FreeCamera * free;
-		Simulation sim;
+		std::shared_ptr<Simulation> sim;
 		Keyboard kbd;
 		int camID = 0;
 	public:
@@ -64,7 +64,6 @@ namespace bogong
 			glUseProgram(programID);
 			ICallbacks::AddShader(shader);
 			assert((bool)!error());
-			sim = std::move(Simulation(shader));
 			error();
 			int display_w, display_h;
 			glfwMakeContextCurrent(window);
@@ -76,10 +75,12 @@ namespace bogong
 			glm::mat4 model = glm::mat4(1.0f);
 			shader.setMat4("model", model);
 			shader.setBool("isTextured", false);
+			sim = std::make_shared<Simulation>(shader);
+
 		}
 		void Update()
 		{
-			sim.Update();
+			sim->Update();
 			glm::vec3 pos = free->GetCameraPos();
 			ImGui::Text("X: %.1f Y: %.1f Z: %.1f", pos.x, pos.y, pos.z);
 			if (ImGui::InputFloat("View Radius: ", &cam->radius, 0.5, 0.5, 4))
@@ -117,7 +118,7 @@ namespace bogong
 		}
 		void DrawCalls()
 		{
-			sim.Draw();
+			sim->Draw();
 		}
 		void RenderEverything()
 		{

@@ -17,11 +17,9 @@ namespace bogong
 		using DrawCall = std::function<void(GLenum, int)>;
 		DrawCall  m_DrawCall = [](GLenum, int)-> void {};
 	public:
-		virtual void BindBuffer()=0;
-		virtual void UnbindBuffer()=0;
-		virtual void RenderMesh()=0;
-		RendererBase() {}
-		RendererBase & operator=(RendererBase && rb)
+		
+		RendererBase(){}
+		/*RendererBase & operator=(RendererBase && rb)
 		{
 			m_DrawCall = std::move(rb.m_DrawCall);
 			m_Shader = std::move(rb.m_Shader);
@@ -33,7 +31,7 @@ namespace bogong
 			m_DrawCall = std::move(rb.m_DrawCall);
 			m_DrawMode = std::move(rb.m_DrawMode);
 			m_Shader = std::move(rb.m_Shader);
-		}
+		}*/
 		void SetShader(Shader p_Shader)
 		{
 			m_Shader = p_Shader;
