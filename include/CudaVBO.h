@@ -25,7 +25,6 @@ namespace bogong {
 		struct cudaGraphicsResource *cuda_vbo_resource;
 		T * dataptr;
 		size_t num_bytes;
-
 	public:
 		T * GetData()
 		{

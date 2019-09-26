@@ -85,6 +85,7 @@
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <CudaCompile Include="include\SurfaceWave\kernels.cu" />
     <CudaCompile Include="src\kernel.cu" />
   </ItemGroup>
   <ItemGroup>
@@ -152,6 +153,8 @@
     <ClInclude Include="include\Simulation.h" />
     <ClInclude Include="include\Sphere.hpp" />
     <ClInclude Include="include\stb_image.h" />
+    <ClInclude Include="include\SurfaceWave\RunCuda.hpp" />
+    <ClInclude Include="include\SurfaceWave\WaveMesh.hpp" />
     <ClInclude Include="include\Texture.h" />
     <ClInclude Include="include\Vertex.h" />
     <ClInclude Include="include\VertexArray.hpp" />

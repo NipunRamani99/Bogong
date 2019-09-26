@@ -1,18 +1,19 @@
 #pragma once
-#include "Rendering/CudaRenderer.hpp"
-#include "RunKernel.h"
+#include <memory>
+#include "../Rendering/CudaRenderer.hpp"
+#include "RunCuda.hpp"
 namespace bogong {
 	namespace cuda {
 		class WaveMesh : public CudaMesh
 		{
 		private:
-			int width =100;
+			int width = 100;
 			float freq = 0.5f;
-			
+			std::vector<float3> vertices;
 		public:
 			VertexBuffer vbo;
 			VertexBuffer vbo2;
-			WaveMesh(int n,float freq)
+			WaveMesh(int n, float freq)
 				:
 				width(n),
 				freq(freq)
@@ -26,20 +27,20 @@ namespace bogong {
 					m_Color[i].w = 1.0f;
 				}
 				count = width * width;
-				CudaVBO<float3> * cvbo = new CudaVBO<float3>( width  * width * sizeof(float3));
+				CudaVBO<float3> * cvbo = new CudaVBO<float3>(width  * width * sizeof(float3));
 				cvbo->Map();
 				cvbo->GetMappedPointer();
-				UpdateMesh(cvbo->GetData(), width, width, 4);
+				UpdateMesh_(cvbo->GetData(), width, width, 4);
 				cvbo->UnMap();
-                vbo2 = VertexBuffer(m_Color.data(), m_Color.size() * sizeof(float4));
+				vbo2 = VertexBuffer(m_Color.data(), m_Color.size() * sizeof(float4));
 				VertexBufferLayout layout1;
 				layout1.AddElement<float>(3);
 				VertexBufferLayout layout2;
 				layout2.AddElement<float>(4);
 				std::unique_ptr<VertexBuffer> ptr1{ cvbo };
 				std::unique_ptr<VertexBuffer> ptr2 = std::make_unique<VertexBuffer>(vbo2);
-				
-			    m_BufferVertex.push_back(std::make_pair(std::move(ptr1), layout1));
+
+				m_BufferVertex.push_back(std::make_pair(std::move(ptr1), layout1));
 				m_BufferVertex.push_back(std::make_pair(std::move(ptr2), layout2));
 			}
 			WaveMesh & operator=(WaveMesh & wave)
@@ -49,14 +50,14 @@ namespace bogong {
 			}
 			WaveMesh()
 			{
-				
+
 			}
 			void Update() override
 			{
 				CudaVBO<float3>* t = (CudaVBO<float3>*)m_BufferVertex[0].first.get();
 				t->Map();
 				t->GetMappedPointer();
-				UpdateMesh(t->GetData(), width,width,3);
+				UpdateMesh_(t->GetData(), width, width, 3);
 				t->UnMap();
 			}
 		};
@@ -75,7 +76,7 @@ namespace bogong {
 			{
 				renderer = std::move(CudaRenderer(WaveMesh(n, 0.5)));
 				renderer.SetDrawMode(GL_POINTS);
-				
+
 			}
 			Wave & operator=(Wave && wave)
 			{
@@ -94,7 +95,7 @@ namespace bogong {
 				CudaVBO<float3>* t = (CudaVBO<float3>*)m_BufferVertex[0].first.get();
 				t->Map();
 				t->GetMappedPointer();
-				UpdateMesh(t->GetData(), n, n, time);
+				UpdateMesh_(t->GetData(), n, n, time);
 				t->UnMap();
 			}
 			void SetShader(Shader p_Shader)

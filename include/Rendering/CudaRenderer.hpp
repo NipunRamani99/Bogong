@@ -1,5 +1,4 @@
-#pragma once 
-
+#pragma once
 #include "../VertexArray.hpp"
 #include "../Shaders.hpp"
 #include "../VertexBufferLayout.hpp"

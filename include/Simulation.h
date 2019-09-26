@@ -6,7 +6,7 @@
 #include "ICallbacks.h"
 #include "Lines.hpp"
 #include "Ripple.hpp"
-#include "WaveMeshTest.h"
+#include "SurfaceWave/WaveMesh.hpp"
 namespace bogong {
 	class Simulation
 	{
