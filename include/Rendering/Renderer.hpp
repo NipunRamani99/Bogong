@@ -56,6 +56,15 @@ namespace bogong {
 		template<typename T>
 		void RenderMesh(const std::shared_ptr<T> & mesh)
 		{
+			m_VAO.Bind();
+			int i = 0;
+			m_Shader.Bind();
+			for (auto element : m_Layout.GetElements())
+			{
+				glEnableVertexAttribArray(i);
+				i++;
+			}
+			error();
 			if (mesh->GetIndexBuffer().GetID() != 0)
 			{
 				m_DrawCall = [](GLenum DrawMode, size_t count) { glDrawElements(DrawMode, (GLsizei)count, GL_UNSIGNED_INT, 0); };
@@ -64,9 +73,13 @@ namespace bogong {
 			{
 				m_DrawCall = [](GLenum DrawMode, size_t count) { glDrawArrays(DrawMode, 0, (GLsizei)count);  };
 			}
-			BindBuffer(mesh);
-			UnbindBuffer(mesh);
+			m_Shader.setMat4("model", m_Model);
+			error();
+			int count = mesh->GetCount();
+			m_DrawCall(m_DrawMode, count);
+			error();
 		}
+		
 		template<typename T>
 		void BindBuffer(const std::shared_ptr<T> & mesh)
 		{
@@ -74,16 +87,11 @@ namespace bogong {
 			error();
 			mesh->GetVertexBuffer().Bind();
 			mesh->GetIndexBuffer().Bind();
-			m_Shader.Bind();
+			//m_Shader.Bind();
 			int stride = m_Layout.GetStride();
 			int offset = 0;
 			int i = 0;
-			for (auto element : m_Layout.GetElements())
-			{
-				glEnableVertexAttribArray(i);
-				i++;
-			}
-			error();
+			
 			i = 0;
 			for (auto element : m_Layout.GetElements())
 			{
@@ -91,11 +99,11 @@ namespace bogong {
 				offset += element.count * sizeof(element.type);
 				i++;
 			}
-			m_Shader.setMat4("model", m_Model);
+			/*m_Shader.setMat4("model", m_Model);
 			error();
 			int count = mesh->GetCount();
 			m_DrawCall(m_DrawMode, count);
-			error();
+			error();*/
 		}
 		template<typename T>
 		void UnbindBuffer(const std::shared_ptr<T> & mesh)

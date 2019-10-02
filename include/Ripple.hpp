@@ -89,6 +89,7 @@ namespace bogong {
 			m_Layout.AddElement<float>(3);
 			m_Renderer = std::make_shared<Renderer>(m_Layout);
 			m_Renderer->SetDrawMode(GL_QUADS);
+			m_Renderer->BindBuffer(m_Mesh);
 		}
 	/*	Ripple(Ripple && p_Ripple)
 		{
