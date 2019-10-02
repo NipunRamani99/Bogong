@@ -1,6 +1,8 @@
 #pragma once
 #include "Rendering/CudaRenderer.hpp"
+#include "Rendering/Renderer.hpp"
 #include "RunKernel.h"
+#include<ctime>
 namespace bogong {
 	namespace cuda {
 		class WaveMesh : public CudaMesh
@@ -51,19 +53,21 @@ namespace bogong {
 			{
 				
 			}
-			void Update() override
+			void Update() override {}
+			void Update2(float time) 
 			{
 				CudaVBO<float3>* t = (CudaVBO<float3>*)m_BufferVertex[0].first.get();
 				t->Map();
 				t->GetMappedPointer();
-				UpdateMesh(t->GetData(), width,width,3);
+				UpdateMesh(t->GetData(), width,width,time);
 				t->UnMap();
 			}
 		};
 		class Wave
 		{
 		private:
-			CudaRenderer renderer;
+			std::shared_ptr<CudaRenderer> renderer;
+			std::shared_ptr<WaveMesh> wave;
 			int n;
 		public:
 			Wave()
@@ -73,33 +77,29 @@ namespace bogong {
 				:
 				n(n)
 			{
-				renderer = std::move(CudaRenderer(WaveMesh(n, 0.5)));
-				renderer.SetDrawMode(GL_POINTS);
-				
+				wave = std::make_shared<WaveMesh>(100, 0.4);
+				renderer = std::make_shared<CudaRenderer>();
+				renderer->BindBuffer(wave);
+				renderer->SetDrawMode(GL_POINTS);
 			}
-			Wave & operator=(Wave && wave)
+			/*Wave & operator=(Wave && wave)
 			{
 				renderer = std::move(wave.renderer);
 				n = wave.n;
 				return *this;
-			}
+			}*/
 			void Draw()
 			{
 				glPointSize(2.0f);
-				renderer.RenderMesh();
+				renderer->RenderMesh(wave);
 			}
-			void Test(float time)
+			void Update(float t)
 			{
-				auto &m_BufferVertex = renderer.GetBuffer();
-				CudaVBO<float3>* t = (CudaVBO<float3>*)m_BufferVertex[0].first.get();
-				t->Map();
-				t->GetMappedPointer();
-				UpdateMesh(t->GetData(), n, n, time);
-				t->UnMap();
+				wave->Update2(t);
 			}
 			void SetShader(Shader p_Shader)
 			{
-				renderer.SetShader(p_Shader);
+				renderer->SetShader(p_Shader);
 				p_Shader.setBool("isTextured", false);
 			}
 		};
