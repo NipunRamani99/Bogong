@@ -8,7 +8,7 @@
 #include <utility>
 namespace bogong {
 	namespace cuda {
-		typedef std::pair<std::unique_ptr<VertexBuffer>, VertexBufferLayout> Buffer;
+		typedef std::pair<std::shared_ptr<VertexBuffer>, VertexBufferLayout> Buffer;
 		
 		class CudaMesh
 		{

@@ -4,3 +4,4 @@
 #include <cuda_runtime.h>
 #include <cuda_gl_interop.h>
 void UpdateMesh(float3 *pos, unsigned int width, unsigned int height, float time);
+void UpdateColors(float4 *pos, unsigned int width, unsigned int height, float time);

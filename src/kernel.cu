@@ -22,7 +22,19 @@ __global__ void simple_vbo_kernel(float3 *pos, unsigned int width, unsigned int 
 	// write output vertex
 	pos[y*width + x] = make_float3(u, w, v);
 }
-
+__global__ void color_kernel(float4 *pos, unsigned int width, unsigned int height, float time)
+{
+	unsigned int x = blockIdx.x*blockDim.x + threadIdx.x;
+	unsigned int y = blockIdx.y*blockDim.y + threadIdx.y;
+	float xx = x / (float)width;
+	float yy = y / (float)height;
+	float u = 0.5f + 0.5f*cosf(time + xx + 0);
+	float v = 0.5f + 0.5f*cosf(time + yy + 2);
+	float w = 0.5f + 0.5f*cosf(time + xx + 4);
+	
+	// write output vertex
+	pos[y*width + x] = make_float4(u, v, w,1.0);
+}
 
 void UpdateMesh(float3 *pos, unsigned int mesh_width,
 	unsigned int mesh_height, float time)
@@ -31,4 +43,12 @@ void UpdateMesh(float3 *pos, unsigned int mesh_width,
 	dim3 block(8, 8, 1);
 	dim3 grid(mesh_width / block.x, mesh_height / block.y, 1);
 	simple_vbo_kernel << < grid, block >> > (pos, mesh_width, mesh_height, time);
+}
+
+void UpdateColors(float4 * pos, unsigned int width, unsigned int height, float time)
+{
+	// execute the kernel
+	dim3 block(8, 8, 1);
+	dim3 grid(width / block.x, height / block.y, 1);
+	color_kernel << < grid, block >> > (pos, width, height, time);
 }

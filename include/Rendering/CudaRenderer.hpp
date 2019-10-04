@@ -17,7 +17,7 @@ namespace bogong {
 			glm::mat4 m_Model = glm::mat4(1.0);
 
 		public:
-			
+			 
 			CudaRenderer()
 			{	
 				m_VAO = VertexArray();

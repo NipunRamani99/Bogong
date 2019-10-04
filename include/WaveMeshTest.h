@@ -10,10 +10,9 @@ namespace bogong {
 		private:
 			int width =100;
 			float freq = 0.5f;
-			
+			std::shared_ptr<CudaVBO<float4>> colors;
+			std::shared_ptr<CudaVBO<float3>> cvbo;
 		public:
-			VertexBuffer vbo;
-			VertexBuffer vbo2;
 			WaveMesh(int n,float freq)
 				:
 				width(n),
@@ -28,21 +27,19 @@ namespace bogong {
 					m_Color[i].w = 1.0f;
 				}
 				count = width * width;
-				CudaVBO<float3> * cvbo = new CudaVBO<float3>( width  * width * sizeof(float3));
+				cvbo = std::make_shared<CudaVBO<float3>>( width  * width * sizeof(float3));
 				cvbo->Map();
 				cvbo->GetMappedPointer();
 				UpdateMesh(cvbo->GetData(), width, width, 4);
 				cvbo->UnMap();
-                vbo2 = VertexBuffer(m_Color.data(), m_Color.size() * sizeof(float4));
+                colors = std::make_shared<CudaVBO<float4>>(width*width*sizeof(float4));
 				VertexBufferLayout layout1;
 				layout1.AddElement<float>(3);
 				VertexBufferLayout layout2;
 				layout2.AddElement<float>(4);
-				std::unique_ptr<VertexBuffer> ptr1{ cvbo };
-				std::unique_ptr<VertexBuffer> ptr2 = std::make_unique<VertexBuffer>(vbo2);
 				
-			    m_BufferVertex.push_back(std::make_pair(std::move(ptr1), layout1));
-				m_BufferVertex.push_back(std::make_pair(std::move(ptr2), layout2));
+			    m_BufferVertex.push_back(std::make_pair(cvbo, layout1));
+				m_BufferVertex.push_back(std::make_pair(colors, layout2));
 			}
 			WaveMesh & operator=(WaveMesh & wave)
 			{
@@ -50,17 +47,20 @@ namespace bogong {
 				return *this;
 			}
 			WaveMesh()
-			{
-				
+			{	
 			}
 			void Update() override {}
 			void Update2(float time) 
 			{
-				CudaVBO<float3>* t = (CudaVBO<float3>*)m_BufferVertex[0].first.get();
-				t->Map();
-				t->GetMappedPointer();
-				UpdateMesh(t->GetData(), width,width,time);
-				t->UnMap();
+				cvbo->Map();
+				cvbo->GetMappedPointer();
+				UpdateMesh(cvbo->GetData(), width,width,time);
+				cvbo->UnMap();
+				
+				colors->Map();
+				colors->GetMappedPointer();
+				UpdateColors(colors->GetData(), width, width, time);
+				colors->UnMap();
 			}
 		};
 		class Wave
