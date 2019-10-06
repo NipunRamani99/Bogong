@@ -30,7 +30,7 @@ namespace bogong {
 				makeMesh();
 				makeVBO();
 				makeLayout();
-				makeIndices();
+				makeIndicesLines();
 				makeIBO();
 				m_BufferVertex.push_back(std::make_pair(std::dynamic_pointer_cast<VertexBuffer>(vertex_cvbo), layout1));
 				m_BufferVertex.push_back(std::make_pair(std::dynamic_pointer_cast<VertexBuffer>(color_cvbo), layout2));	
@@ -47,7 +47,7 @@ namespace bogong {
 				vertex_cvbo->UnMap();
 				color_cvbo->Map();
 				color_cvbo->GetMappedPointer();
-				UpdateColors(color_cvbo->GetData(), rows, rows, time);
+				UpdateColors(color_cvbo->GetData(), rows, rows, 2.5f*time);
 				color_cvbo->UnMap();
 				
 			}
@@ -66,9 +66,27 @@ namespace bogong {
 			{
 				m_IBO = bogong::IndexBuffer(indices.data(), indices.size() * sizeof(unsigned int));
 			}
-			void makeIndices()
+			void makeIndicesQuads()
 			{
 				unsigned int idx = 0;
+
+				for (int j = 0; j < rows - 1; j++)
+				{
+					for (int i = 0; i < rows - 1; i++) {
+						indices.push_back(idx);
+						indices.push_back(idx + 1);
+						indices.push_back(idx + rows + 1);
+						indices.push_back(idx + rows);
+						idx++;
+					}
+					idx++;
+				}
+				count = indices.size();
+			}
+			void makeIndicesLines()
+			{
+				unsigned int idx = 0;
+				
 				for (int j = 0; j < rows-1; j++)
 				{
 					for (int i = 0; i < rows-1; i++) {
