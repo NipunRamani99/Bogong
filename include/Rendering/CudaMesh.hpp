@@ -48,9 +48,7 @@ namespace bogong {
 				count = mesh.count;
 				return *this;
 			}*/
-			virtual void Update()
-			{
-			}
+		
 			std::vector<Buffer> & GetBufferVertex()
 			{
 				return m_BufferVertex;

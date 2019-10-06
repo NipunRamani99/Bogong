@@ -38,11 +38,13 @@ __global__ void color_kernel(float4 *pos, unsigned int width, unsigned int heigh
 __global__ void grid_kernel(float3 * pos, unsigned int width, unsigned int height, float time)
 {
 	unsigned int x = blockIdx.x*blockDim.x + threadIdx.x;
-	unsigned int z = blockIdx.y*blockDim.y + threadIdx.y;
-	float u = pos[x + z * width].x;
-	float v = pos[x + z * width].y;
+	unsigned int y = blockIdx.y*blockDim.y + threadIdx.y;
+	float u = pos[x + y * width].x;
+	float v = pos[x + y * width].z;
 	float freq = 4.0f;
-	pos[x + z * width].y = sinf(u*freq + time) * cosf(v*freq + time) * 0.5f;
+	pos[x + y * width].x = u;
+	pos[x + y * width].z = v;
+	pos[x + y * width].y = sinf(u*freq + time) * cosf(v*freq + time) * 0.5f;
 
 }
 void UpdateMesh(float3 *pos, unsigned int mesh_width,

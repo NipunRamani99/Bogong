@@ -42,7 +42,7 @@ namespace bogong {
 			WaveMesh()
 			{	
 			}
-			void Update() override {}
+			
 			void Update2(float time) 
 			{
 				cvbo->Map();
@@ -78,7 +78,7 @@ namespace bogong {
 			/*Wave & operator=(Wave && wave)
 			{
 				renderer = std::move(wave.renderer);
-				n = wave.n;
+				n = wave.n;   
 				return *this;
 			}*/
 			void Draw()

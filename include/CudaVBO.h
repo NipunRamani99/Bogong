@@ -47,7 +47,7 @@ namespace bogong {
 			:
 			VertexBuffer(data,p_Size,p_Draw)
 		{
-			RegisterVBO(m_ID, &cuda_vbo_resource, cudaGraphicsMapFlagsWriteDiscard);
+			RegisterVBO(m_ID, &cuda_vbo_resource, cudaGraphicsMapFlagsNone);
 		}
 		CudaVBO<T> & operator=(CudaVBO<T> & vbo)
 		{

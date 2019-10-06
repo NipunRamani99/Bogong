@@ -37,7 +37,14 @@ namespace bogong {
 			}
 			void Update()
 			{
+
+			}
+			void Update(float time)
+			{
 				vertex_cvbo->Map();
+				vertex_cvbo->GetMappedPointer();
+				UpdateGrid(vertex_cvbo->GetData(), rows, rows, time);
+				vertex_cvbo->UnMap();
 				
 			}
 		private:
@@ -49,7 +56,7 @@ namespace bogong {
 			void makeVBO()
 			{
 				vertex_cvbo = std::make_shared<CudaVBO<float3>>(vertices);
-				color_cvbo = std::make_shared<CudaVBO<float4>>(colors);
+				color_cvbo	= std::make_shared<CudaVBO<float4>>(colors);
 			}
 			void makeIBO()
 			{
@@ -142,6 +149,10 @@ namespace bogong {
 			{
 				linerenderer->SetShader(shader);
 				pointrenderer->SetShader(shader);
+			}
+			void Update(float t)
+			{
+				grid_mesh->Update(t);
 			}
 			void Draw()
 			{
