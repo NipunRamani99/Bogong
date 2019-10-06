@@ -31,7 +31,13 @@ namespace bogong {
 			return dataptr;
 		}
 		CudaVBO() = default;
-		CudaVBO(unsigned int p_Size, unsigned int p_Draw = GL_DYNAMIC_DRAW)
+		CudaVBO(std::vector<T> vertexdata, unsigned int p_Draw = GL_DYNAMIC_DRAW)
+			:
+			VertexBuffer((const void *)vertexdata.data(),vertexdata.size() * sizeof(T),p_Draw)
+		{
+			RegisterVBO(m_ID, &cuda_vbo_resource, 0);
+		}
+		CudaVBO(size_t p_Size, unsigned int p_Draw = GL_DYNAMIC_DRAW)
 			:
 			VertexBuffer(nullptr, p_Size, p_Draw)
 		{

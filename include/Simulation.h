@@ -6,6 +6,8 @@
 #include "ICallbacks.h"
 //#include "Ripple.hpp"
 #include "WaveMeshTest.h"
+#include "LineGrid.hpp"
+#include <memory>
 namespace bogong {
 	class Simulation
 	{
@@ -14,21 +16,20 @@ namespace bogong {
 		glm::vec3 lightPos = glm::vec3(-1.0f, 0.2f, 0.0f);
 		Shader m_Shader;
 		Shader m_RiplShader;
-		cuda::Wave wave;
+		std::shared_ptr<cuda::LineGrid> lineGrid;
 		float t=0.0f;
 		float m_Scale = 0.895f;
 		float time = 0.01;
 	public:
 		Simulation() = default;
 		Simulation(Shader p_Shader)
-			:
-			wave(100)
 		{
 			m_Shader = p_Shader;
-			m_Scale = 0.001f;
+			lineGrid = std::make_shared<cuda::LineGrid>(50,5);
 			error();
 			ICallbacks::SetShader(m_Shader);
-			wave.SetShader(m_Shader);
+			lineGrid->SetShader(m_Shader);
+			
 			error();
 		}
 		/*Simulation(Simulation && simulation)
@@ -53,12 +54,10 @@ namespace bogong {
 		void Update()
 		{
 			
-			wave.Update(t);
-			t += 0.005;
 		}
 		void Draw()
 		{
-			wave.Draw();
+			lineGrid->Draw();
 			error();
 		}
 	};

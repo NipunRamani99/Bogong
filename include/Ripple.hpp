@@ -37,7 +37,7 @@ namespace bogong {
 				for (int j = -steps / 2; j < steps / 2; j++)
 				{
 					float z = j * delStep;
-					float y = 0.03*sin(f*(x*x + z * z) * 180 / M_PI);
+					float y = 0.03*sin(f*(x*x+ z * z) * 180 / M_PI);
 					m_Vertices[idx].x = x;
 					m_Vertices[idx].y = y;
 					m_Vertices[idx].z = z;

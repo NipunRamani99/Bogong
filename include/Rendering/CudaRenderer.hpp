@@ -22,16 +22,9 @@ namespace bogong {
 			{	
 				m_VAO = VertexArray();
 			}
-			/*CudaRenderer & operator=(CudaRenderer && p_Renderer)
-			{
-				m_cuMesh = std::move(p_Renderer.m_cuMesh);
-				m_VAO = std::move(p_Renderer.m_VAO);
-				m_Shader = std::move(p_Renderer.m_Shader);
-				m_DrawCall = std::move(p_Renderer.m_DrawCall);
-				m_DrawMode = std::move(p_Renderer.m_DrawMode);
-				return *this;
-			}*/
-			void RenderMesh(const std::shared_ptr<CudaMesh> & cumesh)
+		
+			template<typename T>
+			void RenderMesh(const std::shared_ptr<T> & cumesh)
 			{
 				m_VAO.Bind();
 				m_Shader.Bind();
@@ -46,17 +39,19 @@ namespace bogong {
 			
 				int count = cumesh->GetCount();
 				m_Shader.setMat4("model",m_Model);
-				glDrawArrays(GL_POINTS, 0, count);
+				m_DrawCall(m_DrawMode, count);
 				error();
 			}
-			void BindBuffer(const std::shared_ptr<CudaMesh> & cumesh)
+			template<typename T>
+			void BindBuffer(const std::shared_ptr<T> & cumesh)
 			{
 				m_VAO.Bind();
 				m_Shader.Bind();
 				cumesh->Bind();
 				error();
 			}
-			void UnbindBuffer(const std::shared_ptr<CudaMesh> & cumesh)
+			template<typename T>
+			void UnbindBuffer(const std::shared_ptr<T> & cumesh)
 			{
 				cumesh->Unbind();
 				m_VAO.Unbind();	

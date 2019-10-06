@@ -85,7 +85,8 @@ namespace bogong {
 						i++;
 					}
 				}
-
+				if (m_IBO.GetID() != 0)
+					m_IBO.Bind();
 			}
 			void Unbind()
 			{

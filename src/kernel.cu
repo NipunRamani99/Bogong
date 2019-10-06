@@ -35,7 +35,16 @@ __global__ void color_kernel(float4 *pos, unsigned int width, unsigned int heigh
 	// write output vertex
 	pos[y*width + x] = make_float4(u, v, w,1.0);
 }
+__global__ void grid_kernel(float3 * pos, unsigned int width, unsigned int height, float time)
+{
+	unsigned int x = blockIdx.x*blockDim.x + threadIdx.x;
+	unsigned int z = blockIdx.y*blockDim.y + threadIdx.y;
+	float u = pos[x + z * width].x;
+	float v = pos[x + z * width].y;
+	float freq = 4.0f;
+	pos[x + z * width].y = sinf(u*freq + time) * cosf(v*freq + time) * 0.5f;
 
+}
 void UpdateMesh(float3 *pos, unsigned int mesh_width,
 	unsigned int mesh_height, float time)
 {
@@ -51,4 +60,11 @@ void UpdateColors(float4 * pos, unsigned int width, unsigned int height, float t
 	dim3 block(8, 8, 1);
 	dim3 grid(width / block.x, height / block.y, 1);
 	color_kernel << < grid, block >> > (pos, width, height, time);
+}
+
+void UpdateGrid(float3 * pos, unsigned int width, unsigned int height, float time)
+{
+	dim3 block(8, 8, 1);
+	dim3 grid(width / block.x, height / block.y, 1);
+	grid_kernel << <grid, block >> > (pos, width, height, time);
 }

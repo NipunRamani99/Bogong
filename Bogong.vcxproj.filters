@@ -179,6 +179,7 @@
     <ClInclude Include="include\Rendering\ShapeMesh.hpp" />
     <ClInclude Include="include\SurfaceWave\WaveMesh.hpp" />
     <ClInclude Include="include\SurfaceWave\RunCuda.hpp" />
+    <ClInclude Include="include\LineGrid.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Imgui">

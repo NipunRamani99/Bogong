@@ -18,16 +18,9 @@ namespace bogong {
 				width(n),
 				freq(freq)
 			{
-				m_Color.resize(width*width);
-				for (int i = 0; i < width*width; i++)
-				{
-					m_Color[i].x = 1.0f;
-					m_Color[i].y = 0.0f;
-					m_Color[i].z = 0.0f;
-					m_Color[i].w = 1.0f;
-				}
+				
 				count = width * width;
-				cvbo = std::make_shared<CudaVBO<float3>>( width  * width * sizeof(float3));
+				cvbo = std::make_shared<CudaVBO<float3>>( width  * width * sizeof(float3),GL_DYNAMIC_DRAW);
 				cvbo->Map();
 				cvbo->GetMappedPointer();
 				UpdateMesh(cvbo->GetData(), width, width, 4);
@@ -77,7 +70,7 @@ namespace bogong {
 				:
 				n(n)
 			{
-				wave = std::make_shared<WaveMesh>(100, 0.4);
+				wave = std::make_shared<WaveMesh>(n, 0.4f);
 				renderer = std::make_shared<CudaRenderer>();
 				renderer->BindBuffer(wave);
 				renderer->SetDrawMode(GL_POINTS);
