@@ -45,6 +45,10 @@ namespace bogong {
 				vertex_cvbo->GetMappedPointer();
 				UpdateGrid(vertex_cvbo->GetData(), rows, rows, time);
 				vertex_cvbo->UnMap();
+				color_cvbo->Map();
+				color_cvbo->GetMappedPointer();
+				UpdateColors(color_cvbo->GetData(), rows, rows, time);
+				color_cvbo->UnMap();
 				
 			}
 		private:

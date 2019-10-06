@@ -25,7 +25,7 @@ namespace bogong {
 		Simulation(Shader p_Shader)
 		{
 			m_Shader = p_Shader;
-			lineGrid = std::make_shared<cuda::LineGrid>(30,5);
+			lineGrid = std::make_shared<cuda::LineGrid>(128,5);
 			error();
 			ICallbacks::SetShader(m_Shader);
 			lineGrid->SetShader(m_Shader);
@@ -54,7 +54,7 @@ namespace bogong {
 		void Update()
 		{
 			lineGrid->Update(time);
-			time += 0.005f;
+			time += 0.0005f;
 		}
 		void Draw()
 		{
