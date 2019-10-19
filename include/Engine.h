@@ -9,6 +9,8 @@
 #include "Camera.h"
 #include "Keyboard.h"
 #include "Mouse.h"
+#define WIDTH 1366
+#define HEIGHT 768
 namespace bogong
 {
 	class Engine
@@ -30,14 +32,14 @@ namespace bogong
 			int device_count = 0;
 			Init::InitGLFW();
 
-			window = bogong::Init::CreateWindowGL(800, 600, "Mic Check.");
+			window = bogong::Init::CreateWindowGL(WIDTH, HEIGHT, "Mic Check.");
 			Init::SetGLFWWindow(*window, 4, 3, 3, GLFW_OPENGL_CORE_PROFILE, true);
 			glewExperimental = true;
 			if (glewInit() != GLEW_OK) {
 				std::cout << "Couldn't init glew.";
 			}
-			cam = new IsoCamera(window, 800, 600);
-			free = new FreeCamera(800, 600);
+			cam = new IsoCamera(window, WIDTH, HEIGHT);
+			free = new FreeCamera(WIDTH, HEIGHT);
 
 			Callbacks::camID = camID;
 			Callbacks::freecam = free;

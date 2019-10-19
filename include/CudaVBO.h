@@ -16,7 +16,7 @@
 //3.Map it before using it in kernels.
 //4.Unmap it after using it in kernels.
 //5.Use shaders to render the 
-////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////mm    
 namespace bogong {
 	template<typename T>
 	class CudaVBO : public VertexBuffer

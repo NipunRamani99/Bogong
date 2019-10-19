@@ -75,12 +75,6 @@ namespace bogong {
 				renderer->BindBuffer(wave);
 				renderer->SetDrawMode(GL_POINTS);
 			}
-			/*Wave & operator=(Wave && wave)
-			{
-				renderer = std::move(wave.renderer);
-				n = wave.n;   
-				return *this;
-			}*/
 			void Draw()
 			{
 				glPointSize(2.0f);

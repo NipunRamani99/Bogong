@@ -43,7 +43,7 @@ namespace bogong {
 			{
 				vertex_cvbo->Map();
 				vertex_cvbo->GetMappedPointer();
-				UpdateGrid(vertex_cvbo->GetData(), rows, rows, time);
+				GerstnerTest(vertex_cvbo->GetData(), rows, rows, time);
 				vertex_cvbo->UnMap();
 				color_cvbo->Map();
 				color_cvbo->GetMappedPointer();

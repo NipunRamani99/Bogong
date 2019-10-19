@@ -6,7 +6,7 @@
 #include <vector>
 #include <memory>
 #include <utility>
-namespace bogong {
+namespace bogong {  
 	namespace cuda {
 		typedef std::pair<std::shared_ptr<VertexBuffer>, VertexBufferLayout> Buffer;
 		
@@ -20,35 +20,6 @@ namespace bogong {
 			IndexBuffer m_IBO;
 			long int count = 0;
 		public:
-			CudaMesh()
-			{
-
-			}
-			/*CudaMesh(CudaMesh && mesh)
-			{
-				m_VertPos = std::move(mesh.m_VertPos);
-				m_Color = std::move(mesh.m_Color);
-				m_VAO = std::move(mesh.m_VAO);
-				m_BufferVertex = std::move(mesh.m_BufferVertex);
-				m_IBO = std::move(mesh.m_IBO);
-				m_VBO1 = std::move(mesh.m_VBO1);
-				m_VBO2 = std::move(mesh.m_VBO2);
-				count = mesh.count;
-
-			}
-			CudaMesh & operator=(CudaMesh&& mesh)
-			{
-				m_VertPos = std::move(mesh.m_VertPos);
-				m_Color = std::move(mesh.m_Color);
-				m_VAO = std::move(mesh.m_VAO);
-				m_BufferVertex = std::move(mesh.m_BufferVertex);
-				m_IBO = std::move(mesh.m_IBO);
-				m_VBO1 = std::move(mesh.m_VBO1);
-				m_VBO2 = std::move(mesh.m_VBO2);
-				count = mesh.count;
-				return *this;
-			}*/
-		
 			std::vector<Buffer> & GetBufferVertex()
 			{
 				return m_BufferVertex;
