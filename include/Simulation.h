@@ -40,7 +40,7 @@ namespace bogong{
 			time += speed;
 			if (ImGui::InputFloat("Wave Amplitude.", &amplitude, 0.0001, 7))
 			{
-				lineGrid->setAmplitude(amplitude);
+				lineGrid->SetAmplitude(amplitude);
 			}
 		}
 		void Draw()

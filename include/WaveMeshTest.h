@@ -12,7 +12,8 @@ namespace bogong {
 			float freq = 0.5f;
 			std::shared_ptr<CudaVBO<float4>> colors;
 			std::shared_ptr<CudaVBO<float3>> cvbo;
-		public:
+			float amplitude=0.0;
+		public:  
 			WaveMesh(int n,float freq)
 				:
 				width(n),
@@ -29,7 +30,7 @@ namespace bogong {
 				VertexBufferLayout layout1;
 				layout1.AddElement<float>(3);
 				VertexBufferLayout layout2;
-				layout2.AddElement<float>(4);
+				layout2.AddElement<float>(4);  
 				
 			    m_BufferVertex.push_back(std::make_pair(cvbo, layout1));
 				m_BufferVertex.push_back(std::make_pair(colors, layout2));
@@ -83,6 +84,10 @@ namespace bogong {
 			void Update(float t)
 			{
 				wave->Update2(t);
+			}
+			void SetAmplitude(float amplitude)
+			{
+			
 			}
 			void SetShader(Shader p_Shader)
 			{

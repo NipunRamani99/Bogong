@@ -21,7 +21,10 @@ namespace bogong {
 			std::vector<unsigned int> indices;
 			VertexBufferLayout layout1;
 			VertexBufferLayout layout2;
+			float amplitude = 0.5f;
 		public:
+			WaveProp props[4];
+			
 			LineGridMesh(int rows,float width)
 				:
 				rows(rows),
@@ -34,6 +37,29 @@ namespace bogong {
 				makeIBO();
 				m_BufferVertex.push_back(std::make_pair(std::dynamic_pointer_cast<VertexBuffer>(vertex_cvbo), layout1));
 				m_BufferVertex.push_back(std::make_pair(std::dynamic_pointer_cast<VertexBuffer>(color_cvbo), layout2));	
+				props[0].amplitude = 0.001;
+				props[1].amplitude = 0.004;
+				props[2].amplitude = 0.004;
+				props[3].amplitude = 0.002;
+				props[0].isCircular = 0;
+				props[1].isCircular = 0xFF;
+				props[2].isCircular = 0xFF;
+				props[3].isCircular = 0;
+				props[0].dirx = 1.0f / sqrt(2);
+				props[0].diry = 1.0f / sqrt(2);
+				
+				props[1].x = 0.5f;
+				props[1].y = 0.1f;
+				
+				props[2].x = 0.1f;
+				props[2].y = 0.3f;
+
+				props[3].dirx = 0.0f;
+				props[3].diry = 1.0f;
+
+				props[0].w = props[1].w = props[2].w = props[3].w = 1.0f;
+				
+				
 			}
 			void Update()
 			{
@@ -43,13 +69,17 @@ namespace bogong {
 			{
 				vertex_cvbo->Map();
 				vertex_cvbo->GetMappedPointer();
-				GerstnerTest(vertex_cvbo->GetData(), rows, rows, time);
+				GerstnerTest(vertex_cvbo->GetData(), rows, rows,amplitude ,time);
 				vertex_cvbo->UnMap();
 				color_cvbo->Map();
 				color_cvbo->GetMappedPointer();
 				UpdateColors(color_cvbo->GetData(), rows, rows, 2.5f*time);
 				color_cvbo->UnMap();
 				
+			}
+			void Amplitude(float amplitude)
+			{
+				this->amplitude = amplitude;
 			}
 		private:
 			inline void makeLayout()
@@ -74,9 +104,9 @@ namespace bogong {
 				{
 					for (int i = 0; i < rows - 1; i++) {
 						indices.push_back(idx);
-						indices.push_back(idx + 1);
+						indices.push_back(idx +rows);
 						indices.push_back(idx + rows + 1);
-						indices.push_back(idx + rows);
+						indices.push_back(idx + 1);
 						idx++;
 					}
 					idx++;
@@ -175,6 +205,10 @@ namespace bogong {
 			void Update(float t)
 			{
 				grid_mesh->Update(t);
+			}
+			void SetAmplitude(float amplitude)
+			{
+				grid_mesh->Amplitude(amplitude);
 			}
 			void Draw()
 			{

@@ -42,7 +42,7 @@ namespace bogong {
 					m_Vertices[idx].y = y;
 					m_Vertices[idx].z = z;
 					m_Vertices[idx].r = 1.0f;
-					m_Vertices[idx].g = 0.5f;
+					m_Vertices[idx].g = 0.5f;  
 					m_Vertices[idx].a = 1.0f;
 					float d1 = 2 * f*x*0.03*cos(f*((x*x + z * z) * 180 / M_PI));
 					float d2 = 2 * f*z*0.03*cos(f*(x*x + z * z) * 180 / M_PI);
@@ -55,7 +55,7 @@ namespace bogong {
 					idx++;
 
 				}
-			}
+			}  
 			/*
 			* Sample Quad: For width(steps) 10
 			*  10---- 11---- 12---- 13....
@@ -63,7 +63,7 @@ namespace bogong {
 			*  0 ---- 1 ---- 2 ---- 3....
 			*  Indices pushed in Counter Clockwise Fashion like this (0,1,11,10)
 			*/
-
+			  
 			idx = 0;
 			for (int j = 0; j < steps - 1; j++)
 			{
@@ -90,11 +90,11 @@ namespace bogong {
 			m_Renderer = std::make_shared<Renderer>(m_Layout);
 			m_Renderer->SetDrawMode(GL_QUADS);
 			m_Renderer->BindBuffer(m_Mesh);
-		}
+		}  
 	/*	Ripple(Ripple && p_Ripple)
 		{
 			m_Vertices = std::move(p_Ripple.m_Vertices);
-			m_Mesh = std::move(p_Ripple.m_Mesh);
+			m_Mesh = std::move(p_Ripple.m_Mesh); 
 			m_Renderer = std::move(p_Ripple.m_Renderer);
 			m_Layout = std::move(p_Ripple.m_Layout);
 		}
