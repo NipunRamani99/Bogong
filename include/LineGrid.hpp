@@ -86,6 +86,11 @@ namespace bogong {
 				}
 				for (int i = 0; i < n; i++)
 				{
+					std::string label = "Wave velocity " + std::to_string(i);
+					ImGui::InputFloat(label.c_str(), &props[i].w, 0.001, 0.001, 5);
+				}
+				for (int i = 0; i < n; i++)
+				{
 					std::string labl = "Flag "+std::to_string(i);
 					ImGui::InputInt(labl.c_str(), &props[i].isCircular, 0);
 					if (props[i].isCircular == 0xFF)
@@ -104,7 +109,7 @@ namespace bogong {
 			{
 				vertex_cvbo->Map();  
 				vertex_cvbo->GetMappedPointer(); 
-				GerstnerTest(vertex_cvbo->GetData(), props, meshprop, n ,time);  
+				GerstnerNormalTest(vertex_cvbo->GetData(), props, meshprop, n ,time);  
 				vertex_cvbo->UnMap();        
 				color_cvbo->Map();
 				color_cvbo->GetMappedPointer();
