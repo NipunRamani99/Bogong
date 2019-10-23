@@ -54,9 +54,9 @@ __global__ void gerstenerKernel(float3 * pos, unsigned int width, unsigned int h
 	v = v * 2.0f - 1.0f;
 	u += 0.01f;
 	v += 0.01f;
-	float dix1 =  (u) / (sqrt((u*u) +(v*v) ));
-	float diy1 =  (v) / sqrt((u*u)+(v*v));
-	float dix2 = (u-0.45f) / (sqrt((u-0.45f)*(u-0.45f) + (v-0.45f)*(v-0.45f)));
+	float dix1 = -(u) / (sqrt((u*u) +(v*v) ));
+	float diy1 = -(v) / sqrt((u*u)+(v*v));
+	float dix2 = (u - 0.45f) / (sqrt((u - 0.45f)*(u - 0.45f) + (v - 0.45f)*(v - 0.45f)));
 	float diy2 = (v-0.45f) / sqrt((u - 0.45f)*(u - 0.45f) + (v - 0.45f)*(v - 0.45f));
 	float wi = 0.7;
 	float q = 1.7;
@@ -76,7 +76,6 @@ __global__ void multiWaveGerstenerKernel(float3 * pos, unsigned int width, unsig
 	v = v * 2.0f - 1.0f;
 	u += 0.01f;
 	v += 0.01f;
-	
 	float posx = u;
 	float posz = v;
 	float posy = 0;
@@ -101,9 +100,9 @@ __global__ void multiWaveGerstenerKernel(float3 * pos, unsigned int width, unsig
 		float q = prop[i].q;
 		float wi = prop[i].w;
 		float phi = prop[i].phase;
-		posx += q * amplitude*dix*cos((wi*((dix)) + time+phi) * 180 / 3.141592);
-		posz += q * amplitude*diy*cos((wi*((diy)) + time+phi) * 180 / 3.141592);
-	    posy += amplitude * sin((wi*((dix*u) + (diy*v)) + time+phi) * 180 / 3.141592);
+		posx += q * amplitude*dix*cos((wi*((dix)) + time*phi) * 180 / 3.141592);
+		posz += q * amplitude*diy*cos((wi*((diy)) + time*phi) * 180 / 3.141592);
+	    posy += amplitude * sin((wi*((dix*u) + (diy*v)) + time*phi) * 180 / 3.141592);
 	}
 	pos[x + width * y] = make_float3(posx, posy, posz);
 
@@ -117,19 +116,21 @@ void UpdateMesh(float3 *pos, unsigned int mesh_width,
 	simple_vbo_kernel << < grid, block >> > (pos, mesh_width, mesh_height, time);
 }
 void GerstnerTest(float3 * pos, unsigned int mesh_width, unsigned int mesh_height, float amplitude,float time)
-{
+{   
 	dim3 block(8, 8, 1);
 	dim3 grid(mesh_width / block.x, mesh_height / block.y, 1);
 	gerstenerKernel << < grid, block >> > (pos, mesh_width, mesh_height,amplitude, time);
-}
+}   
 void GerstnerTest(float3 * pos, WaveProp * prop, MeshProp mesh,int n ,float time)
 {
 	dim3 block(8, 8, 1);
 	dim3 grid(mesh.mesh_width / block.x, mesh.mesh_height / block.y, 1);
-	WaveProp * device;
-	cudaMemcpy(device, prop, sizeof(WaveProp)*n, cudaMemcpyHostToDevice);
-
-	multiWaveGerstenerKernel << < grid, block >> > (pos, mesh.mesh_width, mesh.mesh_height, device,n, time);
+	WaveProp * dev_ptr;
+	checkCudaErrors(cudaMalloc(&dev_ptr,sizeof(WaveProp)*n));
+	checkCudaErrors(cudaMemcpy(dev_ptr, prop, sizeof(WaveProp)*n, cudaMemcpyHostToDevice));
+	multiWaveGerstenerKernel<< < grid, block >> > (pos, mesh.mesh_width, mesh.mesh_height, dev_ptr,n, time);
+	getLastCudaError("Cuda Kernel Launch failed");
+	checkCudaErrors(cudaFree(dev_ptr));
 }
 void UpdateColors(float4 * pos, unsigned int width, unsigned int height, float time)
 {

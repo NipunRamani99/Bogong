@@ -26,7 +26,7 @@ namespace bogong {
 			}
 			void Bind()
 			{
-				int i = 0;
+				int i = 0;       
 				for (auto& buffer : m_BufferVertex)
 				{
 					for (auto & elem : buffer.second.GetElements())

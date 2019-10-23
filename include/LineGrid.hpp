@@ -13,9 +13,10 @@ namespace bogong {
 		private:
 			std::shared_ptr<CudaVBO<float3>> vertex_cvbo;
 			std::shared_ptr<CudaVBO<float4>> color_cvbo;
-			
+			MeshProp meshprop;
 			int rows = 0;
 			float width = 0.0f;
+			int n = 4;
 			std::vector<float3> vertices;
 			std::vector<float4> colors;
 			std::vector<unsigned int> indices;
@@ -30,6 +31,8 @@ namespace bogong {
 				rows(rows),
 				width(width)
 			{
+				meshprop.mesh_height = rows;
+				meshprop.mesh_width = rows;
 				makeMesh();
 				makeVBO();
 				makeLayout();
@@ -56,21 +59,53 @@ namespace bogong {
 
 				props[3].dirx = 0.0f;
 				props[3].diry = 1.0f;
-
 				props[0].w = props[1].w = props[2].w = props[3].w = 1.0f;
-				
-				
+				props[3].q = 1.0f ;
+				n = 4;
 			}
 			void Update()
 			{
 
 			}
+			void ReadInputs()
+			{
+				for (int i = 0; i < n; i++)
+				{
+					std::string label ="Q" + std::to_string(i);
+					ImGui::InputFloat(label.c_str(), &props[i].q, 0.001, 0.001,5);
+				}
+				for (int i = 0; i < n; i++)
+				{
+					std::string label = "Amplitude" + std::to_string(i);
+					ImGui::InputFloat(label.c_str(), &props[i].amplitude, 0.001, 0.001, 5);
+				}
+				for (int i = 0; i < n; i++)
+				{
+					std::string label = "Phase" + std::to_string(i);
+					ImGui::InputFloat(label.c_str(), &props[i].phase, 0.001, 0.001, 5);
+				}
+				for (int i = 0; i < n; i++)
+				{
+					std::string labl = "Flag "+std::to_string(i);
+					ImGui::InputInt(labl.c_str(), &props[i].isCircular, 0);
+					if (props[i].isCircular == 0xFF)
+					{
+						std::string label = "Vec2 " + std::to_string(i);
+						ImGui::InputFloat2(label.c_str(), &props[i].x,4);
+					}
+					else
+					{
+						std::string label = "DirX/Y " + std::to_string(i);
+						ImGui::InputFloat2(label.c_str(), &props[i].dirx, 4);
+					}
+				}
+			}
 			void Update(float time)
 			{
-				vertex_cvbo->Map();
-				vertex_cvbo->GetMappedPointer();
-				GerstnerTest(vertex_cvbo->GetData(), rows, rows,amplitude ,time);
-				vertex_cvbo->UnMap();
+				vertex_cvbo->Map();  
+				vertex_cvbo->GetMappedPointer(); 
+				GerstnerTest(vertex_cvbo->GetData(), props, meshprop, n ,time);  
+				vertex_cvbo->UnMap();        
 				color_cvbo->Map();
 				color_cvbo->GetMappedPointer();
 				UpdateColors(color_cvbo->GetData(), rows, rows, 2.5f*time);
@@ -128,6 +163,8 @@ namespace bogong {
 						indices.push_back(idx + rows+1);
 						indices.push_back(idx + rows);
 						indices.push_back(idx + rows + 1 );
+						indices.push_back(idx + rows);
+						indices.push_back(idx + 1);
 						idx++;
 					}
 					idx++;
@@ -149,6 +186,7 @@ namespace bogong {
 						colors[idx] = makeColor();
 						idx++;
 					}
+					
 				}
 				count = rows*rows;
 			}
@@ -205,6 +243,10 @@ namespace bogong {
 			void Update(float t)
 			{
 				grid_mesh->Update(t);
+			}
+			void Input()
+			{
+				grid_mesh->ReadInputs();
 			}
 			void SetAmplitude(float amplitude)
 			{

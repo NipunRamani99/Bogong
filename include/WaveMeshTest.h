@@ -31,7 +31,6 @@ namespace bogong {
 				layout1.AddElement<float>(3);
 				VertexBufferLayout layout2;
 				layout2.AddElement<float>(4);  
-				
 			    m_BufferVertex.push_back(std::make_pair(cvbo, layout1));
 				m_BufferVertex.push_back(std::make_pair(colors, layout2));
 			}
