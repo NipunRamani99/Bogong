@@ -25,4 +25,4 @@ void UpdateColors(float4 *pos, unsigned int width, unsigned int height,float tim
 void UpdateGrid(float3 * pos, unsigned int width, unsigned int height, float time);
 void GerstnerTest(float3 * pos, unsigned int mesh_width, unsigned int mesh_height, float amplitude, float time);
 void GerstnerTest(float3 * pos, WaveProp * prop, MeshProp mesh,int n ,float time);
-void GerstnerNormalTest(float3 * pos, WaveProp * prop, MeshProp mesh, int n, float time);
+void GerstnerNormalTest(float3 * pos, float3 * norms,WaveProp * prop, MeshProp mesh, int n, float time);

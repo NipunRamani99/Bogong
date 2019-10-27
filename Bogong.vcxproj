@@ -182,6 +182,8 @@
   <ItemGroup>
     <None Include="imgui.ini" />
     <None Include="include\LightFragmentShader.glsl" />
+    <None Include="shaders\GerstenerWaveFragment.glsl" />
+    <None Include="shaders\GerstenerWaveVertex.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

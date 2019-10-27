@@ -68,21 +68,21 @@ namespace bogong {
 			}
 		}
 
-		bool KeyIsPressed(KEY p_Key)
+		bool isKeyPressed(KEY p_Key)
 		{
 			bool RetnVal = false;
 			if (Keyboard::KeyMap.at(p_Key) == IS_PRESSED)
 				RetnVal = true;
 			return RetnVal;
 		}
-		bool KeyIsRepeating(KEY p_Key)
+		bool isKeyRepeating(KEY p_Key)
 		{
 			bool RetnVal = false;
 			if (Keyboard::KeyMap.at(p_Key) == IS_REPEATING)
 				RetnVal = true;
 			return RetnVal;
 		}
-		bool KeyIsReleased(KEY p_Key)
+		bool isKeyReleased(KEY p_Key)
 		{
 			bool RetnVal = false;
 			if (Keyboard::KeyMap.at(p_Key) == IS_RELEASED)

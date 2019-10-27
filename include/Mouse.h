@@ -16,17 +16,15 @@ namespace bogong {
 	};
 	class Mouse
 	{
-	private:
-
 	public:
 		static std::map< BUTTON, MOUSE_STATUS> MouseMap;
+		double x = 0;
+		double y = 0;
 		Mouse()
 		{
 			MouseMap.insert({ LMB,MOUSE_NONE });
 			MouseMap.insert({ RMB,MOUSE_NONE });
 			MouseMap.insert({ OTHER,MOUSE_NONE });
-
-
 		}
 		void Flush()
 		{
@@ -35,7 +33,11 @@ namespace bogong {
 				Button.second = MOUSE_NONE;
 			}
 		}
-
+		void mousePositionCallback(GLFWwindow* window, double xpos, double ypos)
+		{
+			x = xpos;
+			y = ypos;
+		}
 		static void MouseCallback(GLFWwindow * p_Window, int p_Scancode, int p_Action, int p_Mod)
 		{
 			MOUSE_STATUS stat;
@@ -65,6 +67,18 @@ namespace bogong {
 				break;
 			}
 			MouseMap.find(butn)->second = stat;
+		}
+		bool isButtonPressed(BUTTON button)
+		{
+			return MouseMap.at(button) == MOUSE_STATUS::MOUSE_IS_PRESSED;
+		}
+		bool isButtonReleased(BUTTON button)
+		{
+			return MouseMap.at(button) == MOUSE_STATUS::MOUSE_IS_RELEASED;
+		}
+		bool isButtonNone(BUTTON button)
+		{
+			return MouseMap.at(button) == MOUSE_STATUS::MOUSE_NONE;
 		}
 	};
 }

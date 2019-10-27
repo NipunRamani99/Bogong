@@ -13,6 +13,7 @@ namespace bogong {
 		private:
 			std::shared_ptr<CudaVBO<float3>> vertex_cvbo;
 			std::shared_ptr<CudaVBO<float4>> color_cvbo;
+			std::shared_ptr<CudaVBO<float3>> normals_cvbo;
 			MeshProp meshprop;
 			int rows = 0;
 			float width = 0.0f;
@@ -22,12 +23,13 @@ namespace bogong {
 			std::vector<unsigned int> indices;
 			VertexBufferLayout layout1;
 			VertexBufferLayout layout2;
+			VertexBufferLayout layout3;
 			float amplitude = 0.5f;
 		public:
 			WaveProp props[4];
 			
 			LineGridMesh(int rows,float width)
-				:
+				:  
 				rows(rows),
 				width(width)
 			{
@@ -40,6 +42,7 @@ namespace bogong {
 				makeIBO();
 				m_BufferVertex.push_back(std::make_pair(std::dynamic_pointer_cast<VertexBuffer>(vertex_cvbo), layout1));
 				m_BufferVertex.push_back(std::make_pair(std::dynamic_pointer_cast<VertexBuffer>(color_cvbo), layout2));	
+				m_BufferVertex.push_back(std::make_pair(std::dynamic_pointer_cast<VertexBuffer>(normals_cvbo), layout3));
 				props[0].amplitude = 0.001;
 				props[1].amplitude = 0.004;
 				props[2].amplitude = 0.004;
@@ -50,13 +53,10 @@ namespace bogong {
 				props[3].isCircular = 0;
 				props[0].dirx = 1.0f / sqrt(2);
 				props[0].diry = 1.0f / sqrt(2);
-				
 				props[1].x = 0.5f;
 				props[1].y = 0.1f;
-				
 				props[2].x = 0.1f;
 				props[2].y = 0.3f;
-
 				props[3].dirx = 0.0f;
 				props[3].diry = 1.0f;
 				props[0].w = props[1].w = props[2].w = props[3].w = 1.0f;
@@ -109,28 +109,35 @@ namespace bogong {
 			{
 				vertex_cvbo->Map();  
 				vertex_cvbo->GetMappedPointer(); 
-				GerstnerNormalTest(vertex_cvbo->GetData(), props, meshprop, n ,time);  
-				vertex_cvbo->UnMap();        
+				normals_cvbo->Map();
+				normals_cvbo->GetMappedPointer();
+
+				GerstnerNormalTest(vertex_cvbo->GetData(), normals_cvbo->GetData() ,props, meshprop, n ,time);  
+				vertex_cvbo->UnMap();
+				normals_cvbo->UnMap();
 				color_cvbo->Map();
 				color_cvbo->GetMappedPointer();
 				UpdateColors(color_cvbo->GetData(), rows, rows, 2.5f*time);
-				color_cvbo->UnMap();
-				
+				color_cvbo->UnMap();	
 			}
 			void Amplitude(float amplitude)
 			{
 				this->amplitude = amplitude;
 			}
+
 		private:
 			inline void makeLayout()
 			{
 				layout1.AddElement<float>(3);
 				layout2.AddElement<float>(4);
+				layout3.AddElement<float>(3);
 			}
 			void makeVBO()
 			{
 				vertex_cvbo = std::make_shared<CudaVBO<float3>>(vertices);
 				color_cvbo	= std::make_shared<CudaVBO<float4>>(colors);
+				normals_cvbo = std::make_shared<CudaVBO<float3>>(vertices.size()*sizeof(float3));
+				
 			}
 			void makeIBO()
 			{

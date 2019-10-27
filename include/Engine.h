@@ -137,15 +137,15 @@ namespace bogong
 		{
 			kbd.Flush();
 			glfwPollEvents();
-			if (kbd.KeyIsPressed(KEY_A))
+			if (kbd.isKeyPressed(KEY_A))
 			{
 				std::cout << "KEY A Is Pressed.";
 			}
-			if (kbd.KeyIsRepeating(KEY_A))
+			if (kbd.isKeyRepeating(KEY_A))
 			{
 				std::cout << "KEY A Is Repeating.";
 			}
-			if (kbd.KeyIsReleased(KEY_A))
+			if (kbd.isKeyReleased(KEY_A))
 			{
 				std::cout << "KEY A Is Released.";
 			}

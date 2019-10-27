@@ -6,6 +6,43 @@ namespace bogong {
 	namespace CamGlobal {
 		glm::vec3 viewPos = glm::vec3(1.0f);
 	};
+	class Camera
+	{
+		glm::mat4 projection;
+		glm::mat4 view;
+		int width = 800;
+		int height = 600;
+	public:
+		glm::mat4 GetProjection()
+		{
+			return projection;
+		}
+		glm::mat4 GetView()
+		{
+			return view;
+		}
+		
+	};
+	class IsometricCamera : public Camera
+	{
+		glm::vec3 cameraPos = glm::vec3(1.0f);
+		glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+		glm::vec3 cameraDirection = glm::vec3(cameraPos - cameraTarget);
+		glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+		double prevTheta;
+		double prevPhi;
+		float zoom = 3.0f;
+	public:
+		 
+		void Update(Keyboard & kbd, Mouse & mouse)
+		{
+			if (kbd.isKeyPressed(bogong::KEY::KEY_A))
+			{
+				zoom -= 0.5f;
+			}
+			
+		}
+	};
 	class IsoCamera
 	{
 		glm::vec3 cameraPos = glm::vec3(3.0f, 3.0f, 3.0f);
@@ -110,8 +147,8 @@ namespace bogong {
 		float lastFrame = 0.0f;
 		int width = 0;
 		int height = 0;
-		Shader m_Shader;
-		std::vector<Shader> shaders;
+		bogong::Shader m_Shader;
+		std::vector<bogong::Shader> shaders;
 		glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 
 	public:

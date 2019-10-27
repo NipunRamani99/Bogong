@@ -15,21 +15,25 @@ namespace bogong{
 	private:
 		glm::vec3 lightPos = glm::vec3(-1.0f, 0.2f, 0.0f);
 		Shader m_Shader;
-		Shader m_RiplShader;
+		Shader GerstnerShader;
+		
 		std::shared_ptr<cuda::LineGrid> lineGrid;
 		float t = 0.0f;
 		float m_Scale = 0.895f;
 		float time = 0.01;
 		float speed = 0.0005f;
 		float amplitude = 1.0f;
+		
 	public:
 		Simulation() = default;
 		Simulation(Shader p_Shader)
 		{
 			m_Shader = p_Shader;
+			GerstnerShader.LoadShader("shaders/GerstenerWaveVertex.glsl",bogong::ShaderType::VERTEX);
+			GerstnerShader.LoadShader("shaders/GerstenerWaveFragment.glsl", bogong::ShaderType::FRAGMENT);
+			GerstnerShader.LoadProgram();
 			lineGrid = std::make_shared<cuda::LineGrid>(64,10);
 			error();
-			ICallbacks::SetShader(m_Shader);
 			lineGrid->SetShader(m_Shader);
 			error();
 		}
@@ -42,6 +46,10 @@ namespace bogong{
 			if (ImGui::InputFloat("Wave Amplitude.", &amplitude, 0.0001, 7))
 			{
 				lineGrid->SetAmplitude(amplitude);
+			}
+			if (ImGui::InputFloat3("LightPos", (float*)&lightPos, 5))
+			{
+				GerstnerShader.setVec3("lightPos", lightPos);
 			}
 		}
 		void Draw()

@@ -200,6 +200,8 @@
       <Filter>include</Filter>
     </None>
     <None Include="include\LightFragmentShader.glsl" />
+    <None Include="shaders\GerstenerWaveVertex.glsl" />
+    <None Include="shaders\GerstenerWaveFragment.glsl" />
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="src\kernel.cu" />

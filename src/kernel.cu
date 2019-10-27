@@ -66,7 +66,7 @@ __global__ void gerstenerKernel(float3 * pos, unsigned int width, unsigned int h
 	pos[x + width * y] = make_float3(posx,posy,posz);
 
  }
-__global__ void multiWaveGerstenerKernelWithNormals(float3 * pos, unsigned int width, unsigned int height, WaveProp * prop, int n, float time)
+__global__ void multiWaveGerstenerKernelWithNormals(float3 * pos, float3 * norms ,unsigned int width, unsigned int height, WaveProp * prop, int n, float time)
 {
 	unsigned int x = threadIdx.x + blockDim.x * blockIdx.x;
 	unsigned int y = threadIdx.y + blockDim.y * blockIdx.y;
@@ -79,6 +79,9 @@ __global__ void multiWaveGerstenerKernelWithNormals(float3 * pos, unsigned int w
 	float posx = u;
 	float posz = v;
 	float posy = 0;
+	float normx = 0;
+	float normy = 0;
+	float normz = 0;
 	for (int i = 0; i < n; i++)
 	{
 		float dix = 0.0f, diy = 0.0f;
@@ -103,11 +106,18 @@ __global__ void multiWaveGerstenerKernelWithNormals(float3 * pos, unsigned int w
 		posx += q * amplitude*dix*cos((wi*((dix)) + time * phi) * 180 / 3.141592);
 		posz += q * amplitude*diy*cos((wi*((diy)) + time * phi) * 180 / 3.141592);
 		posy += amplitude * sin((wi*((dix*u) + (diy*v)) + time * phi) * 180 / 3.141592);
+		normx += dix * wi * amplitude * sin((wi*(dix*u + diy * v) + time * phi) * 180 / 3.141592);
+		normz += diy * wi * amplitude * sin(((wi*(dix*u + diy * v)) + time * phi) * 180 / 3.141592);
+		normy += q * wi * amplitude * cos((wi*(dix*u + diy * v) + time * phi) * 180 / 3.141592);
 	}
+	normx -= normx;
+	normz -= normz;
+	normy = 1 - normy;
 	pos[x + width * y] = make_float3(posx, posy, posz);
+	norms[x + width * y] = make_float3(normx, normy, normz);
 
 }
-__global__ void multiWaveGerstenerKernel(float3 * pos, unsigned int width, unsigned int height, WaveProp * prop,int n ,float time)
+__global__ void multiWaveGerstenerKernel(float3 * pos,unsigned int width, unsigned int height, WaveProp * prop,int n ,float time)
 {
 	unsigned int x = threadIdx.x + blockDim.x * blockIdx.x;
 	unsigned int y = threadIdx.y + blockDim.y * blockIdx.y;
@@ -146,7 +156,6 @@ __global__ void multiWaveGerstenerKernel(float3 * pos, unsigned int width, unsig
 	    posy += amplitude * sin((wi*((dix*u) + (diy*v)) + time*phi) * 180 / 3.141592);
 	}
 	pos[x + width * y] = make_float3(posx, posy, posz);
-
 }
 void UpdateMesh(float3 *pos, unsigned int mesh_width,
 	unsigned int mesh_height, float time)
@@ -162,14 +171,14 @@ void GerstnerTest(float3 * pos, unsigned int mesh_width, unsigned int mesh_heigh
 	dim3 grid(mesh_width / block.x, mesh_height / block.y, 1);
 	gerstenerKernel << < grid, block >> > (pos, mesh_width, mesh_height,amplitude, time);
 }
-void GerstnerNormalTest(float3 * pos, WaveProp * prop, MeshProp mesh, int n, float time)
+void GerstnerNormalTest(float3 * pos, float3 * norms,WaveProp * prop, MeshProp mesh, int n, float time)
 {
 	dim3 block(8, 8, 1);
 	dim3 grid(mesh.mesh_width / block.x, mesh.mesh_height / block.y, 1);
 	WaveProp * dev_ptr;
 	checkCudaErrors(cudaMalloc(&dev_ptr, sizeof(WaveProp)*n));
 	checkCudaErrors(cudaMemcpy(dev_ptr, prop, sizeof(WaveProp)*n, cudaMemcpyHostToDevice));
-	multiWaveGerstenerKernelWithNormals << <grid, block >> > (pos, mesh.mesh_width, mesh.mesh_height, dev_ptr, n, time);
+	multiWaveGerstenerKernelWithNormals << <grid, block >> > (pos, norms,mesh.mesh_width, mesh.mesh_height, dev_ptr, n, time);
 	getLastCudaError("Cuda Kernel Launch failed");
 	checkCudaErrors(cudaFree(dev_ptr));
 }
