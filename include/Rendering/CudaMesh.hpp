@@ -18,7 +18,7 @@ namespace bogong {
 			VertexArray m_VAO;
 			std::vector<Buffer> m_BufferVertex;
 			IndexBuffer m_IBO;
-			long int count = 0;
+			size_t count = 0;
 		public:
 			std::vector<Buffer> & GetBufferVertex()
 			{
@@ -49,7 +49,7 @@ namespace bogong {
 						auto type = elem.type;
 						auto isNormalized = elem.isNormalized;
 						auto stride =  pair.second.GetStride();
-						glVertexAttribPointer(i, count, type, isNormalized, stride, (void*)offset);
+						glVertexAttribPointer(i, count, type, isNormalized, stride, (const void *)offset);
 						offset += elem.count * sizeof(float);
 						i++;
 					}
@@ -76,7 +76,7 @@ namespace bogong {
 			{
 				return m_IBO;
 			}
-			int GetCount()
+			size_t GetCount()
 			{
 				return count;
 			}

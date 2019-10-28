@@ -9,7 +9,7 @@ namespace bogong {
 	protected:
 		unsigned int m_ID=0;
 		bool m_IsBound;
-		unsigned int m_BufferSize = 0;
+		size_t m_BufferSize = 0;
 	
 	public:
 		VertexBuffer() = default;
@@ -19,7 +19,7 @@ namespace bogong {
 			m_IsBound = vertexBuffer.m_IsBound;
 			m_BufferSize = vertexBuffer.m_BufferSize;
 		}
-		VertexBuffer(const void * p_Data, unsigned int p_Size, unsigned int p_Draw = GL_DYNAMIC_DRAW)
+		VertexBuffer(const void * p_Data, size_t  p_Size, unsigned int p_Draw = GL_DYNAMIC_DRAW)
 		{
 			m_BufferSize = p_Size;
 			glGenBuffers(1, &m_ID);

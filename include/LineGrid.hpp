@@ -43,16 +43,16 @@ namespace bogong {
 				m_BufferVertex.push_back(std::make_pair(std::dynamic_pointer_cast<VertexBuffer>(vertex_cvbo), layout1));
 				m_BufferVertex.push_back(std::make_pair(std::dynamic_pointer_cast<VertexBuffer>(color_cvbo), layout2));	
 				m_BufferVertex.push_back(std::make_pair(std::dynamic_pointer_cast<VertexBuffer>(normals_cvbo), layout3));
-				props[0].amplitude = 0.001;
-				props[1].amplitude = 0.004;
-				props[2].amplitude = 0.004;
-				props[3].amplitude = 0.002;
+				props[0].amplitude = 0.001f;
+				props[1].amplitude = 0.004f;
+				props[2].amplitude = 0.004f;
+				props[3].amplitude = 0.002f;
 				props[0].isCircular = 0;
 				props[1].isCircular = 0xFF;
 				props[2].isCircular = 0xFF;
 				props[3].isCircular = 0;
-				props[0].dirx = 1.0f / sqrt(2);
-				props[0].diry = 1.0f / sqrt(2);
+				props[0].dirx = 1.0f / sqrtf(2);
+				props[0].diry = 1.0f / sqrtf(2);
 				props[1].x = 0.5f;
 				props[1].y = 0.1f;
 				props[2].x = 0.1f;
@@ -72,22 +72,22 @@ namespace bogong {
 				for (int i = 0; i < n; i++)
 				{
 					std::string label ="Q" + std::to_string(i);
-					ImGui::InputFloat(label.c_str(), &props[i].q, 0.001, 0.001,5);
+					ImGui::InputFloat(label.c_str(), &props[i].q, 0.001f, 0.001f,5);
 				}
 				for (int i = 0; i < n; i++)
 				{
 					std::string label = "Amplitude" + std::to_string(i);
-					ImGui::InputFloat(label.c_str(), &props[i].amplitude, 0.001, 0.001, 5);
+					ImGui::InputFloat(label.c_str(), &props[i].amplitude, 0.001f, 0.001f, 5);
 				}
 				for (int i = 0; i < n; i++)
 				{
 					std::string label = "Phase" + std::to_string(i);
-					ImGui::InputFloat(label.c_str(), &props[i].phase, 0.001, 0.001, 5);
+					ImGui::InputFloat(label.c_str(), &props[i].phase, 0.001f, 0.001f, 5);
 				}
 				for (int i = 0; i < n; i++)
 				{
 					std::string label = "Wave velocity " + std::to_string(i);
-					ImGui::InputFloat(label.c_str(), &props[i].w, 0.001, 0.001, 5);
+					ImGui::InputFloat(label.c_str(), &props[i].w, 0.001f, 0.001f, 5);
 				}
 				for (int i = 0; i < n; i++)
 				{

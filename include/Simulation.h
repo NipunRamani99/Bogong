@@ -20,7 +20,7 @@ namespace bogong{
 		std::shared_ptr<cuda::LineGrid> lineGrid;
 		float t = 0.0f;
 		float m_Scale = 0.895f;
-		float time = 0.01;
+		float time = 0.01f;
 		float speed = 0.0005f;
 		float amplitude = 1.0f;
 		
@@ -41,9 +41,9 @@ namespace bogong{
 		{
 			lineGrid->Input();
 			lineGrid->Update(time);
-			ImGui::InputFloat("Wave speed.", &speed, 0.0001, 7);
+			ImGui::InputFloat("Wave speed.", &speed, 0.0001f, 7);
 			time += speed;
-			if (ImGui::InputFloat("Wave Amplitude.", &amplitude, 0.0001, 7))
+			if (ImGui::InputFloat("Wave Amplitude.", &amplitude, 0.0001f, 7))
 			{
 				lineGrid->SetAmplitude(amplitude);
 			}

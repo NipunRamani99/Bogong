@@ -30,14 +30,14 @@ namespace bogong {
 				m_Shader.Bind();
 				if (cumesh->GetIndexBuffer().GetID() != 0)
 				{
-					m_DrawCall = [](GLenum DrawMode, int count) { glDrawElements(DrawMode, count, GL_UNSIGNED_INT, 0); };
+					m_DrawCall = [](GLenum DrawMode, size_t count) { glDrawElements(DrawMode, count, GL_UNSIGNED_INT, 0); };
 				}
 				else
 				{
-					m_DrawCall = [](GLenum DrawMode, int count) { glDrawArrays(DrawMode, 0, count);  };
+					m_DrawCall = [](GLenum DrawMode, size_t count) { glDrawArrays(DrawMode, 0, count);  };
 				}
 			
-				int count = cumesh->GetCount();
+				size_t count = cumesh->GetCount();
 				m_Shader.setMat4("model",m_Model);
 				m_DrawCall(m_DrawMode, count);
 				error();

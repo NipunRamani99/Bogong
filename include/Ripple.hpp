@@ -22,30 +22,30 @@ namespace bogong {
 			m_Center = p_Center;
 			int steps = 100;
 			float delStep = width / steps;
-			width = steps / 2;
+			width = float(steps / 2);
 			int height = steps / 2;
 			//Create Vertices.
 			m_Vertices.resize(steps*steps + 1);
 			int idx = 0;
-			glm::vec3 xTangent = glm::vec3(1, 0, 0);
-			glm::vec3 zTangent = glm::vec3(0, 0, 1);
+			glm::vec3 xTangent = glm::vec3(1.0f, 0.0f, 0.0f);
+			glm::vec3 zTangent = glm::vec3(0.0f, 0.0f, 1.0f);
 			glm::vec3 res;
-			float f = 1.0;
+			float f = 1.0f;
 			for (int i = -steps / 2; i < steps / 2; i++)
 			{
 				float x = delStep * i;
 				for (int j = -steps / 2; j < steps / 2; j++)
 				{
 					float z = j * delStep;
-					float y = 0.03*sin(f*(x*x+ z * z) * 180 / M_PI);
+					float y = 0.03f*sin(f*(x*x+ z * z) * 180.0f / float(M_PI));
 					m_Vertices[idx].x = x;
 					m_Vertices[idx].y = y;
 					m_Vertices[idx].z = z;
 					m_Vertices[idx].r = 1.0f;
 					m_Vertices[idx].g = 0.5f;  
 					m_Vertices[idx].a = 1.0f;
-					float d1 = 2 * f*x*0.03*cos(f*((x*x + z * z) * 180 / M_PI));
-					float d2 = 2 * f*z*0.03*cos(f*(x*x + z * z) * 180 / M_PI);
+					float d1 = 2.0f * f*x*0.03f*cosf(f*((x*x + z * z) * 180.0f / float(M_PI)));
+					float d2 = 2.0f * f*z*0.03f*cosf(f*(x*x + z * z) * 180.0f /float(M_PI));
 					xTangent.y = d1;
 					zTangent.y = d2;
 					res = glm::normalize(glm::cross(zTangent, xTangent));

@@ -34,14 +34,15 @@ namespace bogong {
 		float zoom = 3.0f;
 	public:
 		 
-		void Update(Keyboard & kbd, Mouse & mouse)
+		/*void Update(bogong::Keyboard & kbd, bogong::Mouse & mouse)
 		{
-			if (kbd.isKeyPressed(bogong::KEY::KEY_A))
+			KEY key = KEY::KEY_A;
+			if (kbd.isKeyPressed(key))
 			{
 				zoom -= 0.5f;
 			}
 			
-		}
+		}*/
 	};
 	class IsoCamera
 	{

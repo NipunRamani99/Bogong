@@ -22,6 +22,7 @@ namespace bogong
 		FreeCamera * free;
 		std::shared_ptr<Simulation> sim;
 		Keyboard kbd;
+		Mouse mouse;
 		int camID = 0;
 	public:
 
@@ -41,12 +42,8 @@ namespace bogong
 			cam = new IsoCamera(window, WIDTH, HEIGHT);
 			free = new FreeCamera(WIDTH, HEIGHT);
 
-			Callbacks::camID = camID;
-			Callbacks::freecam = free;
-			Callbacks::cam = cam;
 			kbd.SetCallback(window);
-			glfwSetCursorPosCallback(window, Callbacks::mousePositionCallback);
-			glfwSetMouseButtonCallback(window, Callbacks::mouseButtonCallback);
+			mouse.SetCallback(window);
 			Init::InitImgui(*window);
 			glEnable(GL_DEPTH_TEST);
 			glEnable(GL_BLEND);
@@ -58,13 +55,13 @@ namespace bogong
 		void Start()
 		{
 			glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
-			Shader shader;
+			/*Shader shader;
 			shader.LoadShader("shaders/vertexShader.glsl", ShaderType::VERTEX);
 			shader.LoadShader("shaders/fragmentShader.glsl", ShaderType::FRAGMENT);
-			shader.LoadProgram();
-			programID = shader.GetProgramID();
-			glUseProgram(programID);
-			ICallbacks::AddShader(shader);
+			shader.LoadProgram();*/
+			//programID = shader.GetProgramID();
+			//glUseProgram(programID);
+			//ICallbacks::AddShader(shader);
 			assert((bool)!error());
 			error();
 			int display_w, display_h;
@@ -72,59 +69,25 @@ namespace bogong
 			glfwGetFramebufferSize(window, &display_w, &display_h);
 			glClearColor(Init::clear_color.x, Init::clear_color.y, Init::clear_color.z, Init::clear_color.w);
 			glViewport(0, 0, display_w, display_h);
-			cam->setShader(shader);
+			/*cam->setShader(shader);
 			free->SetShader(shader);
 			glm::mat4 model = glm::mat4(1.0f);
 			shader.setMat4("model", model);
-			shader.setBool("isTextured", false);
-			sim = std::make_shared<Simulation>(shader);
+			shader.setBool("isTextured", false);*/
+			//sim = std::make_shared<Simulation>(shader);
 
 		}
 		void Update()
 		{
-			sim->Update();
-			glm::vec3 pos = free->GetCameraPos();
-			ImGui::Text("X: %.1f Y: %.1f Z: %.1f", pos.x, pos.y, pos.z);
-			if (ImGui::InputFloat("View Radius: ", &cam->radius, 0.5, 0.5, 4))
-			{
-				cam->updateCamera();
-			}
-			if (ImGui::ColorEdit3("clear color", (float*)&Init::clear_color))
-			{
-				glClearColor(Init::clear_color.x, Init::clear_color.y, Init::clear_color.z, Init::clear_color.w);
-			}
-			if (camID == 0) {
-				if (ImGui::Button("Switch Camera"))
-				{
-					if (camID == 0)
-					{
-						Callbacks::camID = 1;
-						camID = 1;
-						glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
-
-					}
-				}
-			}
-			else {
-				ImGui::Text("Press K to switch back.");
-				if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS)
-				{
-
-					Callbacks::camID = 0;
-					camID = 0;
-					glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-
-				}
-			}
+			std::string coords = "X: "+ std::to_string(mouse.x) + " Y: " + std::to_string(mouse.y);
+			
+			ImGui::LabelText(coords.c_str(),"Test: ");
 		}
 		void DrawCalls()
 		{
-			sim->Draw();
 		}
 		void RenderEverything()
 		{
-			DrawCalls();
 			Init::Render();
 			Init::EndImguiFrame();
 			glfwSwapBuffers(window);
@@ -136,6 +99,7 @@ namespace bogong
 		void Loop()
 		{
 			kbd.Flush();
+			mouse.Flush();
 			glfwPollEvents();
 			if (kbd.isKeyPressed(KEY_A))
 			{
@@ -148,6 +112,15 @@ namespace bogong
 			if (kbd.isKeyReleased(KEY_A))
 			{
 				std::cout << "KEY A Is Released.";
+			}
+			if (mouse.isButtonPressed(BUTTON::LMB))
+			{
+				std::cout << "LMB PRESSED.";
+			}
+			if (mouse.isButtonReleased(BUTTON::LMB))
+			{
+				std::cout << "LMB RELEASED.";
+				std::cout << "X: " << mouse.x << " Y: " << mouse.y<<". " ;
 			}
 			Init::StartImguiFrame();
 			Init::PrepareImguiFrame();
