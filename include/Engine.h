@@ -9,8 +9,8 @@
 #include "Camera.h"
 #include "Keyboard.h"
 #include "Mouse.h"
-#define WIDTH 1366
-#define HEIGHT 768
+#define WIDTH 800
+#define HEIGHT 600
 namespace bogong
 {
 	class Engine
@@ -18,12 +18,13 @@ namespace bogong
 	private:
 		GLFWwindow * window;
 		GLuint programID;
-		IsoCamera * cam;
-		FreeCamera * free;
+		std::shared_ptr<IsometricCamera> camera;
 		std::shared_ptr<Simulation> sim;
 		Keyboard kbd;
 		Mouse mouse;
 		int camID = 0;
+		double prevTime = 0.0;
+		double currentTime = 0.0;
 	public:
 
 		bool KeepRendering = true;
@@ -32,62 +33,54 @@ namespace bogong
 			int gpuDevice = 0;
 			int device_count = 0;
 			Init::InitGLFW();
-
 			window = bogong::Init::CreateWindowGL(WIDTH, HEIGHT, "Mic Check.");
 			Init::SetGLFWWindow(*window, 4, 3, 3, GLFW_OPENGL_CORE_PROFILE, true);
 			glewExperimental = true;
 			if (glewInit() != GLEW_OK) {
 				std::cout << "Couldn't init glew.";
 			}
-			cam = new IsoCamera(window, WIDTH, HEIGHT);
-			free = new FreeCamera(WIDTH, HEIGHT);
-
+			camera = std::make_shared<IsometricCamera>();
 			kbd.SetCallback(window);
 			mouse.SetCallback(window);
 			Init::InitImgui(*window);
-			glEnable(GL_DEPTH_TEST);
-			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			glEnable(GL_CULL_FACE);
-			glFrontFace(GL_CCW);
+			//glEnable(GL_DEPTH_TEST);
+			//glEnable(GL_BLEND);
+			//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			//glEnable(GL_CULL_FACE);
+			//glFrontFace(GL_CCW);
 
 		}
 		void Start()
 		{
-			glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 			/*Shader shader;
 			shader.LoadShader("shaders/vertexShader.glsl", ShaderType::VERTEX);
 			shader.LoadShader("shaders/fragmentShader.glsl", ShaderType::FRAGMENT);
 			shader.LoadProgram();*/
-			//programID = shader.GetProgramID();
-			//glUseProgram(programID);
-			//ICallbacks::AddShader(shader);
 			assert((bool)!error());
 			error();
+			sim = std::make_shared<Simulation>();
 			int display_w, display_h;
 			glfwMakeContextCurrent(window);
 			glfwGetFramebufferSize(window, &display_w, &display_h);
-			glClearColor(Init::clear_color.x, Init::clear_color.y, Init::clear_color.z, Init::clear_color.w);
+			
 			glViewport(0, 0, display_w, display_h);
-			/*cam->setShader(shader);
-			free->SetShader(shader);
-			glm::mat4 model = glm::mat4(1.0f);
-			shader.setMat4("model", model);
-			shader.setBool("isTextured", false);*/
-			//sim = std::make_shared<Simulation>(shader);
+			
 
 		}
-		void Update()
+		void Update(double deltime)
 		{
 			std::string coords = "X: "+ std::to_string(mouse.x) + " Y: " + std::to_string(mouse.y);
-			
 			ImGui::LabelText(coords.c_str(),"Test: ");
+			sim->Update(kbd, mouse, (float)deltime);
 		}
 		void DrawCalls()
 		{
+			sim->Draw();
 		}
 		void RenderEverything()
 		{
+			DrawCalls();
 			Init::Render();
 			Init::EndImguiFrame();
 			glfwSwapBuffers(window);
@@ -98,6 +91,8 @@ namespace bogong
 		}
 		void Loop()
 		{
+			prevTime = currentTime;
+			double currentTime = glfwGetTime();
 			kbd.Flush();
 			mouse.Flush();
 			glfwPollEvents();
@@ -126,7 +121,7 @@ namespace bogong
 			Init::PrepareImguiFrame();
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			glfwPollEvents();
-			Update();
+			Update(currentTime-prevTime);
 			RenderEverything();
 		}
 		void End()

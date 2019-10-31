@@ -180,6 +180,7 @@
     <ClInclude Include="include\SurfaceWave\WaveMesh.hpp" />
     <ClInclude Include="include\SurfaceWave\RunCuda.hpp" />
     <ClInclude Include="include\LineGrid.hpp" />
+    <ClInclude Include="include\Plane.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Imgui">
@@ -202,6 +203,8 @@
     <None Include="include\LightFragmentShader.glsl" />
     <None Include="shaders\GerstenerWaveVertex.glsl" />
     <None Include="shaders\GerstenerWaveFragment.glsl" />
+    <None Include="shaders\BasicVertexShader.glsl" />
+    <None Include="shaders\BasicFragmentShader.glsl" />
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="src\kernel.cu" />

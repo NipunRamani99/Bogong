@@ -2,6 +2,8 @@
 #include<glm/gtx/transform.hpp>
 #include<GLFW/glfw3.h>
 #include "Shaders.hpp"
+#include "Keyboard.h"
+#include "Mouse.h"
 namespace bogong {
 	namespace CamGlobal {
 		glm::vec3 viewPos = glm::vec3(1.0f);
@@ -23,6 +25,42 @@ namespace bogong {
 		}
 		
 	};
+	class FPCamera : public Camera
+	{
+		glm::vec3 cameraPos = glm::vec3(0.0f,0.0f,-1.0f);
+		glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+		glm::mat4 view = glm::mat4(1.0f);
+		glm::mat4 projection = glm::mat4(1.0f);
+		glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, 1.0f);
+		float cameraSpeed = 0.05f;
+		int screenWidth = 800;
+		int screenHeight = 600;
+	public:
+		FPCamera()
+		{
+			projection = glm::perspective(glm::radians(45.0f), float(screenWidth) / float(screenHeight), 0.1f, 100.0f);
+			view = glm::lookAt(cameraPos, cameraPos+cameraFront,up );
+		}
+		
+		void Update(bogong::Keyboard & kbd, bogong::Mouse & mouse,float delta)
+		{
+			float camSpeed = cameraSpeed * delta;
+			if (kbd.isKeyPressed(KEY::KEY_W)) {
+				cameraPos += camSpeed * cameraFront;
+			};
+			if (kbd.isKeyPressed(KEY::KEY_S)) {
+				cameraPos -= camSpeed * cameraFront;
+			};
+			if (kbd.isKeyPressed(KEY::KEY_A)) {
+				cameraPos -= glm::normalize(glm::cross(cameraFront, up))*camSpeed;
+			};
+			if (kbd.isKeyPressed(KEY::KEY_D)) {
+				cameraPos += glm::normalize(glm::cross(cameraFront, up))*camSpeed;
+			};
+			view = glm::lookAt(cameraPos, cameraPos + cameraFront, up);
+			ImGui::DragFloat3("Position", (float*)&cameraPos, 0.01, -1000, 1000);
+		}
+	};
 	class IsometricCamera : public Camera
 	{
 		glm::vec3 cameraPos = glm::vec3(1.0f);
@@ -31,18 +69,34 @@ namespace bogong {
 		glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
 		double prevTheta;
 		double prevPhi;
+		int currentX = 0;
+		int currentY = 0;
+		int prevX = 0;
+		int prevY = 0;
 		float zoom = 3.0f;
+
 	public:
 		 
-		/*void Update(bogong::Keyboard & kbd, bogong::Mouse & mouse)
+		void Update(bogong::Keyboard & kbd, bogong::Mouse & mouse)
 		{
 			KEY key = KEY::KEY_A;
 			if (kbd.isKeyPressed(key))
 			{
 				zoom -= 0.5f;
 			}
-			
-		}*/
+			BUTTON btn = BUTTON::LMB;
+			if (mouse.isButtonPressed(btn))
+			{
+				currentX = mouse.x;
+				currentY = mouse.y;
+			}
+			if (mouse.isButtonReleased(btn))
+			{
+				prevX = currentX;
+				prevY = currentY;
+
+			}
+		}
 	};
 	class IsoCamera
 	{

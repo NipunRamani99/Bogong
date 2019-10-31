@@ -142,6 +142,7 @@
     <ClInclude Include="include\Lights.hpp" />
     <ClInclude Include="include\Lines.hpp" />
     <ClInclude Include="include\Mouse.h" />
+    <ClInclude Include="include\Plane.hpp" />
     <ClInclude Include="include\Rendering\CudaMesh.hpp" />
     <ClInclude Include="include\Rendering\CudaRenderer.hpp" />
     <ClInclude Include="include\Rendering\Mesh.hpp" />
@@ -182,6 +183,8 @@
   <ItemGroup>
     <None Include="imgui.ini" />
     <None Include="include\LightFragmentShader.glsl" />
+    <None Include="shaders\BasicFragmentShader.glsl" />
+    <None Include="shaders\BasicVertexShader.glsl" />
     <None Include="shaders\GerstenerWaveFragment.glsl" />
     <None Include="shaders\GerstenerWaveVertex.glsl" />
   </ItemGroup>

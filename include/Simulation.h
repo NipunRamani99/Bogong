@@ -8,54 +8,52 @@
 #include "LineGrid.hpp"
 #include <memory>
 #include "Imgui.h"
-
+#include "Keyboard.h"
+#include "Mouse.h"
+#include "Plane.hpp"
 namespace bogong{
 	class Simulation
 	{
 	private:
 		glm::vec3 lightPos = glm::vec3(-1.0f, 0.2f, 0.0f);
 		Shader m_Shader;
-		Shader GerstnerShader;
-		
-		std::shared_ptr<cuda::LineGrid> lineGrid;
-		float t = 0.0f;
-		float m_Scale = 0.895f;
-		float time = 0.01f;
-		float speed = 0.0005f;
-		float amplitude = 1.0f;
-		
+		std::shared_ptr<FPCamera> camera;
+		std::shared_ptr<Plane> plane;
 	public:
-		Simulation() = default;
-		Simulation(Shader p_Shader)
+		
+		Simulation()
 		{
-			m_Shader = p_Shader;
-			GerstnerShader.LoadShader("shaders/GerstenerWaveVertex.glsl",bogong::ShaderType::VERTEX);
-			GerstnerShader.LoadShader("shaders/GerstenerWaveFragment.glsl", bogong::ShaderType::FRAGMENT);
-			GerstnerShader.LoadProgram();
-			lineGrid = std::make_shared<cuda::LineGrid>(64,10);
-			error();
-			lineGrid->SetShader(m_Shader);
-			error();
+			m_Shader.LoadShader("shaders/BasicVertexShader.glsl", bogong::ShaderType::VERTEX);
+			m_Shader.LoadShader("shaders/BasicFragmentShader.glsl", bogong::ShaderType::FRAGMENT);
+			m_Shader.LoadProgram();
+			assert(!error());
+
+			plane = std::make_shared<Plane>();
+			plane->setShader(m_Shader);
+			assert(!error());
+
+			camera = std::make_shared<FPCamera>();
+			assert(!error());
+
 		}
-		void Update()
+		void Update(bogong::Keyboard & kbd, bogong::Mouse & mouse,float delta)
 		{
-			lineGrid->Input();
-			lineGrid->Update(time);
-			ImGui::InputFloat("Wave speed.", &speed, 0.0001f, 7);
-			time += speed;
-			if (ImGui::InputFloat("Wave Amplitude.", &amplitude, 0.0001f, 7))
-			{
-				lineGrid->SetAmplitude(amplitude);
-			}
-			if (ImGui::InputFloat3("LightPos", (float*)&lightPos, 5))
-			{
-				GerstnerShader.setVec3("lightPos", lightPos);
-			}
+			m_Shader.Bind();
+			camera->Update(kbd, mouse,delta);
+			m_Shader.setMat4("projection", camera->GetProjection());
+			assert(!error());
+
+			m_Shader.setMat4("view", camera->GetView());
+			assert(!error());
+
 		}
 		void Draw()
 		{
-			lineGrid->Draw();
-			error();
+			assert(!error());
+
+			plane->Draw();
+			assert(!error());
+
 		}
 	};
 }

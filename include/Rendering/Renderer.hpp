@@ -28,26 +28,7 @@ namespace bogong {
 			
 			m_VAO = VertexArray();
 		}
-		/*Renderer & operator=(Renderer && p_Renderer)
-		{
-			m_Mesh = std::move(p_Renderer.m_Mesh);
-			m_DrawCall = std::move(p_Renderer.m_DrawCall);
-			m_Layout = std::move(p_Renderer.m_Layout);
-			m_Model = std::move(p_Renderer.m_Model);
-			m_VAO = std::move(p_Renderer.m_VAO);
-			m_DrawMode = std::move(p_Renderer.m_DrawMode);
-			m_Shader = std::move(p_Renderer.m_Shader);
-			
-			return *this;
-		}
-		Renderer(Renderer && renderer)
-			:
-			m_Mesh(std::move(renderer.m_Mesh)),
-			m_Layout(std::move(renderer.m_Layout)),
-			m_VAO(std::move(renderer.m_VAO))
-		{
-
-		}*/
+		
 		void SetLayout(VertexBufferLayout p_Layout)
 		{
 			m_Layout = p_Layout;
@@ -56,9 +37,13 @@ namespace bogong {
 		template<typename T>
 		void RenderMesh(const std::shared_ptr<T> & mesh)
 		{
+			assert(!error());
+
 			m_VAO.Bind();
 			int i = 0;
 			m_Shader.Bind();
+			assert(!error());
+
 			for (auto element : m_Layout.GetElements())
 			{
 				glEnableVertexAttribArray(i);
@@ -74,24 +59,26 @@ namespace bogong {
 				m_DrawCall = [](GLenum DrawMode, size_t count) { glDrawArrays(DrawMode, 0, (GLsizei)count);  };
 			}
 			m_Shader.setMat4("model", m_Model);
-			error();
+			assert(!error());
+
 			int count = mesh->GetCount();
 			m_DrawCall(m_DrawMode, count);
-			error();
+			assert(!error());
+
 		}
 		
 		template<typename T>
 		void BindBuffer(const std::shared_ptr<T> & mesh)
 		{
 			m_VAO.Bind();
-			error();
+			assert(!error());
 			mesh->GetVertexBuffer().Bind();
 			mesh->GetIndexBuffer().Bind();
 			//m_Shader.Bind();
 			int stride = m_Layout.GetStride();
 			int offset = 0;
 			int i = 0;
-			
+			assert(!error());
 			i = 0;
 			for (auto element : m_Layout.GetElements())
 			{
