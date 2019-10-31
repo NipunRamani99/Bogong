@@ -2,6 +2,8 @@
 #include<glm/gtx/transform.hpp>
 #include<GLFW/glfw3.h>
 #include "Shaders.hpp"
+#include "Keyboard.h"
+#include "Mouse.h"
 namespace bogong {
 	namespace CamGlobal {
 		glm::vec3 viewPos = glm::vec3(1.0f);
@@ -36,10 +38,6 @@ namespace bogong {
 		 
 		void Update(Keyboard & kbd, Mouse & mouse)
 		{
-			if (kbd.isKeyPressed(bogong::KEY::KEY_A))
-			{
-				zoom -= 0.5f;
-			}
 			
 		}
 	};
