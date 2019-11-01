@@ -1,4 +1,7 @@
 #include "../include/Globals.h"
+#include <string>
+#include <iostream>
+#include <gl/glew.h>
 namespace bogong{
 bool error()
 {

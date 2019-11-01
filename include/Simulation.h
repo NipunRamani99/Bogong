@@ -36,7 +36,7 @@ namespace bogong{
 			assert(!error());
 
 		}
-		void Update(bogong::Keyboard & kbd, bogong::Mouse & mouse,float delta)
+		void Update(std::shared_ptr<bogong::Keyboard>  kbd, std::shared_ptr<bogong::Mouse> & mouse,float delta)
 		{
 			m_Shader.Bind();
 			camera->Update(kbd, mouse,delta);
