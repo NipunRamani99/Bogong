@@ -31,63 +31,18 @@ namespace bogong {
 		static std::map<int, STATUS> KeyMap;
 
 	public:
-		Keyboard()
-		{
-			//Initialize the Container and set every isPressed value to false.
-			for (int i = 0; i < 36; i++)
-			{
-				KeyMap.insert({ i,NONE });
-			}
-		}
-		void Flush()
-		{
-			for (auto & Key : Keyboard::KeyMap)
-			{
-				Key.second = NONE;
-			}
-		}
-		void SetCallback(GLFWwindow * p_Window)
-		{
+		Keyboard();
 
-			glfwSetKeyCallback(p_Window, Keyboard::Callback);
-		}
-		static void Callback(GLFWwindow* p_Window, int p_Key, int p_Scancode, int p_Action, int mods)
-		{
-			if (p_Key >= 65 && p_Key <= 90)
-			{
-				p_Key = p_Key - 65;
-				STATUS stat;
-				if (p_Action == GLFW_PRESS)
-					stat = IS_PRESSED;
-				if (p_Action == GLFW_RELEASE)
-					stat = IS_RELEASED;
-				if (p_Action == GLFW_REPEAT)
-					stat = IS_REPEATING;
+		void Flush();
 
-				Keyboard::KeyMap.find(p_Key)->second = stat;
-			}
-		}
+		void SetCallback(GLFWwindow* p_Window);
 
-		bool isKeyPressed(KEY p_Key)
-		{
-			bool RetnVal = false;
-			if (Keyboard::KeyMap.at(p_Key) == IS_PRESSED)
-				RetnVal = true;
-			return RetnVal;
-		}
-		bool isKeyRepeating(KEY p_Key)
-		{
-			bool RetnVal = false;
-			if (Keyboard::KeyMap.at(p_Key) == IS_REPEATING)
-				RetnVal = true;
-			return RetnVal;
-		}
-		bool isKeyReleased(KEY p_Key)
-		{
-			bool RetnVal = false;
-			if (Keyboard::KeyMap.at(p_Key) == IS_RELEASED)
-				RetnVal = true;
-			return RetnVal;
-		}
+		static void Callback(GLFWwindow* p_Window, int p_Key, int p_Scancode, int p_Action, int mods);
+
+		bool isKeyPressed(KEY p_Key);
+
+		bool isKeyRepeating(KEY p_Key);
+
+		bool isKeyReleased(KEY p_Key);
 	};
 }

@@ -7,7 +7,7 @@
 #include "WaveMeshTest.h"
 #include "LineGrid.hpp"
 #include <memory>
-#include "Imgui.h"
+
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Plane.hpp"
@@ -47,7 +47,7 @@ namespace bogong{
 			assert(!error());
 
 		}
-		void Draw()
+		void Draw() const
 		{
 			assert(!error());
 

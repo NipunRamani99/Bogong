@@ -7,6 +7,6 @@ uniform mat4 view;
 out vec4 Color;
 void main()
 {
-	vec3 Pos = vec3((vec4(pos, 0.0)));
+	gl_Position = vec4(pos, 1.0);
 	Color = aColor;
 }

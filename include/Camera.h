@@ -4,10 +4,14 @@
 #include "Shaders.hpp"
 #include "Keyboard.h"
 #include "Mouse.h"
-namespace bogong {
-	namespace CamGlobal {
+
+namespace bogong
+{
+	namespace CamGlobal
+	{
 		glm::vec3 viewPos = glm::vec3(1.0f);
 	};
+
 	class Camera
 	{
 		glm::mat4 projection;
@@ -19,15 +23,16 @@ namespace bogong {
 		{
 			return projection;
 		}
+
 		glm::mat4 GetView()
 		{
 			return view;
 		}
-		
 	};
+
 	class FPCamera : public Camera
 	{
-		glm::vec3 cameraPos = glm::vec3(0.0f,0.0f,-1.0f);
+		glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, -1.0f);
 		glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
 		glm::mat4 view = glm::mat4(1.0f);
 		glm::mat4 projection = glm::mat4(1.0f);
@@ -35,32 +40,43 @@ namespace bogong {
 		float cameraSpeed = 0.05f;
 		int screenWidth = 800;
 		int screenHeight = 600;
+		float prevMouseX = 0.0f;
+		float prevMouseY = 0.0f;
+		float currMouseX = 0.0f;
+		float currMouseY = 0.0f;
+		float pitch = 0.0f;
+		float yaw = 0.0f;
 	public:
 		FPCamera()
 		{
 			projection = glm::perspective(glm::radians(45.0f), float(screenWidth) / float(screenHeight), 0.1f, 100.0f);
-			view = glm::lookAt(cameraPos, cameraPos+cameraFront,up );
+			view = lookAt(cameraPos, cameraPos + cameraFront, up);
 		}
-		
-		void Update(bogong::Keyboard & kbd, bogong::Mouse & mouse,float delta)
+
+		void Update(Keyboard& kbd, Mouse& mouse, float delta)
 		{
 			float camSpeed = cameraSpeed * delta;
-			if (kbd.isKeyPressed(KEY::KEY_W)) {
+			if (kbd.isKeyPressed(KEY_W))
+			{
 				cameraPos += camSpeed * cameraFront;
-			};
-			if (kbd.isKeyPressed(KEY::KEY_S)) {
+			}
+			if (kbd.isKeyPressed(KEY_S))
+			{
 				cameraPos -= camSpeed * cameraFront;
-			};
-			if (kbd.isKeyPressed(KEY::KEY_A)) {
-				cameraPos -= glm::normalize(glm::cross(cameraFront, up))*camSpeed;
-			};
-			if (kbd.isKeyPressed(KEY::KEY_D)) {
-				cameraPos += glm::normalize(glm::cross(cameraFront, up))*camSpeed;
-			};
-			view = glm::lookAt(cameraPos, cameraPos + cameraFront, up);
-			ImGui::DragFloat3("Position", (float*)&cameraPos, 0.01, -1000, 1000);
+			}
+			if (kbd.isKeyPressed(KEY_A))
+			{
+				cameraPos -= normalize(cross(cameraFront, up)) * camSpeed;
+			}
+			if (kbd.isKeyPressed(KEY_D))
+			{
+				cameraPos += normalize(cross(cameraFront, up)) * camSpeed;
+			}
+			view = lookAt(cameraPos, cameraPos + cameraFront, up);
+			ImGui::DragFloat3("Position", reinterpret_cast<float*>(&cameraPos), 0.01, -1000, 1000);
 		}
 	};
+
 	class IsometricCamera : public Camera
 	{
 		glm::vec3 cameraPos = glm::vec3(1.0f);
@@ -76,15 +92,15 @@ namespace bogong {
 		float zoom = 3.0f;
 
 	public:
-		 
-		void Update(bogong::Keyboard & kbd, bogong::Mouse & mouse)
+
+		void Update(Keyboard& kbd, Mouse& mouse)
 		{
-			KEY key = KEY::KEY_A;
+			KEY key = KEY_A;
 			if (kbd.isKeyPressed(key))
 			{
 				zoom -= 0.5f;
 			}
-			BUTTON btn = BUTTON::LMB;
+			BUTTON btn = LMB;
 			if (mouse.isButtonPressed(btn))
 			{
 				currentX = mouse.x;
@@ -94,10 +110,10 @@ namespace bogong {
 			{
 				prevX = currentX;
 				prevY = currentY;
-
 			}
 		}
 	};
+
 	class IsoCamera
 	{
 		glm::vec3 cameraPos = glm::vec3(3.0f, 3.0f, 3.0f);
@@ -110,7 +126,7 @@ namespace bogong {
 		glm::mat4 projection;
 		int width = 800;
 		int height = 600;
-		GLFWwindow * window;
+		GLFWwindow* window;
 		Shader m_Shader;
 		float currPhi = glm::radians(45.0f);
 		float currTheta = glm::radians(45.0f);
@@ -118,17 +134,19 @@ namespace bogong {
 	public:
 		bool isIsometric = true;
 		float radius = 3.0f;
-		IsoCamera(GLFWwindow * p_Window, int p_Width, int p_Height)
+
+		IsoCamera(GLFWwindow* p_Window, int p_Width, int p_Height)
 		{
 			window = p_Window;
-			cameraRight = glm::normalize(glm::cross(up, cameraDirection));
-			cameraUp = glm::cross(cameraDirection, cameraRight);
-			view = glm::lookAt(cameraPos, cameraTarget, up);
-			projection = glm::perspective(glm::radians(55.0f), (float)width / height, 0.1f, 100.0f);
+			cameraRight = normalize(cross(up, cameraDirection));
+			cameraUp = cross(cameraDirection, cameraRight);
+			view = lookAt(cameraPos, cameraTarget, up);
+			projection = glm::perspective(glm::radians(55.0f), static_cast<float>(width) / height, 0.1f, 100.0f);
 			width = p_Width;
 			height = p_Height;
 			CamGlobal::viewPos = cameraPos;
 		}
+
 		void setShader(Shader p_shader)
 		{
 			glUseProgram(p_shader.GetProgramID());
@@ -136,16 +154,19 @@ namespace bogong {
 			m_Shader.setMat4("projection", projection);
 			m_Shader.setMat4("view", view);
 		}
+
 		void ZoomIn()
 		{
 			radius -= 0.05f;
 			updateCamera(currPhi, currTheta);
 		}
+
 		void ZoomOut()
 		{
 			radius += 0.05f;
 			updateCamera(currPhi, currTheta);
 		}
+
 		void AddShader(Shader p_Shader)
 		{
 			glUseProgram(p_Shader.GetProgramID());
@@ -153,28 +174,32 @@ namespace bogong {
 			p_Shader.setMat4("view", view);
 			shaders.push_back(p_Shader);
 		}
+
 		void updateCamera(float phi, float theta)
 		{
 			currTheta = theta;
 			currPhi = phi;
 			updateCamera();
 		}
-		inline const glm::mat4 & GetView() const
+
+		const glm::mat4& GetView() const
 		{
 			return view;
 		}
-		inline const glm::mat4 & GetProjection() const
+
+		const glm::mat4& GetProjection() const
 		{
 			return projection;
 		}
+
 		void updateCamera()
 		{
 			float camX = radius * sin(currTheta) * sin(currPhi);
 			float camY = radius * cos(currPhi);
 			float camZ = radius * cos(currTheta) * sin(currPhi);
 			cameraPos = glm::vec3(camX, camY, camZ);
-			view = glm::lookAt(cameraPos, cameraTarget, up);
-			for (auto & shader : shaders)
+			view = lookAt(cameraPos, cameraTarget, up);
+			for (auto& shader : shaders)
 			{
 				glUseProgram(shader.GetProgramID());
 				shader.setMat4("projection", projection);
@@ -183,39 +208,42 @@ namespace bogong {
 			CamGlobal::viewPos = cameraPos;
 			glUseProgram(m_Shader.GetProgramID());
 		}
-
 	};
+
 	class FreeCamera
 	{
 		// camera
 		glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 		glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
-		float yaw = -90.0f;	// yaw is initialized to -90.0 degrees since a yaw of 0.0 results in a direction vector pointing to the right so we initially rotate a bit to the left.
+		float yaw = -90.0f;
+		// yaw is initialized to -90.0 degrees since a yaw of 0.0 results in a direction vector pointing to the right so we initially rotate a bit to the left.
 		float pitch = 0.0f;
 		float lastX = 1366.0f / 2.0;
 		float lastY = 768.0 / 2.0;
 		float fov = 45.0f;
 
 		// timing
-		float deltaTime = 0.0f;	// time between current frame and last frame
+		float deltaTime = 0.0f; // time between current frame and last frame
 		float lastFrame = 0.0f;
 		int width = 0;
 		int height = 0;
-		bogong::Shader m_Shader;
-		std::vector<bogong::Shader> shaders;
+		Shader m_Shader;
+		std::vector<Shader> shaders;
 		glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 
 	public:
 		bool firstMouse = true;
 
 		FreeCamera() = default;
+
 		FreeCamera(int p_Width, int p_Height)
 		{
 			width = p_Width;
 			height = p_Height;
 		}
-		void ProcessInputs(GLFWwindow * window)
+
+		void ProcessInputs(GLFWwindow* window)
 		{
 			if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 				glfwSetWindowShouldClose(window, true);
@@ -226,29 +254,35 @@ namespace bogong {
 			if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 				cameraPos -= cameraSpeed * cameraFront;
 			if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-				cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+				cameraPos -= normalize(cross(cameraFront, cameraUp)) * cameraSpeed;
 			if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-				cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+				cameraPos += normalize(cross(cameraFront, cameraUp)) * cameraSpeed;
 			updateCamera();
 		}
+
 		void SetShader(Shader p_Shader)
 		{
 			m_Shader = p_Shader;
 		}
+
 		void AddShader(Shader p_Shader)
 		{
 			shaders.push_back(p_Shader);
 		}
+
 		glm::vec3 GetCameraPos()
 		{
 			return cameraPos;
 		}
+
 		void updateCamera()
 		{
-			glm::mat4 projection = glm::perspective(glm::radians(fov), (float)width / (float)height, 0.1f, 100.0f);
-			glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+			glm::mat4 projection = glm::perspective(glm::radians(fov),
+			                                        static_cast<float>(width) / static_cast<float>(height), 0.1f,
+			                                        100.0f);
+			glm::mat4 view = lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
-			for (auto & shader : shaders)
+			for (auto& shader : shaders)
 			{
 				glUseProgram(shader.GetProgramID());
 				shader.setMat4("projection", projection);
@@ -256,12 +290,13 @@ namespace bogong {
 			}
 			glUseProgram(m_Shader.GetProgramID());
 		}
-		void mouse_callback(GLFWwindow * window, double xpos, double ypos)
+
+		void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 		{
 			if (this->firstMouse)
 			{
-				lastX = (float)xpos;
-				lastY = (float)ypos;
+				lastX = static_cast<float>(xpos);
+				lastY = static_cast<float>(ypos);
 				firstMouse = false;
 			}
 
@@ -287,7 +322,7 @@ namespace bogong {
 			front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
 			front.y = sin(glm::radians(pitch));
 			front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-			cameraFront = glm::normalize(front);
+			cameraFront = normalize(front);
 			updateCamera();
 		}
 	};

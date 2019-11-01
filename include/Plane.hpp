@@ -56,7 +56,7 @@ namespace bogong {
 			assert(!error());
 
 		}
-		void Draw()
+		void Draw() const
 		{
 			assert(!error());
 			renderer->RenderMesh(mesh);
