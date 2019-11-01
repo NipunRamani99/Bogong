@@ -38,7 +38,7 @@ namespace bogong {
 		void SetCallback(GLFWwindow* p_Window);
 
 		static void Callback(GLFWwindow* p_Window, int p_Key, int p_Scancode, int p_Action, int mods);
-
+		void debugOutput();
 		bool isKeyPressed(KEY p_Key);
 
 		bool isKeyRepeating(KEY p_Key);

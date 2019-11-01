@@ -1,4 +1,5 @@
 #include "../include/Keyboard.h"
+#include "../Imgui/imgui.h"
 namespace bogong {
 	std::map<int, STATUS> Keyboard::KeyMap = std::map<int, STATUS>();
 
@@ -9,6 +10,10 @@ namespace bogong {
 		{
 			KeyMap.insert({i, NONE});
 		}
+	}
+	void Keyboard::debugOutput()
+	{
+		ImGui::LabelText("Test","");
 	}
 
 	void Keyboard::Flush()
