@@ -182,8 +182,6 @@
     <ClInclude Include="include\Rendering\Renderer.hpp" />
     <ClInclude Include="include\Rendering\RendererBase.hpp" />
     <ClInclude Include="include\Rendering\ShapeMesh.hpp" />
-    <ClInclude Include="include\SurfaceWave\WaveMesh.hpp" />
-    <ClInclude Include="include\SurfaceWave\RunCuda.hpp" />
     <ClInclude Include="include\LineGrid.hpp" />
     <ClInclude Include="include\Plane.hpp" />
     <ClInclude Include="include\Cube.hpp" />
@@ -214,6 +212,5 @@
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="src\kernel.cu" />
-    <CudaCompile Include="include\SurfaceWave\kernels.cu" />
   </ItemGroup>
 </Project>
