@@ -21,7 +21,7 @@ namespace bogong{
 	public:
 
 		Simulation();
-		void Update(std::shared_ptr<bogong::Keyboard> kbd, std::shared_ptr<bogong::Mouse>& mouse, float delta);
+		void Update(std::shared_ptr<bogong::Keyboard> &kbd, std::shared_ptr<bogong::Mouse>& mouse, float delta);
 		void Draw() const;
 	};
 }

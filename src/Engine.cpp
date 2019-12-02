@@ -24,21 +24,20 @@ void bogong::Engine::Start()
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	assert((bool)!error());
-	error();
 	sim = std::make_shared<Simulation>();
 	int display_w, display_h;
 	glfwMakeContextCurrent(window);
 	glfwGetFramebufferSize(window, &display_w, &display_h);
-
 	glViewport(0, 0, display_w, display_h);
 	kbd = std::make_shared<Keyboard>();
 	mouse = std::make_shared<Mouse>();
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
 void bogong::Engine::Update(float deltime)
 {
-	std::string coords = "X: " + std::to_string(mouse->x) + " Y: " + std::to_string(mouse->y);
-	ImGui::LabelText(coords.c_str(), "Test: ");
+	std::string coords = "Mouse X: " + std::to_string(mouse->x) + "Mouse Y: " + std::to_string(mouse->y);
+	ImGui::Text(coords.c_str());
 	sim->Update(kbd, mouse, static_cast<float>(deltime));
 }
 
@@ -62,37 +61,20 @@ void bogong::Engine::RenderEverything()
 void bogong::Engine::Loop()
 {
 	prevTime = currentTime;
-	double currentTime = glfwGetTime();
+	currentTime = glfwGetTime();
 	kbd->Flush();
 	mouse->Flush();
-	glfwPollEvents();
-	if (kbd->isKeyPressed(KEY_A))
-	{
-		std::cout << "KEY A Is Pressed.";
-	}
-	if (kbd->isKeyRepeating(KEY_A))
-	{
-		std::cout << "KEY A Is Repeating.";
-	}
-	if (kbd->isKeyReleased(KEY_A))
-	{
-		std::cout << "KEY A Is Released.";
-	}
-	if (mouse->isButtonPressed(LMB))
-	{
-		std::cout << "LMB PRESSED.";
-	}
-	if (mouse->isButtonReleased(LMB))
-	{
-		std::cout << "LMB RELEASED.";
-		std::cout << "X: " << mouse->x << " Y: " << mouse->y << ". ";
-	}
 	Init::StartImguiFrame();
 	Init::PrepareImguiFrame();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glfwPollEvents();
 	Update(currentTime - prevTime);
+	float fps = 1 / (currentTime - prevTime);
+	std::string fpsstr = "FPS: ";
+	fpsstr += std::to_string(fps);
+	ImGui::Text(fpsstr.c_str());
 	RenderEverything();
+	
 }
 
 void bogong::Engine::End()

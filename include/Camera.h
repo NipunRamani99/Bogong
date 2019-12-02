@@ -27,7 +27,7 @@ namespace bogong
 		glm::mat4 view = glm::mat4(1.0f);
 		glm::mat4 projection = glm::mat4(1.0f);
 		glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, 1.0f);
-		float cameraSpeed = 0.05f;
+		float cameraSpeed = 1.0f;
 		int screenWidth = 800;
 		int screenHeight = 600;
 		float prevMouseX = 0.0f;

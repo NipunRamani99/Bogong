@@ -15,14 +15,13 @@ bogong::Simulation::Simulation()
 	assert(!error());
 }
 
-void bogong::Simulation::Update(std::shared_ptr<bogong::Keyboard> kbd, std::shared_ptr<bogong::Mouse>& mouse,
+void bogong::Simulation::Update(std::shared_ptr<bogong::Keyboard> &kbd, std::shared_ptr<bogong::Mouse> &mouse,
                                 float delta)
 {
 	m_Shader.Bind();
 	camera->Update(kbd, mouse, delta);
 	m_Shader.setMat4("projection", camera->GetProjection());
 	assert(!error());
-	kbd->debugOutput();
 	m_Shader.setMat4("view", camera->GetView());
 	assert(!error());
 }

@@ -1,5 +1,6 @@
 #include "../include/Camera.h"
 #include "../include/Keyboard.h"
+#include "../include/Mouse.h"
 #include "../Imgui/imgui.h"
 
 namespace bogong {
@@ -24,6 +25,12 @@ bogong::FPCamera::FPCamera()
 
 void bogong::FPCamera::Update(std::shared_ptr<Keyboard> kbd, std::shared_ptr<Mouse> mouse, float delta)
 {
+	prevMouseX = currMouseX;
+	prevMouseY = currMouseY;
+	currMouseX = mouse->x;
+	currMouseY = mouse->y;
+	pitch += currMouseX - prevMouseX;
+	yaw += prevMouseY-currMouseX;
 	float camSpeed = cameraSpeed * delta;
 	if (kbd->isKeyPressed(KEY_W))
 	{
@@ -41,6 +48,14 @@ void bogong::FPCamera::Update(std::shared_ptr<Keyboard> kbd, std::shared_ptr<Mou
 	{
 		cameraPos += normalize(cross(cameraFront, up)) * camSpeed;
 	}
+	pitch = glm::clamp(pitch, -89.0f, 89.0f);
+	
+	glm::vec3 direction;
+	direction.x = cos(glm::radians(yaw)) + cos(glm::radians(pitch));
+	direction.y = sin(glm::radians(pitch));
+	direction.z = sin(glm::radians(yaw))*cos(glm::radians(pitch));
+	cameraFront = direction;
 	view = lookAt(cameraPos, cameraPos + cameraFront, up);
-	ImGui::DragFloat3("Position", reinterpret_cast<float*>(&cameraPos), 0.01, -1000, 1000);
+	float * posfloat = reinterpret_cast<float*>(&cameraPos);
+	ImGui::DragFloat3("Position", posfloat, 0.01, -1000, 1000);
 }
