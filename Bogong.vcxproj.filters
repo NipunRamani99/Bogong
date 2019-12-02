@@ -28,6 +28,11 @@
     <ClCompile Include="src\Keyboard.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="include\Rendering\Renderer.cpp" />
+    <ClCompile Include="src\VertexBuffer.cpp" />
+    <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\LineGrid.cpp" />
+    <ClCompile Include="src\Simulation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Imgui\imconfig.h">
@@ -180,6 +185,8 @@
     <ClInclude Include="include\SurfaceWave\WaveMesh.hpp" />
     <ClInclude Include="include\SurfaceWave\RunCuda.hpp" />
     <ClInclude Include="include\LineGrid.hpp" />
+    <ClInclude Include="include\Plane.hpp" />
+    <ClInclude Include="include\Cube.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Imgui">
@@ -202,6 +209,8 @@
     <None Include="include\LightFragmentShader.glsl" />
     <None Include="shaders\GerstenerWaveVertex.glsl" />
     <None Include="shaders\GerstenerWaveFragment.glsl" />
+    <None Include="shaders\BasicVertexShader.glsl" />
+    <None Include="shaders\BasicFragmentShader.glsl" />
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="src\kernel.cu" />

@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{10EEB476-87C2-484F-BE3C-15FE9AB7F01B}</ProjectGuid>
     <RootNamespace>Bogong</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
     <CudaToolkitCustomDir>
     </CudaToolkitCustomDir>
   </PropertyGroup>
@@ -33,7 +33,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
-    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 10.0.props" />
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 10.2.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -128,6 +128,7 @@
     <ClInclude Include="include\Callbacks.h" />
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\Cone.h" />
+    <ClInclude Include="include\Cube.hpp" />
     <ClInclude Include="include\LineGrid.hpp" />
     <ClInclude Include="include\CudaVBO.h" />
     <ClInclude Include="include\Defs.h" />
@@ -142,6 +143,7 @@
     <ClInclude Include="include\Lights.hpp" />
     <ClInclude Include="include\Lines.hpp" />
     <ClInclude Include="include\Mouse.h" />
+    <ClInclude Include="include\Plane.hpp" />
     <ClInclude Include="include\Rendering\CudaMesh.hpp" />
     <ClInclude Include="include\Rendering\CudaRenderer.hpp" />
     <ClInclude Include="include\Rendering\Mesh.hpp" />
@@ -173,20 +175,27 @@
     <ClCompile Include="Imgui\imgui_widgets.cpp" />
     <ClCompile Include="include\Arrow.h" />
     <ClCompile Include="include\Rendering\Renderer.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\Globals.cpp" />
     <ClCompile Include="src\Init.cpp" />
     <ClCompile Include="src\Keyboard.cpp" />
+    <ClCompile Include="src\LineGrid.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Mouse.cpp" />
+    <ClCompile Include="src\Simulation.cpp" />
+    <ClCompile Include="src\VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
     <None Include="include\LightFragmentShader.glsl" />
+    <None Include="shaders\BasicFragmentShader.glsl" />
+    <None Include="shaders\BasicVertexShader.glsl" />
     <None Include="shaders\GerstenerWaveFragment.glsl" />
     <None Include="shaders\GerstenerWaveVertex.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 10.0.targets" />
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 10.2.targets" />
   </ImportGroup>
 </Project>

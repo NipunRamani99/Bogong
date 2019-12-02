@@ -54,7 +54,7 @@ namespace bogong {
 		{
 			return m_IBO;
 		}
-		int GetCount()
+		size_t GetCount()
 		{
 			return m_Count;
 		}

@@ -9,7 +9,7 @@ namespace bogong {
 		bool m_IsBound = false;
 	public:
 		IndexBuffer() = default;
-		IndexBuffer(unsigned int * data, unsigned int size, unsigned int draw = GL_DYNAMIC_DRAW)
+		IndexBuffer(unsigned int * data, size_t size, unsigned int draw = GL_DYNAMIC_DRAW)
 		{
 			glGenBuffers(1, &m_IndexID);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexID);

@@ -1,4 +1,5 @@
 #pragma once
+
 #include "VertexBuffer.hpp"
 #include "Shaders.hpp"
 #include "VertexArray.hpp"
@@ -7,55 +8,36 @@
 #include "WaveMeshTest.h"
 #include "LineGrid.hpp"
 #include <memory>
-#include "Imgui.h"
-
+#include "Keyboard.h"
+#include "Mouse.h"
+#include "Plane.hpp"
 namespace bogong{
 	class Simulation
 	{
 	private:
 		glm::vec3 lightPos = glm::vec3(-1.0f, 0.2f, 0.0f);
 		Shader m_Shader;
-		Shader GerstnerShader;
+		std::shared_ptr<FPCamera> camera;
+		std::shared_ptr<Plane> plane;
 		
-		std::shared_ptr<cuda::LineGrid> lineGrid;
-		float t = 0.0f;
-		float m_Scale = 0.895f;
-		float time = 0.01;
-		float speed = 0.0005f;
-		float amplitude = 1.0f;
-		
+		glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, -1.0f);
+		glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+		glm::mat4 view = glm::mat4(1.0f);
+		glm::mat4 projection = glm::mat4(1.0f);
+		glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, 1.0f);
+		float cameraSpeed = 1.0f;
+		int screenWidth = 800;
+		int screenHeight = 600;
+		float prevMouseX = 0.0f;
+		float prevMouseY = 0.0f;
+		float currMouseX = 0.0f;
+		float currMouseY = 0.0f;
+		float pitch = 0.0f;
+		float yaw = 0.0f;
 	public:
-		Simulation() = default;
-		Simulation(Shader p_Shader)
-		{
-			m_Shader = p_Shader;
-			GerstnerShader.LoadShader("shaders/GerstenerWaveVertex.glsl",bogong::ShaderType::VERTEX);
-			GerstnerShader.LoadShader("shaders/GerstenerWaveFragment.glsl", bogong::ShaderType::FRAGMENT);
-			GerstnerShader.LoadProgram();
-			lineGrid = std::make_shared<cuda::LineGrid>(64,10);
-			error();
-			lineGrid->SetShader(m_Shader);
-			error();
-		}
-		void Update()
-		{
-			lineGrid->Input();
-			lineGrid->Update(time);
-			ImGui::InputFloat("Wave speed.", &speed, 0.0001, 7);
-			time += speed;
-			if (ImGui::InputFloat("Wave Amplitude.", &amplitude, 0.0001, 7))
-			{
-				lineGrid->SetAmplitude(amplitude);
-			}
-			if (ImGui::InputFloat3("LightPos", (float*)&lightPos, 5))
-			{
-				GerstnerShader.setVec3("lightPos", lightPos);
-			}
-		}
-		void Draw()
-		{
-			lineGrid->Draw();
-			error();
-		}
+
+		Simulation();
+		void Update(const std::shared_ptr<bogong::Keyboard> &kbd,const std::shared_ptr<bogong::Mouse>& mouse, float delta) ;
+		void Draw() const;
 	};
 }
