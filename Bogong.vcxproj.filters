@@ -186,6 +186,7 @@
     <ClInclude Include="include\SurfaceWave\RunCuda.hpp" />
     <ClInclude Include="include\LineGrid.hpp" />
     <ClInclude Include="include\Plane.hpp" />
+    <ClInclude Include="include\Cube.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Imgui">

@@ -128,6 +128,7 @@
     <ClInclude Include="include\Callbacks.h" />
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\Cone.h" />
+    <ClInclude Include="include\Cube.hpp" />
     <ClInclude Include="include\LineGrid.hpp" />
     <ClInclude Include="include\CudaVBO.h" />
     <ClInclude Include="include\Defs.h" />

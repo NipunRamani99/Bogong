@@ -4,10 +4,7 @@
 #include<map>
 #include<functional>
 namespace bogong {
-	/*
-	*Keyboard Class.
-	*
-	*/
+	
 	enum KEY
 	{
 		KEY_A, KEY_B, KEY_C, KEY_D, KEY_E, KEY_F,
@@ -26,7 +23,7 @@ namespace bogong {
 
 	};
 	class Keyboard
-	{   //Container to hold if any key was pressed or not.
+	{   
 	private:
 		static std::map<int, STATUS> KeyMap;
 

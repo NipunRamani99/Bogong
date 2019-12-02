@@ -32,6 +32,7 @@ void bogong::Engine::Start()
 	kbd = std::make_shared<Keyboard>();
 	mouse = std::make_shared<Mouse>();
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glEnable(GL_DEPTH_TEST);
 }
 
 void bogong::Engine::Update(float deltime)

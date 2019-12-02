@@ -2,7 +2,7 @@
 #include "../include/Keyboard.h"
 #include "../include/Mouse.h"
 #include "../Imgui/imgui.h"
-
+#include<string>
 namespace bogong {
 	class Mouse;
 }
@@ -23,14 +23,9 @@ bogong::FPCamera::FPCamera()
 	view = lookAt(cameraPos, cameraPos + cameraFront, up);
 }
 
-void bogong::FPCamera::Update(std::shared_ptr<Keyboard> kbd, std::shared_ptr<Mouse> mouse, float delta)
+void bogong::FPCamera::Update(const std::shared_ptr<Keyboard>& kbd, const std::shared_ptr<Mouse>& mouse, float delta) 
 {
-	prevMouseX = currMouseX;
-	prevMouseY = currMouseY;
-	currMouseX = mouse->x;
-	currMouseY = mouse->y;
-	pitch += currMouseX - prevMouseX;
-	yaw += prevMouseY-currMouseX;
+	
 	float camSpeed = cameraSpeed * delta;
 	if (kbd->isKeyPressed(KEY_W))
 	{
@@ -48,14 +43,29 @@ void bogong::FPCamera::Update(std::shared_ptr<Keyboard> kbd, std::shared_ptr<Mou
 	{
 		cameraPos += normalize(cross(cameraFront, up)) * camSpeed;
 	}
+	prevMouseX = currMouseX;
+	prevMouseY = currMouseY;
+	currMouseX = mouse->x;
+	currMouseY = mouse->y;
+	float xoffset = currMouseX - prevMouseX;
+	float yoffset = prevMouseY - currMouseY;
+	xoffset = 0.05*xoffset;
+	yoffset = 0.05*yoffset;
+	yaw += xoffset;
+	pitch += yoffset;
+	
+	
 	pitch = glm::clamp(pitch, -89.0f, 89.0f);
 	
 	glm::vec3 direction;
-	direction.x = cos(glm::radians(yaw)) + cos(glm::radians(pitch));
+	direction.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
 	direction.y = sin(glm::radians(pitch));
 	direction.z = sin(glm::radians(yaw))*cos(glm::radians(pitch));
-	cameraFront = direction;
+	cameraFront = glm::normalize(direction);
 	view = lookAt(cameraPos, cameraPos + cameraFront, up);
 	float * posfloat = reinterpret_cast<float*>(&cameraPos);
 	ImGui::DragFloat3("Position", posfloat, 0.01, -1000, 1000);
+	std::string camFront = "CameraFront X: " + std::to_string(cameraFront.x) + " Y: " + std::to_string(cameraFront.y) + " Z: " + std::to_string(cameraFront.z);
+	ImGui::Text(camFront.c_str());
+	
 }
