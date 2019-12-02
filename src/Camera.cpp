@@ -27,19 +27,19 @@ void bogong::FPCamera::Update(const std::shared_ptr<Keyboard>& kbd, const std::s
 {
 	
 	float camSpeed = cameraSpeed * delta;
-	if (kbd->isKeyPressed(KEY_W))
+	if (kbd->isKeyPressed(KEY_W)|| kbd->isKeyRepeating(KEY_W))
 	{
 		cameraPos += camSpeed * cameraFront;
 	}
-	if (kbd->isKeyPressed(KEY_S))
+	if (kbd->isKeyPressed(KEY_S)||kbd->isKeyRepeating(KEY_S))
 	{
 		cameraPos -= camSpeed * cameraFront;
 	}
-	if (kbd->isKeyPressed(KEY_A))
+	if (kbd->isKeyPressed(KEY_A)||kbd->isKeyRepeating(KEY_A))
 	{
 		cameraPos -= normalize(cross(cameraFront, up)) * camSpeed;
 	}
-	if (kbd->isKeyPressed(KEY_D))
+	if (kbd->isKeyPressed(KEY_D)||kbd->isKeyRepeating(KEY_D))
 	{
 		cameraPos += normalize(cross(cameraFront, up)) * camSpeed;
 	}
@@ -53,19 +53,11 @@ void bogong::FPCamera::Update(const std::shared_ptr<Keyboard>& kbd, const std::s
 	yoffset = 0.05*yoffset;
 	yaw += xoffset;
 	pitch += yoffset;
-	
-	
 	pitch = glm::clamp(pitch, -89.0f, 89.0f);
-	
 	glm::vec3 direction;
 	direction.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
 	direction.y = sin(glm::radians(pitch));
 	direction.z = sin(glm::radians(yaw))*cos(glm::radians(pitch));
 	cameraFront = glm::normalize(direction);
 	view = lookAt(cameraPos, cameraPos + cameraFront, up);
-	float * posfloat = reinterpret_cast<float*>(&cameraPos);
-	ImGui::DragFloat3("Position", posfloat, 0.01, -1000, 1000);
-	std::string camFront = "CameraFront X: " + std::to_string(cameraFront.x) + " Y: " + std::to_string(cameraFront.y) + " Z: " + std::to_string(cameraFront.z);
-	ImGui::Text(camFront.c_str());
-	
 }

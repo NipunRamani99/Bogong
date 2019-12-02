@@ -1,5 +1,6 @@
 #include "../include/Keyboard.h"
 #include "../Imgui/imgui.h"
+#include <string>
 namespace bogong {
 	std::map<int, STATUS> Keyboard::KeyMap = std::map<int, STATUS>();
 
@@ -13,16 +14,18 @@ namespace bogong {
 	}
 	void Keyboard::debugOutput()
 	{
-		ImGui::LabelText("Test","");
-	}
-
-	void Keyboard::Flush()
-	{
-		for (auto& Key : Keyboard::KeyMap)
+		int i = 0;
+		for (auto & Key : Keyboard::KeyMap)
 		{
-			Key.second = NONE;
+			char charac = i + 'A';
+			i++;
+			std::string str1 = std::string(1, charac);
+ 			std::string str = str1 + " : " + std::to_string(Key.second);
+			ImGui::Text(str.c_str());
 		}
 	}
+
+	
 
 	void Keyboard::SetCallback(GLFWwindow* p_Window)
 	{

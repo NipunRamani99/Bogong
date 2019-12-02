@@ -30,8 +30,6 @@ namespace bogong {
 	public:
 		Keyboard();
 
-		void Flush();
-
 		void SetCallback(GLFWwindow* p_Window);
 
 		static void Callback(GLFWwindow* p_Window, int p_Key, int p_Scancode, int p_Action, int mods);

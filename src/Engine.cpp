@@ -37,8 +37,7 @@ void bogong::Engine::Start()
 
 void bogong::Engine::Update(float deltime)
 {
-	std::string coords = "Mouse X: " + std::to_string(mouse->x) + "Mouse Y: " + std::to_string(mouse->y);
-	ImGui::Text(coords.c_str());
+	
 	sim->Update(kbd, mouse, static_cast<float>(deltime));
 }
 
@@ -63,17 +62,12 @@ void bogong::Engine::Loop()
 {
 	prevTime = currentTime;
 	currentTime = glfwGetTime();
-	kbd->Flush();
-	mouse->Flush();
 	Init::StartImguiFrame();
 	Init::PrepareImguiFrame();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glfwPollEvents();
 	Update(currentTime - prevTime);
 	float fps = 1 / (currentTime - prevTime);
-	std::string fpsstr = "FPS: ";
-	fpsstr += std::to_string(fps);
-	ImGui::Text(fpsstr.c_str());
 	RenderEverything();
 	
 }

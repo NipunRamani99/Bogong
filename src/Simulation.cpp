@@ -29,7 +29,7 @@ void bogong::Simulation::Update(const std::shared_ptr<bogong::Keyboard> &kbd,con
 	m_Shader.setMat4("projection", camera->GetProjection());
 	m_Shader.setMat4("view", camera->GetView());
 	assert(!error());
-
+	kbd->debugOutput();
 }
 
 void bogong::Simulation::Draw() const
