@@ -8,16 +8,12 @@ bogong::Simulation::Simulation()
 	m_Shader.LoadShader("shaders/BasicFragmentShader.glsl", bogong::ShaderType::FRAGMENT);
 	m_Shader.LoadProgram();
 	assert(!error());
-
 	plane = std::make_shared<Plane>();
 	plane->setShader(m_Shader);
 	assert(!error());
 	m_Shader.Bind();
 	camera = std::make_shared<FPCamera>();
-	assert(!error());
-
-
-	
+	assert(!error());	
 }
 
 void bogong::Simulation::Update(const std::shared_ptr<bogong::Keyboard> &kbd,const std::shared_ptr<bogong::Mouse> &mouse,
