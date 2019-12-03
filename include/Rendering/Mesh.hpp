@@ -7,6 +7,8 @@
 #include "../Vertex.h"
 
 namespace bogong {
+	typedef std::pair<std::shared_ptr<VertexBuffer>, VertexBufferLayout> Buffer;
+
 	class Mesh
 	{
 	public:

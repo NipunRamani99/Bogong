@@ -124,23 +124,17 @@
     <ClInclude Include="Imgui\imstb_rectpack.h" />
     <ClInclude Include="Imgui\imstb_textedit.h" />
     <ClInclude Include="Imgui\imstb_truetype.h" />
-    <ClInclude Include="include\Callbacks.h" />
     <ClInclude Include="include\Camera.h" />
-    <ClInclude Include="include\Cone.h" />
     <ClInclude Include="include\Cube.hpp" />
-    <ClInclude Include="include\LineGrid.hpp" />
+    <ClInclude Include="include\GerstenerWave.hpp" />
     <ClInclude Include="include\CudaVBO.h" />
     <ClInclude Include="include\Defs.h" />
     <ClInclude Include="include\Engine.h" />
-    <ClInclude Include="include\ErrorLog.h" />
     <ClInclude Include="include\Globals.h" />
-    <ClInclude Include="include\ICallbacks.h" />
     <ClInclude Include="include\Imgui.h" />
     <ClInclude Include="include\IndexBuffer.h" />
     <ClInclude Include="include\Init.hpp" />
     <ClInclude Include="include\Keyboard.h" />
-    <ClInclude Include="include\Lights.hpp" />
-    <ClInclude Include="include\Lines.hpp" />
     <ClInclude Include="include\Mouse.h" />
     <ClInclude Include="include\Plane.hpp" />
     <ClInclude Include="include\Rendering\CudaMesh.hpp" />
@@ -149,7 +143,6 @@
     <ClInclude Include="include\Rendering\Renderer.hpp" />
     <ClInclude Include="include\Rendering\RendererBase.hpp" />
     <ClInclude Include="include\Rendering\ShapeMesh.hpp" />
-    <ClInclude Include="include\Ripple.hpp" />
     <ClInclude Include="include\RunKernel.h" />
     <ClInclude Include="include\Shaders.hpp" />
     <ClInclude Include="include\Simulation.h" />
@@ -160,8 +153,7 @@
     <ClInclude Include="include\VertexArray.hpp" />
     <ClInclude Include="include\VertexBuffer.hpp" />
     <ClInclude Include="include\VertexBufferLayout.hpp" />
-    <ClInclude Include="include\WaveMesh.h" />
-    <ClInclude Include="include\WaveMeshTest.h" />
+    <ClInclude Include="include\SinusoidalWave.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Imgui\imgui.cpp" />
@@ -170,7 +162,6 @@
     <ClCompile Include="Imgui\imgui_impl_glfw.cpp" />
     <ClCompile Include="Imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="Imgui\imgui_widgets.cpp" />
-    <ClCompile Include="include\Arrow.h" />
     <ClCompile Include="include\Rendering\Renderer.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Engine.cpp" />
@@ -185,7 +176,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
-    <None Include="include\LightFragmentShader.glsl" />
     <None Include="shaders\BasicFragmentShader.glsl" />
     <None Include="shaders\BasicVertexShader.glsl" />
     <None Include="shaders\GerstenerWaveFragment.glsl" />

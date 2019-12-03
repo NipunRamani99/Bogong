@@ -1,67 +1,51 @@
 #include "Rendering/ShapeMesh.hpp"
 #include "Rendering/Renderer.hpp"
+
 namespace bogong {
-	class Plane
+	class CubeMesh : public ShapeMesh
 	{
-		std::shared_ptr<ShapeMesh> mesh;
-		std::shared_ptr<Renderer> renderer;
+	private:
+
 		std::vector<Vertex<float>> vertices;
-		VertexBufferLayout vbl;
+		std::vector<unsigned int> faces;
+		
 	public:
-		Plane()
+		CubeMesh()
 		{
-			Vertex<float> a;
-			Vertex<float> b;
-			Vertex<float> c;
-			Vertex<float> d;
-			a.x = 0.20f;
-			a.z = 0.0f;
-			a.y = 0.20f;
-			a.r = 1.0f;
-			a.a = 1.0f;
-
-			b.y = -0.20f;
-			b.x = 0.20f;
-			b.z = 0.0f;
-			b.r = 1.0f;
-			b.a = 1.0f;
-
-			c.x = -0.20f;
-			c.y = -0.20f;
-			c.z = 0.0f;
-			c.r = 1.0f;
-			c.a = 1.0f;
-
-			d.y = 0.20f;
-			d.x = -0.20f;
-			d.z = 0.0f;
-			d.r = 1.0f;
-			d.a = 1.0f;
-			vertices.push_back(a);
-			vertices.push_back(b);
-			vertices.push_back(c);
-			vertices.push_back(d);
-			mesh = std::make_shared<ShapeMesh>(vertices);
-			renderer = std::make_shared<Renderer>();
-			vbl.AddElement<float>(3);
-			vbl.AddElement<float>(4);
-			renderer->SetDrawMode(GL_QUADS);
-			renderer->SetLayout(vbl);
-			renderer->BindBuffer(mesh);
-
+			vertices = {
+				// front
+				{-1.0, -1.0,  1.0,1.0f,0.0f,0.0f,1.0f},
+				{ 1.0, -1.0,  1.0 ,1.0f,0.0f,0.0f,1.0f},
+			    { 1.0,  1.0,  1.0,1.0f,0.0f,0.0f,1.0f},
+				{ -1.0,  1.0,  1.0 ,1.0f,0.0f,0.0f,1.0f},
+				// back
+				{-1.0, -1.0, -1.0,1.0f,0.0f,0.0f,1.0f},
+				{1.0, -1.0, -1.0,1.0f,0.0f,0.0f,1.0f },
+				{1.0,  1.0, -1.0,1.0f,0.0f,0.0f,1.0f},
+				{-1.0,  1.0, -1.0 ,1.0f,0.0f,0.0f,1.0f}
+			};
+			faces = {
+					// front
+					0, 1, 2,
+					2, 3, 0,
+					// right
+					1, 5, 6,
+					6, 2, 1,
+					// back
+					7, 6, 5,
+					5, 4, 7,
+					// left
+					4, 0, 3,
+					3, 7, 4,
+					// bottom
+					4, 5, 1,
+					1, 0, 4,
+					// top
+					3, 2, 6,
+					6, 7, 3
+			};
+			
 		}
-		void setShader(Shader shader)
-		{
-			renderer->SetShader(shader);
-			assert(!error());
-
-		}
-		void Draw() const
-		{
-			assert(!error());
-			renderer->RenderMesh(mesh);
-			assert(!error());
-
-		}
+		
 	};
 }

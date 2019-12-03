@@ -19,9 +19,6 @@
     <ClCompile Include="Imgui\imgui_widgets.cpp">
       <Filter>Imgui</Filter>
     </ClCompile>
-    <ClCompile Include="include\Arrow.h">
-      <Filter>include</Filter>
-    </ClCompile>
     <ClCompile Include="src\Mouse.cpp" />
     <ClCompile Include="src\Globals.cpp" />
     <ClCompile Include="src\Init.cpp" />
@@ -143,24 +140,16 @@
     <ClInclude Include="CUDA\timer.h">
       <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="include\Cone.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="include\Defs.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Engine.h" />
-    <ClInclude Include="include\ErrorLog.h" />
     <ClInclude Include="include\Globals.h" />
-    <ClInclude Include="include\ICallbacks.h" />
     <ClInclude Include="include\Imgui.h" />
     <ClInclude Include="include\IndexBuffer.h" />
     <ClInclude Include="include\Init.hpp" />
     <ClInclude Include="include\Keyboard.h" />
-    <ClInclude Include="include\Lights.hpp" />
-    <ClInclude Include="include\Lines.hpp" />
     <ClInclude Include="include\Mouse.h" />
-    <ClInclude Include="include\Ripple.hpp" />
     <ClInclude Include="include\RunKernel.h" />
     <ClInclude Include="include\Shaders.hpp" />
     <ClInclude Include="include\Simulation.h" />
@@ -171,9 +160,6 @@
     <ClInclude Include="include\VertexArray.hpp" />
     <ClInclude Include="include\VertexBuffer.hpp" />
     <ClInclude Include="include\VertexBufferLayout.hpp" />
-    <ClInclude Include="include\WaveMesh.h" />
-    <ClInclude Include="include\WaveMeshTest.h" />
-    <ClInclude Include="include\Callbacks.h" />
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\CudaVBO.h" />
     <ClInclude Include="include\Rendering\CudaMesh.hpp" />
@@ -182,9 +168,10 @@
     <ClInclude Include="include\Rendering\Renderer.hpp" />
     <ClInclude Include="include\Rendering\RendererBase.hpp" />
     <ClInclude Include="include\Rendering\ShapeMesh.hpp" />
-    <ClInclude Include="include\LineGrid.hpp" />
     <ClInclude Include="include\Plane.hpp" />
     <ClInclude Include="include\Cube.hpp" />
+    <ClInclude Include="include\GerstenerWave.hpp" />
+    <ClInclude Include="include\SinusoidalWave.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Imgui">
@@ -204,7 +191,6 @@
     <None Include="imgui.ini">
       <Filter>include</Filter>
     </None>
-    <None Include="include\LightFragmentShader.glsl" />
     <None Include="shaders\GerstenerWaveVertex.glsl" />
     <None Include="shaders\GerstenerWaveFragment.glsl" />
     <None Include="shaders\BasicVertexShader.glsl" />

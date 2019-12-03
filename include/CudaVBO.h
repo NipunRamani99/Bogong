@@ -3,7 +3,7 @@
 // includes, cuda
 #include <cuda_runtime.h>
 #include <cuda_gl_interop.h>
-//
+
 #include "../Extra/helper_functions.h"   
 //#include "../Extra/timer.h"              
 #include "../Extra/helper_cuda.h"

@@ -76,9 +76,6 @@ namespace bogong {
 					idx++;
 				}
 				idx++;
-				/*	m_Indices.push_back(idx );
-					m_Indices.push_back(idx + width);*/
-					//idx++;
 			}
 
 
@@ -91,21 +88,7 @@ namespace bogong {
 			m_Renderer->SetDrawMode(GL_QUADS);
 			m_Renderer->BindBuffer(m_Mesh);
 		}  
-	/*	Ripple(Ripple && p_Ripple)
-		{
-			m_Vertices = std::move(p_Ripple.m_Vertices);
-			m_Mesh = std::move(p_Ripple.m_Mesh); 
-			m_Renderer = std::move(p_Ripple.m_Renderer);
-			m_Layout = std::move(p_Ripple.m_Layout);
-		}
-		Ripple & operator = (Ripple && p_Ripple)
-		{
-			m_Vertices = std::move(p_Ripple.m_Vertices);
-			m_Mesh = std::move(p_Ripple.m_Mesh);
-			m_Renderer = std::move(p_Ripple.m_Renderer);
-			m_Layout = std::move(p_Ripple.m_Layout);
-			return *this;
-		}*/
+	
 		void SetShader(Shader & p_Shader)
 		{
 			m_Renderer->SetShader(p_Shader);

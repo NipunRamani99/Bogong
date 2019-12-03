@@ -6,16 +6,13 @@
 #include <vector>
 #include <memory>
 #include <utility>
+#include "Mesh.hpp"
 namespace bogong {  
 	namespace cuda {
-		typedef std::pair<std::shared_ptr<VertexBuffer>, VertexBufferLayout> Buffer;
 		
 		class CudaMesh
 		{
 		protected:
-			std::vector<float3> m_VertPos;
-			std::vector<float4> m_Color;
-			VertexArray m_VAO;
 			std::vector<Buffer> m_BufferVertex;
 			IndexBuffer m_IBO;
 			size_t count = 0;

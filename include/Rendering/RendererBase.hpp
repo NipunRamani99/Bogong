@@ -19,19 +19,7 @@ namespace bogong
 	public:
 		
 		RendererBase(){}
-		/*RendererBase & operator=(RendererBase && rb)
-		{
-			m_DrawCall = std::move(rb.m_DrawCall);
-			m_Shader = std::move(rb.m_Shader);
-			m_DrawMode = std::move(rb.m_DrawMode);
-			return *this;
-		}
-		RendererBase(RendererBase && rb)
-		{
-			m_DrawCall = std::move(rb.m_DrawCall);
-			m_DrawMode = std::move(rb.m_DrawMode);
-			m_Shader = std::move(rb.m_Shader);
-		}*/
+		
 		void SetShader(Shader p_Shader)
 		{
 			m_Shader = p_Shader;
