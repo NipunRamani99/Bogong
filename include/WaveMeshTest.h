@@ -12,7 +12,8 @@ namespace bogong {
 			float freq = 0.5f;
 			std::shared_ptr<CudaVBO<float4>> colors;
 			std::shared_ptr<CudaVBO<float3>> cvbo;
-			float amplitude=0.0;
+			float amplitude=0.0f;
+			float counter = 0.0f;
 		public:  
 			WaveMesh(int n,float freq)
 				:
@@ -43,16 +44,17 @@ namespace bogong {
 			{	
 			}
 			
-			void Update2(float time) 
+			void Update2(float deltime) 
 			{
+				counter += deltime;
 				cvbo->Map();
 				cvbo->GetMappedPointer();
-				UpdateMesh(cvbo->GetData(), width,width,time);
+				UpdateMesh(cvbo->GetData(), width,width,counter);
 				cvbo->UnMap();
 				
 				colors->Map();
 				colors->GetMappedPointer();
-				UpdateColors(colors->GetData(), width, width, time);
+				UpdateColors(colors->GetData(), width, width, counter);
 				colors->UnMap();
 			}
 		};
@@ -91,7 +93,7 @@ namespace bogong {
 			void SetShader(Shader p_Shader)
 			{
 				renderer->SetShader(p_Shader);
-				p_Shader.setBool("isTextured", false);
+
 			}
 		};
 	}

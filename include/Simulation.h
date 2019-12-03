@@ -19,7 +19,7 @@ namespace bogong{
 		Shader m_Shader;
 		std::shared_ptr<FPCamera> camera;
 		std::shared_ptr<Plane> plane;
-		
+		std::shared_ptr<cuda::Wave> wave;
 		
 	public:
 

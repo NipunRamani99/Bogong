@@ -37,7 +37,7 @@ namespace bogong {
 		void SetShader(Shader p_Shader)
 		{
 			m_Shader = p_Shader;
-			m_Shader.setBool("isTextured", false);
+
 
 		}
 		void Draw()

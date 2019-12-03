@@ -8,6 +8,8 @@ bogong::Simulation::Simulation()
 	m_Shader.LoadShader("shaders/BasicFragmentShader.glsl", bogong::ShaderType::FRAGMENT);
 	m_Shader.LoadProgram();
 	assert(!error());
+	wave = std::make_shared<cuda::Wave>(100);
+	wave->SetShader(m_Shader);
 	plane = std::make_shared<Plane>();
 	plane->setShader(m_Shader);
 	assert(!error());
@@ -25,11 +27,11 @@ void bogong::Simulation::Update(const std::shared_ptr<bogong::Keyboard> &kbd,con
 	m_Shader.setMat4("projection", camera->GetProjection());
 	m_Shader.setMat4("view", camera->GetView());
 	assert(!error());
-	kbd->debugOutput();
+	wave->Update(delta);
 }
 
 void bogong::Simulation::Draw() const
 {
-	plane->Draw();
+	wave->Draw();
 	assert(!error());
 }
