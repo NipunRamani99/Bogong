@@ -3,7 +3,7 @@
 #include "../Imgui/imgui_impl_glfw.h"
 #include "../Imgui/imgui_impl_opengl3.h"
 
-bogong::cuda::LineGridMesh::LineGridMesh(int rows, float width):
+bogong::cuda::GerstnerWaveMesh::GerstnerWaveMesh(int rows, float width):
 	rows(rows),
 	width(width)
 {
@@ -38,11 +38,8 @@ bogong::cuda::LineGridMesh::LineGridMesh(int rows, float width):
 	n = 4;
 }
 
-void bogong::cuda::LineGridMesh::Update()
-{
-}
 
-void bogong::cuda::LineGridMesh::ReadInputs()
+void bogong::cuda::GerstnerWaveMesh::ReadInputs()
 {
 	for (int i = 0; i < n; i++)
 	{
@@ -81,47 +78,48 @@ void bogong::cuda::LineGridMesh::ReadInputs()
 	}
 }
 
-void bogong::cuda::LineGridMesh::Update(float time)
+void bogong::cuda::GerstnerWaveMesh::Update(float time)
 {
+	counter += time;
 	vertex_cvbo->Map();
 	vertex_cvbo->GetMappedPointer();
 	normals_cvbo->Map();
 	normals_cvbo->GetMappedPointer();
 
-	GerstnerNormalTest(vertex_cvbo->GetData(), normals_cvbo->GetData(), props, meshprop, n, time);
+	GerstnerNormalTest(vertex_cvbo->GetData(), normals_cvbo->GetData(), props, meshprop, n, counter);
 	vertex_cvbo->UnMap();
 	normals_cvbo->UnMap();
 	color_cvbo->Map();
 	color_cvbo->GetMappedPointer();
-	UpdateColors(color_cvbo->GetData(), rows, rows, 2.5f * time);
+	UpdateColors(color_cvbo->GetData(), rows, rows, 2.5f * counter);
 	color_cvbo->UnMap();
 }
 
-void bogong::cuda::LineGridMesh::Amplitude(float amplitude)
+void bogong::cuda::GerstnerWaveMesh::Amplitude(float amplitude)
 {
 	this->amplitude = amplitude;
 }
 
-void bogong::cuda::LineGridMesh::makeLayout()
+void bogong::cuda::GerstnerWaveMesh::makeLayout()
 {
 	layout1.AddElement<float>(3);
 	layout2.AddElement<float>(4);
 	layout3.AddElement<float>(3);
 }
 
-void bogong::cuda::LineGridMesh::makeVBO()
+void bogong::cuda::GerstnerWaveMesh::makeVBO()
 {
 	vertex_cvbo = std::make_shared<CudaVBO<float3>>(vertices);
 	color_cvbo = std::make_shared<CudaVBO<float4>>(colors);
 	normals_cvbo = std::make_shared<CudaVBO<float3>>(vertices.size() * sizeof(float3));
 }
 
-void bogong::cuda::LineGridMesh::makeIBO()
+void bogong::cuda::GerstnerWaveMesh::makeIBO()
 {
 	m_IBO = bogong::IndexBuffer(indices.data(), indices.size() * sizeof(unsigned int));
 }
 
-void bogong::cuda::LineGridMesh::makeIndicesQuads()
+void bogong::cuda::GerstnerWaveMesh::makeIndicesQuads()
 {
 	unsigned int idx = 0;
 
@@ -140,7 +138,7 @@ void bogong::cuda::LineGridMesh::makeIndicesQuads()
 	count = indices.size();
 }
 
-void bogong::cuda::LineGridMesh::makeIndicesLines()
+void bogong::cuda::GerstnerWaveMesh::makeIndicesLines()
 {
 	unsigned int idx = 0;
 
@@ -165,7 +163,7 @@ void bogong::cuda::LineGridMesh::makeIndicesLines()
 	count = indices.size();
 }
 
-void bogong::cuda::LineGridMesh::makeMesh()
+void bogong::cuda::GerstnerWaveMesh::makeMesh()
 {
 	vertices.resize(rows * rows);
 	colors.resize(rows * rows);
@@ -184,7 +182,7 @@ void bogong::cuda::LineGridMesh::makeMesh()
 	count = rows * rows;
 }
 
-float3 bogong::cuda::LineGridMesh::makeVertex(int x, int z, float delX, float delZ)
+float3 bogong::cuda::GerstnerWaveMesh::makeVertex(int x, int z, float delX, float delZ)
 {
 	float3 vertex;
 	vertex.x = float(x) * delX - width / 2.0f;
@@ -194,7 +192,7 @@ float3 bogong::cuda::LineGridMesh::makeVertex(int x, int z, float delX, float de
 	return vertex;
 }
 
-float4 bogong::cuda::LineGridMesh::makeColor()
+float4 bogong::cuda::GerstnerWaveMesh::makeColor()
 {
 	float4 color;
 	color.x = 1.0f;

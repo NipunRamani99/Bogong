@@ -7,9 +7,14 @@ bogong::Simulation::Simulation()
 	m_Shader.LoadShader("shaders/BasicVertexShader.glsl", bogong::ShaderType::VERTEX);
 	m_Shader.LoadShader("shaders/BasicFragmentShader.glsl", bogong::ShaderType::FRAGMENT);
 	m_Shader.LoadProgram();
+	
+	gerstener.LoadShader("shaders/GerstenerWaveVertex.glsl", bogong::ShaderType::VERTEX);
+	gerstener.LoadShader("shaders/GerstenerWaveFragment.glsl", bogong::ShaderType::FRAGMENT);
+	gerstener.LoadProgram();
+
 	assert(!error());
-	wave = std::make_shared<cuda::Wave>(100);
-	wave->SetShader(m_Shader);
+	gwave = std::make_shared<cuda::GerstnerWave>(128,128);
+	gwave->SetShader(gerstener);
 	plane = std::make_shared<Plane>();
 	plane->setShader(m_Shader);
 	assert(!error());
@@ -26,12 +31,15 @@ void bogong::Simulation::Update(const std::shared_ptr<bogong::Keyboard> &kbd,con
 	assert(!error());
 	m_Shader.setMat4("projection", camera->GetProjection());
 	m_Shader.setMat4("view", camera->GetView());
+	gerstener.Bind();
+	gerstener.setMat4("projection", camera->GetProjection());
+	gerstener.setMat4("view", camera->GetView());
 	assert(!error());
-	wave->Update(delta);
+	gwave->Update(delta);
 }
 
 void bogong::Simulation::Draw() const
 {
-	wave->Draw();
+	gwave->Draw();
 	assert(!error());
 }

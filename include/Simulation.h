@@ -5,7 +5,6 @@
 #include "VertexArray.hpp"
 #include "ICallbacks.h"
 #include "Ripple.hpp"
-#include "WaveMeshTest.h"
 #include "LineGrid.hpp"
 #include <memory>
 #include "Keyboard.h"
@@ -17,10 +16,10 @@ namespace bogong{
 	private:
 		glm::vec3 lightPos = glm::vec3(-1.0f, 0.2f, 0.0f);
 		Shader m_Shader;
+		Shader gerstener;
 		std::shared_ptr<FPCamera> camera;
 		std::shared_ptr<Plane> plane;
-		std::shared_ptr<cuda::Wave> wave;
-		
+		std::shared_ptr<cuda::GerstnerWave> gwave;
 	public:
 
 		Simulation();

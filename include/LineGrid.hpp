@@ -8,7 +8,7 @@
 namespace bogong {
 
 	namespace cuda {
-		class LineGridMesh : public CudaMesh
+		class GerstnerWaveMesh : public CudaMesh
 		{
 		private:
 			std::shared_ptr<CudaVBO<float3>> vertex_cvbo;
@@ -25,10 +25,11 @@ namespace bogong {
 			VertexBufferLayout layout2;
 			VertexBufferLayout layout3;
 			float amplitude = 0.5f;
+			 float counter = 0.0f;
 		public:
 			WaveProp props[4];
 
-			LineGridMesh(int rows, float width);
+			GerstnerWaveMesh(int rows, float width);
 
 			void Update();
 
@@ -55,15 +56,15 @@ namespace bogong {
 
 			float4 makeColor();
 		};
-		class LineGrid
+		class GerstnerWave
 		{
 		private:
 			std::shared_ptr<CudaRenderer> linerenderer;
 			std::shared_ptr<CudaRenderer> pointrenderer;
-			std::shared_ptr<LineGridMesh> grid_mesh;
+			std::shared_ptr<GerstnerWaveMesh> grid_mesh;
 			inline void initMesh(int n, float width)
 			{
-				grid_mesh = std::make_shared<LineGridMesh>(n,width);
+				grid_mesh = std::make_shared<GerstnerWaveMesh>(n,width);
 			}
 			inline void initRenderer()
 			{
@@ -75,7 +76,7 @@ namespace bogong {
 				pointrenderer->BindBuffer(grid_mesh);
 			}
 		public:
-			LineGrid(int n,float width)
+			GerstnerWave(int n,float width)
 			{
 				initMesh(n, width);
 				initRenderer();
