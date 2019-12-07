@@ -4,7 +4,6 @@
 
 namespace bogong
 {
-	;
 	class Keyboard;
 	class Mouse;
 	class Camera

@@ -1,15 +1,13 @@
 #pragma once
 
-#include "VertexBuffer.hpp"
 #include "Shaders.hpp"
-#include "VertexArray.hpp"
-#include "ICallbacks.h"
-#include "Ripple.hpp"
-#include "LineGrid.hpp"
+#include "GerstenerWave.hpp"
 #include <memory>
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Plane.hpp"
+#include "Camera.h"
+
 namespace bogong{
 	class Simulation
 	{

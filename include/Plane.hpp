@@ -42,13 +42,22 @@ namespace bogong {
 			vertices.push_back(c);
 			vertices.push_back(d);
 			mesh = std::make_shared<ShapeMesh>(vertices);
+			assert(!error());
+
 			renderer = std::make_shared<Renderer>();
+			assert(!error());
+
 			vbl.AddElement<float>(3);
 			vbl.AddElement<float>(4);
 			renderer->SetDrawMode(GL_QUADS);
+			assert(!error());
+
 			renderer->SetLayout(vbl);
+			assert(!error());
+
 			renderer->BindBuffer(mesh);
-			
+			assert(!error());
+
 		}
 		void setShader(Shader shader)
 		{

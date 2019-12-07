@@ -168,7 +168,7 @@
     <ClCompile Include="src\Globals.cpp" />
     <ClCompile Include="src\Init.cpp" />
     <ClCompile Include="src\Keyboard.cpp" />
-    <ClCompile Include="src\LineGrid.cpp" />
+    <ClCompile Include="src\GerstenerWave.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Mouse.cpp" />
     <ClCompile Include="src\Simulation.cpp" />

@@ -28,8 +28,8 @@
     <ClCompile Include="src\VertexBuffer.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\Camera.cpp" />
-    <ClCompile Include="src\LineGrid.cpp" />
     <ClCompile Include="src\Simulation.cpp" />
+    <ClCompile Include="src\GerstenerWave.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Imgui\imconfig.h">

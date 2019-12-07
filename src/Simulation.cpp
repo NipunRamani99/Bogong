@@ -15,8 +15,6 @@ bogong::Simulation::Simulation()
 	assert(!error());
 	gwave = std::make_shared<cuda::GerstnerWave>(128,128);
 	gwave->SetShader(gerstener);
-	plane = std::make_shared<Plane>();
-	plane->setShader(m_Shader);
 	assert(!error());
 	m_Shader.Bind();
 	camera = std::make_shared<FPCamera>();
