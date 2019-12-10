@@ -85,7 +85,6 @@
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CudaCompile Include="src\Kernels.cu" />
     <CudaCompile Include="src\kernel.cu" />
   </ItemGroup>
   <ItemGroup>
@@ -150,7 +149,6 @@
     <ClInclude Include="include\Simulation.h" />
     <ClInclude Include="include\Sphere.hpp" />
     <ClInclude Include="include\StableFluid\Quad.hpp" />
-    <ClInclude Include="include\StableFluid\StableFluidKernels.h" />
     <ClInclude Include="include\stb_image.h" />
     <ClInclude Include="include\Texture.h" />
     <ClInclude Include="include\Vertex.h" />

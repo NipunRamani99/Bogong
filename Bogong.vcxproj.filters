@@ -174,7 +174,6 @@
     <ClInclude Include="include\GerstenerWave.hpp" />
     <ClInclude Include="include\SinusoidalWave.h" />
     <ClInclude Include="include\StableFluid\Quad.hpp" />
-    <ClInclude Include="include\StableFluid\StableFluidKernels.h" />
     <ClInclude Include="include\CudaTexture.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -202,6 +201,5 @@
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="src\kernel.cu" />
-    <CudaCompile Include="src\Kernels.cu" />
   </ItemGroup>
 </Project>
