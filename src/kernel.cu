@@ -1,6 +1,6 @@
 #include <cuda_runtime.h>
 #include "../include/RunKernel.h"
-
+ 
 __global__ void simple_vbo_kernel(float3 *pos, unsigned int width, unsigned int height, float time)
 {
 	unsigned int x = blockIdx.x*blockDim.x + threadIdx.x;

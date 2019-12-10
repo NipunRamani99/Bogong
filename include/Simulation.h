@@ -1,11 +1,12 @@
 #pragma once
 
 #include "Shaders.hpp"
-#include "GerstenerWave.hpp"
+
 #include <memory>
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Plane.hpp"
+#include "StableFluid/Quad.hpp"
 #include "Camera.h"
 
 namespace bogong{
@@ -15,9 +16,8 @@ namespace bogong{
 		glm::vec3 lightPos = glm::vec3(-1.0f, 0.2f, 0.0f);
 		Shader m_Shader;
 		Shader gerstener;
+		std::shared_ptr<cuda::StableFluid::Quad> quad;
 		std::shared_ptr<FPCamera> camera;
-		std::shared_ptr<Plane> plane;
-		std::shared_ptr<cuda::GerstnerWave> gwave;
 	public:
 
 		Simulation();

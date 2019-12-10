@@ -85,6 +85,7 @@
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <CudaCompile Include="src\Kernels.cu" />
     <CudaCompile Include="src\kernel.cu" />
   </ItemGroup>
   <ItemGroup>
@@ -126,6 +127,7 @@
     <ClInclude Include="Imgui\imstb_truetype.h" />
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\Cube.hpp" />
+    <ClInclude Include="include\CudaTexture.hpp" />
     <ClInclude Include="include\GerstenerWave.hpp" />
     <ClInclude Include="include\CudaVBO.h" />
     <ClInclude Include="include\Defs.h" />
@@ -147,6 +149,8 @@
     <ClInclude Include="include\Shaders.hpp" />
     <ClInclude Include="include\Simulation.h" />
     <ClInclude Include="include\Sphere.hpp" />
+    <ClInclude Include="include\StableFluid\Quad.hpp" />
+    <ClInclude Include="include\StableFluid\StableFluidKernels.h" />
     <ClInclude Include="include\stb_image.h" />
     <ClInclude Include="include\Texture.h" />
     <ClInclude Include="include\Vertex.h" />
@@ -163,6 +167,7 @@
     <ClCompile Include="Imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="Imgui\imgui_widgets.cpp" />
     <ClCompile Include="include\Rendering\Renderer.cpp" />
+    <ClCompile Include="include\StableFluid\Quad.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\Globals.cpp" />

@@ -31,8 +31,8 @@ void bogong::Engine::Start()
 	glViewport(0, 0, display_w, display_h);
 	kbd = std::make_shared<Keyboard>();
 	mouse = std::make_shared<Mouse>();
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_TEXTURE_2D);
 	
 }
 

@@ -5,7 +5,7 @@
 #include <vector>
 #include <memory>
 #include "../Vertex.h"
-
+#include "../VertexBufferLayout.hpp"
 namespace bogong {
 	typedef std::pair<std::shared_ptr<VertexBuffer>, VertexBufferLayout> Buffer;
 

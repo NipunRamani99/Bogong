@@ -29,7 +29,7 @@ namespace bogong {
 					for (auto & elem : buffer.second.GetElements())
 					{
 						glEnableVertexAttribArray(i);
-						i++;
+						i++; 
 					}
 				}
 				i = 0;
