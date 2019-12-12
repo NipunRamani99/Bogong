@@ -1,6 +1,5 @@
 #pragma once
 #include "Rendering/CudaRenderer.hpp"
-#include "Rendering/Renderer.hpp"
 #include "RunKernel.h"
 #include<ctime>
 namespace bogong {

@@ -172,6 +172,7 @@
     <ClInclude Include="include\CudaTexture.hpp" />
     <ClInclude Include="include\FrameBuffer.hpp" />
     <ClInclude Include="include\Surface.hpp" />
+    <ClInclude Include="include\StableFluid\StableFluidKernels.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Imgui">
@@ -198,5 +199,6 @@
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="src\kernel.cu" />
+    <CudaCompile Include="src\Kernels.cu" />
   </ItemGroup>
 </Project>

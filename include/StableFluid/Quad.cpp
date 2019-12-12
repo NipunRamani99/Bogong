@@ -4,11 +4,13 @@
 #include "../Vertex.h"
 #include "../Globals.h"
 #include "../CudaTexture.hpp"
+#include "StableFluidKernels.h"
 using namespace bogong::cuda::StableFluid;
 
 QuadMesh::QuadMesh()
 {
-	
+	surf_height = 512;
+	surf_width = 512;
 	count = 4;
 	Vertex<float> x1;
 	x1.x = -1.f;
@@ -47,7 +49,7 @@ QuadMesh::QuadMesh()
 	x4.u = 0.0f;
 	x4.v = 0.0f;
 	std::vector<float4> textureSurf;
-	textureSurf.resize(800 * 600);
+	textureSurf.resize(surf_width*surf_height);
 	std::vector<Vertex<float>> vertices;
 	vertices.push_back(x1);
 	vertices.push_back(x2);
@@ -61,15 +63,15 @@ QuadMesh::QuadMesh()
 	vbl.SetStride(sizeof(Vertex<float>));
 	auto buffer1= std::make_pair(vbo, vbl);
 	m_BufferVertex.push_back(buffer1);
-	for (int x = 0; x < 800; x++)
+	for (int x = 0; x < surf_width; x++)
 	{
-		for (int y = 0; y < 600; y++)
+		for (int y = 0; y < surf_height; y++)
 		{
-			textureSurf[y * 800 + x] = { 0.0f,0.0f,1.0f,1.0f };
+			textureSurf[y * surf_width + x] = { 0.0f,0.0f,1.0f,1.0f };
 		}
 	}
 	assert(!error());
-	tex = std::make_shared<cuda::CudaTexture>(CudaTexture(textureSurf,800,600,GL_RGBA32F,GL_FLOAT,GL_TEXTURE_2D));
+	tex = std::make_shared<cuda::CudaTexture>(CudaTexture(textureSurf,surf_width,surf_height,GL_RGBA32F,GL_FLOAT,GL_TEXTURE_2D));
 	assert(!error());
 	m_TexVector.push_back(tex);
 }
@@ -80,11 +82,16 @@ void QuadMesh::ProcessInput()
 
 void QuadMesh::Update()
 {	
+	tex->Map();
+	tex->GetMappedPointer();
+	void * p = tex->GetDataPtr();
+	WashColor((float4*)p, surf_width, surf_height, 1.0f);
+	tex->UnMap();
 }
 
 Quad::Quad()
 {
-	mesh = std::make_shared<QuadMesh>();
+	mesh	 = std::make_shared<QuadMesh>();
 	renderer = std::make_shared<CudaRenderer>();
 	renderer->BindBuffer(mesh);
 	renderer->SetDrawMode(GL_QUADS);
@@ -98,4 +105,8 @@ void Quad::SetShader(bogong::Shader shader)
 void Quad::Draw()
 {
 	renderer->RenderMesh(mesh);
+}
+void Quad::Update(float t)
+{
+	mesh->Update();
 }

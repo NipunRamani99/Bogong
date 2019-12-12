@@ -11,7 +11,8 @@ namespace bogong {
 		class CudaTexture : public Texture
 		{
 
-			cudaGraphicsResource  * resource;
+			struct cudaGraphicsResource *resource;
+			cudaArray * cuArray;
 			void * devPtr;
 		public:
 			template<typename T>
@@ -19,23 +20,23 @@ namespace bogong {
 				:
 				Texture(surface, width, height, format, data_type, texture_target)
 			{
-				checkCudaErrors(cudaGraphicsGLRegisterBuffer(&resource, m_TexID, cudaGraphicsRegisterFlagsNone));
+				checkCudaErrors(cudaGraphicsGLRegisterImage(&resource, m_TexID, texture_target, cudaGraphicsRegisterFlagsNone));
 			}
 			CudaTexture()
 			{
-				checkCudaErrors(cudaGraphicsGLRegisterBuffer(&resource, m_TexID, cudaGraphicsRegisterFlagsNone));
+				checkCudaErrors(cudaGraphicsGLRegisterImage(&resource, m_TexID, target,cudaGraphicsRegisterFlagsNone));
 			}
 			void Map()
 			{
-				checkCudaErrors(cudaGraphicsMapResources(1, (cudaGraphicsResource_t*)resource, 0));
+				checkCudaErrors(cudaGraphicsMapResources(1, &resource, 0));
 			}
 			void UnMap()
 			{
-				checkCudaErrors(cudaGraphicsUnmapResources(1, (cudaGraphicsResource_t*)resource, 0));
+				checkCudaErrors(cudaGraphicsUnmapResources(1, &resource, 0));
 			}
 			void GetMappedPointer()
 			{
-				checkCudaErrors(cudaGraphicsResourceGetMappedPointer(&devPtr, &size, (cudaGraphicsResource_t)resource));
+				checkCudaErrors(cudaGraphicsSubResourceGetMappedArray(&cuArray, resource, 0, 0));
 			}
 			void * GetDataPtr()
 			{

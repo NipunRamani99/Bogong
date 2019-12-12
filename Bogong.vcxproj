@@ -86,6 +86,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <CudaCompile Include="src\kernel.cu" />
+    <CudaCompile Include="src\Kernels.cu" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CUDA\drvapi_error_string.h" />
@@ -146,6 +147,7 @@
     <ClInclude Include="include\Simulation.h" />
     <ClInclude Include="include\Sphere.hpp" />
     <ClInclude Include="include\StableFluid\Quad.hpp" />
+    <ClInclude Include="include\StableFluid\StableFluidKernels.h" />
     <ClInclude Include="include\stb_image.h" />
     <ClInclude Include="include\Surface.hpp" />
     <ClInclude Include="include\Texture.h" />

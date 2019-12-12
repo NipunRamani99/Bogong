@@ -18,7 +18,7 @@ bogong::Simulation::Simulation()
 void bogong::Simulation::Update(const std::shared_ptr<bogong::Keyboard> &kbd,const std::shared_ptr<bogong::Mouse> &mouse,
                                 float delta)
 {
-	
+	quad->Update(delta);
 }
 
 void bogong::Simulation::Draw() const

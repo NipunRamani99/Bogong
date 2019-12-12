@@ -2,7 +2,7 @@
 #include "../Rendering/CudaRenderer.hpp"
 #include "../CudaVBO.h"
 #include "../VertexBuffer.hpp"
-#include "../Texture.h"
+#include "../CudaTexture.hpp"
 #include "../Shaders.hpp"
 namespace bogong {
 	namespace cuda {
@@ -11,7 +11,9 @@ namespace bogong {
 			{
 			private:
 				std::shared_ptr<VertexBuffer> vbo;
-				std::shared_ptr<Texture> tex;
+				std::shared_ptr<CudaTexture> tex;
+				int surf_width = 0;
+				int surf_height = 0;
 			public:
 				QuadMesh();
 				void ProcessInput();
@@ -24,6 +26,7 @@ namespace bogong {
 				Quad();
 				void SetShader(Shader shader);
 				void Draw();
+				void Update(float delT);
 			};
 		}
 	}
