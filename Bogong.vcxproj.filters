@@ -171,6 +171,7 @@
     <ClInclude Include="include\StableFluid\Quad.hpp" />
     <ClInclude Include="include\CudaTexture.hpp" />
     <ClInclude Include="include\FrameBuffer.hpp" />
+    <ClInclude Include="include\Surface.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Imgui">

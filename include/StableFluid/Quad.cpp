@@ -3,6 +3,7 @@
 #include "../Shaders.hpp"
 #include "../Vertex.h"
 #include "../Globals.h"
+#include "../CudaTexture.hpp"
 using namespace bogong::cuda::StableFluid;
 
 QuadMesh::QuadMesh()
@@ -68,7 +69,7 @@ QuadMesh::QuadMesh()
 		}
 	}
 	assert(!error());
-	tex = std::make_shared<Texture>(Texture(textureSurf,800,600,GL_RGBA32F,GL_FLOAT,GL_TEXTURE_2D));
+	tex = std::make_shared<cuda::CudaTexture>(CudaTexture(textureSurf,800,600,GL_RGBA32F,GL_FLOAT,GL_TEXTURE_2D));
 	assert(!error());
 	m_TexVector.push_back(tex);
 }

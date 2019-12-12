@@ -147,6 +147,7 @@
     <ClInclude Include="include\Sphere.hpp" />
     <ClInclude Include="include\StableFluid\Quad.hpp" />
     <ClInclude Include="include\stb_image.h" />
+    <ClInclude Include="include\Surface.hpp" />
     <ClInclude Include="include\Texture.h" />
     <ClInclude Include="include\Vertex.h" />
     <ClInclude Include="include\VertexArray.hpp" />
