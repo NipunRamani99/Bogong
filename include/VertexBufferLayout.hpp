@@ -53,6 +53,9 @@ namespace bogong {
 			this->m_Stride = layout.m_Stride;
 			return *this;
 		}
+		void SetStride(int stride) {
+			m_Stride = stride;
+		}
 		std::vector<BufferElement> & GetElements()
 		{
 			return m_Elements;

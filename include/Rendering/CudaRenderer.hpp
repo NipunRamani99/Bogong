@@ -2,20 +2,23 @@
 #include "../VertexArray.hpp"
 #include "../Shaders.hpp"
 #include "../VertexBufferLayout.hpp"
-#include "RendererBase.hpp"
+
 #include "CudaMesh.hpp"
 #include "../Globals.h"
 #include <functional>
 #include <memory>
 namespace bogong {
 	namespace cuda {
-		class CudaRenderer :public RendererBase
+		class CudaRenderer 
 		{
 		private:
 			
 			VertexArray m_VAO;
 			glm::mat4 m_Model = glm::mat4(1.0);
-
+			GLenum m_DrawMode;
+			Shader m_Shader;
+			using DrawCall = std::function<void(GLenum, int)>;
+			DrawCall  m_DrawCall = [](GLenum, int)-> void {};
 		public:
 			 
 			CudaRenderer()
@@ -47,6 +50,7 @@ namespace bogong {
 			{
 				m_VAO.Bind();
 				m_Shader.Bind();
+				assert(!error());
 				cumesh->Bind();
 				error();
 			}
@@ -55,6 +59,18 @@ namespace bogong {
 			{
 				cumesh->Unbind();
 				m_VAO.Unbind();	
+			}
+			void SetShader(Shader p_Shader)
+			{
+				m_Shader = p_Shader;
+			}
+			void SetDrawMode(GLenum p_DrawMode)
+			{
+				m_DrawMode = p_DrawMode;
+			}
+			void SetDrawCall(DrawCall p_DrawCall)
+			{
+				m_DrawCall = p_DrawCall;
 			}
 		};
 	}

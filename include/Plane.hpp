@@ -1,10 +1,11 @@
-#include "Rendering/ShapeMesh.hpp"
-#include "Rendering/Renderer.hpp"
+#include "Rendering/CudaMesh.hpp"
+#include "Rendering/CudaRenderer.hpp"
+#include "Vertex.h"
 namespace bogong {
 	class Plane
 	{
-		std::shared_ptr<ShapeMesh> mesh;
-		std::shared_ptr<Renderer> renderer;
+		std::shared_ptr<cuda::CudaMesh> mesh;
+		std::shared_ptr<cuda::CudaRenderer> renderer;
 		std::vector<Vertex<float>> vertices;
 		VertexBufferLayout vbl;
 	public:
@@ -41,10 +42,10 @@ namespace bogong {
 			vertices.push_back(b);
 			vertices.push_back(c);
 			vertices.push_back(d);
-			mesh = std::make_shared<ShapeMesh>(vertices);
+			//mesh = std::make_shared<cuda::CudaMesh>(vertices);
 			assert(!error());
 
-			renderer = std::make_shared<Renderer>();
+			renderer = std::make_shared<cuda::CudaRenderer>();
 			assert(!error());
 
 			vbl.AddElement<float>(3);
@@ -52,9 +53,7 @@ namespace bogong {
 			renderer->SetDrawMode(GL_QUADS);
 			assert(!error());
 
-			renderer->SetLayout(vbl);
-			assert(!error());
-
+			
 			renderer->BindBuffer(mesh);
 			assert(!error());
 

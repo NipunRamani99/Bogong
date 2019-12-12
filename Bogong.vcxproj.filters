@@ -24,7 +24,6 @@
     <ClCompile Include="src\Init.cpp" />
     <ClCompile Include="src\Keyboard.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="include\Rendering\Renderer.cpp" />
     <ClCompile Include="src\VertexBuffer.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\Camera.cpp" />
@@ -165,16 +164,13 @@
     <ClInclude Include="include\CudaVBO.h" />
     <ClInclude Include="include\Rendering\CudaMesh.hpp" />
     <ClInclude Include="include\Rendering\CudaRenderer.hpp" />
-    <ClInclude Include="include\Rendering\Mesh.hpp" />
-    <ClInclude Include="include\Rendering\Renderer.hpp" />
-    <ClInclude Include="include\Rendering\RendererBase.hpp" />
-    <ClInclude Include="include\Rendering\ShapeMesh.hpp" />
     <ClInclude Include="include\Plane.hpp" />
     <ClInclude Include="include\Cube.hpp" />
     <ClInclude Include="include\GerstenerWave.hpp" />
     <ClInclude Include="include\SinusoidalWave.h" />
     <ClInclude Include="include\StableFluid\Quad.hpp" />
     <ClInclude Include="include\CudaTexture.hpp" />
+    <ClInclude Include="include\FrameBuffer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Imgui">

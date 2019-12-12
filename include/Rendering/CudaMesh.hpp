@@ -3,16 +3,18 @@
 #include "../VertexArray.hpp"
 #include "../VertexBufferLayout.hpp"
 #include "../IndexBuffer.h"
+#include "../Texture.h"
 #include <vector>
 #include <memory>
 #include <utility>
-#include "Mesh.hpp"
 namespace bogong {  
 	namespace cuda {
+		typedef std::pair<std::shared_ptr<VertexBuffer>, VertexBufferLayout> Buffer;
 		
 		class CudaMesh
 		{
 		protected:
+			std::vector<std::shared_ptr<Texture>> m_TexVector;
 			std::vector<Buffer> m_BufferVertex;
 			IndexBuffer m_IBO;
 			size_t count = 0;
@@ -33,12 +35,14 @@ namespace bogong {
 					}
 				}
 				i = 0;
+				assert(!error());
 				for (auto & pair : m_BufferVertex)
 				{
 					auto buffer = pair.first.get();
 					buffer->Bind();
 					auto elements = pair.second.GetElements();
 					int offset = 0;
+					assert(!error());
 					for (auto & elem : elements)
 					{
 						auto k = i;
@@ -51,8 +55,12 @@ namespace bogong {
 						i++;
 					}
 				}
-				if (m_IBO.GetID() != 0)
+				assert(!error());
+				if (m_IBO.GetID())
 					m_IBO.Bind();
+				for (auto & t : m_TexVector) {
+					t->Bind();
+				}
 			}
 			void Unbind()
 			{
