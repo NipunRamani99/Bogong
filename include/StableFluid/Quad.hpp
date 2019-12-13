@@ -4,6 +4,7 @@
 #include "../VertexBuffer.hpp"
 #include "../CudaTexture.hpp"
 #include "../Shaders.hpp"
+
 namespace bogong {
 	namespace cuda {
 		namespace StableFluid {

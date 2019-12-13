@@ -4,4 +4,4 @@
 #include <cuda_runtime.h>
 #include <cuda_gl_interop.h>
 
-void WashColor(float4 * colour, unsigned int width, unsigned int height, float t);
+void WashColor(const cudaArray * arr,int width, int height);

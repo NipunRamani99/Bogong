@@ -2,7 +2,7 @@
 #include "Texture.h"
 #include <cuda_runtime.h>
 #include <cuda_gl_interop.h>
-
+#include <cuda.h>
 #include "../Extra/helper_functions.h"   
 //#include "../Extra/timer.h"              
 #include "../Extra/helper_cuda.h"
@@ -13,18 +13,20 @@ namespace bogong {
 
 			struct cudaGraphicsResource *resource;
 			cudaArray * cuArray;
-			void * devPtr;
+		
+			cudaChannelFormatDesc desc;
 		public:
 			template<typename T>
 			CudaTexture(std::vector<T>& surface, size_t width, size_t height, GLuint format, GLuint data_type, GLuint texture_target)
 				:
 				Texture(surface, width, height, format, data_type, texture_target)
 			{
-				checkCudaErrors(cudaGraphicsGLRegisterImage(&resource, m_TexID, texture_target, cudaGraphicsRegisterFlagsNone));
+				checkCudaErrors(cudaGraphicsGLRegisterImage(&resource, m_TexID, target, cudaGraphicsRegisterFlagsSurfaceLoadStore));
+
 			}
 			CudaTexture()
 			{
-				checkCudaErrors(cudaGraphicsGLRegisterImage(&resource, m_TexID, target,cudaGraphicsRegisterFlagsNone));
+				checkCudaErrors(cudaGraphicsGLRegisterImage(&resource, m_TexID, target, cudaGraphicsRegisterFlagsSurfaceLoadStore));
 			}
 			void Map()
 			{
@@ -38,9 +40,9 @@ namespace bogong {
 			{
 				checkCudaErrors(cudaGraphicsSubResourceGetMappedArray(&cuArray, resource, 0, 0));
 			}
-			void * GetDataPtr()
+			cudaArray * GetDataPtr()
 			{
-				return devPtr;
+				return cuArray;
 			}
 		};
 	}

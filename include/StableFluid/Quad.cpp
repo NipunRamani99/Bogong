@@ -81,11 +81,11 @@ void QuadMesh::ProcessInput()
 }
 
 void QuadMesh::Update()
-{	
+{
 	tex->Map();
 	tex->GetMappedPointer();
-	void * p = tex->GetDataPtr();
-	WashColor((float4*)p, surf_width, surf_height, 1.0f);
+	cudaArray * p = tex->GetDataPtr();
+	WashColor(p,surf_width,surf_height);
 	tex->UnMap();
 }
 
