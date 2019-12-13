@@ -7,30 +7,20 @@
 #include<iostream>
 #include "../include/StableFluid/StableFluidKernels.h"
 
-texture<float4, 2, cudaReadModeElementType> texRef;
-__global__ void TexRead(int width, int height,float4 * devPtr)
+surface<void,cudaSurfaceType2D> surfRef;
+__global__ void TexRead(int width, int height)
 {
 	int x = threadIdx.x + blockIdx.x*blockDim.x;
 	int y = threadIdx.y + blockIdx.y*blockDim.y;
-	float4 colour = tex2D(texRef,x,y);
-	devPtr[x + y * width] = colour;
+	float4 colour = { 0,1.0f,0,1.0f };
+	surf2Dwrite(colour, surfRef, x * 4, y);
 }
 void WashColor(const cudaArray * array,int width,int height)
 {
 
-	checkCudaErrors(cudaBindTextureToArray(texRef,array));
-	texRef.normalized = false;
-	texRef.filterMode = cudaFilterModeLinear;
-	float4 * devVal;
-	float4 * hostVal = new float4[width*height];
-	checkCudaErrors(cudaMalloc(&devVal, width*height * sizeof(float4)));	
+	checkCudaErrors(cudaBindSurfaceToArray(surfRef,array));
 	dim3 block(16,16);
 	dim3 grid(width/16,height/16);
-	TexRead <<< grid, block >>>(width,height,devVal); 
-	cudaMemcpy(hostVal, devVal, width*height * sizeof(float4), cudaMemcpyDeviceToHost);
-
-	std::cout << hostVal[100].x << ", "<<hostVal[100].y<<", "<<hostVal[100].z<<", "<<hostVal[100].w<<"|";
-	cudaUnbindTexture(texRef);
-	cudaFree(devVal);
-	delete hostVal;
+	TexRead <<< grid, block >>>(width,height); 
+	
 }
