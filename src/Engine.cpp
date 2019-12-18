@@ -32,8 +32,7 @@ void bogong::Engine::Start()
 	kbd = std::make_shared<Keyboard>();
 	mouse = std::make_shared<Mouse>();
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_TEXTURE_2D);
-	
+
 }
 
 void bogong::Engine::Update(float deltime)

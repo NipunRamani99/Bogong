@@ -19,13 +19,11 @@ namespace bogong {
 			glBindTexture(texture_target, m_TexID);
 			target = texture_target;
 			assert(!error());
-			glTextureParameteri(m_TexID, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-			assert(!error());
-
-			glTextureParameteri(m_TexID, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-			assert(!error());
 			glTextureParameteri(m_TexID, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			glTextureParameteri(m_TexID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTextureParameteri(m_TexID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glTextureParameteri(m_TexID, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+			glTextureParameteri(m_TexID, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+			glTextureParameteri(m_TexID, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
 			assert(!error());
 			glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, GL_RGBA, data_type, surface.data());
 			assert(!error());
@@ -40,10 +38,10 @@ namespace bogong {
 			glGenTextures(1, &m_TexID);
 			glBindTexture(GL_TEXTURE, m_TexID);
 			target = texture_target;
-			glTextureParameteri(target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-			glTextureParameteri(target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-			glTextureParameteri(target, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			glTextureParameteri(target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTextureParameteri(m_TexID, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+			glTextureParameteri(m_TexID, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+			glTextureParameteri(m_TexID, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			glTextureParameteri(m_TexID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			glTexImage2D(GL_TEXTURE_2D, 0, format, p_width, p_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, p_texturebufferdata);
 			glGenerateMipmap(GL_TEXTURE_2D);
 			glBindTexture(GL_TEXTURE, 0);

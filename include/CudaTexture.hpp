@@ -11,8 +11,8 @@ namespace bogong {
 		class CudaTexture : public Texture
 		{
 
-			struct cudaGraphicsResource *resource;
-			cudaArray * cuArray;
+			cudaGraphicsResource *resource;
+			cudaArray_t cuArray;
 		
 			cudaChannelFormatDesc desc;
 		public:
@@ -21,7 +21,7 @@ namespace bogong {
 				:
 				Texture(surface, width, height, format, data_type, texture_target)
 			{
-				checkCudaErrors(cudaGraphicsGLRegisterImage(&resource, m_TexID, target, cudaGraphicsRegisterFlagsSurfaceLoadStore));
+				checkCudaErrors(cudaGraphicsGLRegisterImage(&resource, m_TexID, GL_TEXTURE_2D, cudaGraphicsRegisterFlagsSurfaceLoadStore));
 
 			}
 			CudaTexture()
@@ -40,7 +40,7 @@ namespace bogong {
 			{
 				checkCudaErrors(cudaGraphicsSubResourceGetMappedArray(&cuArray, resource, 0, 0));
 			}
-			cudaArray * GetDataPtr()
+			cudaArray_t GetDataPtr()
 			{
 				return cuArray;
 			}

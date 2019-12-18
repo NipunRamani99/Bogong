@@ -12,13 +12,13 @@ namespace bogong {
 			{
 			private:
 				std::shared_ptr<VertexBuffer> vbo;
-				std::shared_ptr<CudaTexture> tex;
+				std::shared_ptr<cuda::CudaTexture> tex;
 				int surf_width = 0;
 				int surf_height = 0;
 			public:
 				QuadMesh();
 				void ProcessInput();
-				void Update();
+				void Update(float delT);
 			};
 			class Quad {
 				std::shared_ptr<QuadMesh> mesh;
