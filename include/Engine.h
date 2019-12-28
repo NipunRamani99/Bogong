@@ -1,7 +1,7 @@
 #pragma once
 
-#define WIDTH 800
-#define HEIGHT 600
+#define WIDTH 1366
+#define HEIGHT 768
 #include  <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <memory>

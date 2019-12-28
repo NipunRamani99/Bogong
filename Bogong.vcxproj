@@ -125,6 +125,8 @@
     <ClInclude Include="Imgui\imstb_rectpack.h" />
     <ClInclude Include="Imgui\imstb_textedit.h" />
     <ClInclude Include="Imgui\imstb_truetype.h" />
+    <ClInclude Include="include\3DDataViz\GaussianHeatMap.hpp" />
+    <ClInclude Include="include\3DDataViz\OriginViz.hpp" />
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\Cube.hpp" />
     <ClInclude Include="include\CudaTexture.hpp" />
@@ -140,6 +142,7 @@
     <ClInclude Include="include\Keyboard.h" />
     <ClInclude Include="include\Mouse.h" />
     <ClInclude Include="include\Plane.hpp" />
+    <ClInclude Include="include\RenderBuffer.hpp" />
     <ClInclude Include="include\Rendering\CudaMesh.hpp" />
     <ClInclude Include="include\Rendering\CudaRenderer.hpp" />
     <ClInclude Include="include\RunKernel.h" />

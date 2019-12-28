@@ -22,16 +22,25 @@ bogong::Engine::Engine()
 
 void bogong::Engine::Start()
 {
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	assert((bool)!error());
 	sim = std::make_shared<Simulation>();
 	int display_w, display_h;
 	glfwMakeContextCurrent(window);
+	glfwWindowHint(GLFW_SAMPLES, 8);
 	glfwGetFramebufferSize(window, &display_w, &display_h);
 	glViewport(0, 0, display_w, display_h);
 	kbd = std::make_shared<Keyboard>();
 	mouse = std::make_shared<Mouse>();
+	glEnable(GL_MULTISAMPLE);
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glEnable(GL_LINE_SMOOTH);
+	glEnable(GL_POINT_SMOOTH);
+	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+	glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 }
 

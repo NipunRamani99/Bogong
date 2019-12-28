@@ -6,7 +6,8 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Plane.hpp"
-#include "StableFluid/Quad.hpp"
+#include "3DDataViz/OriginViz.hpp"
+#include "3DDataViz/GaussianHeatMap.hpp"
 #include "Camera.h"
 
 namespace bogong{
@@ -16,7 +17,8 @@ namespace bogong{
 		glm::vec3 lightPos = glm::vec3(-1.0f, 0.2f, 0.0f);
 		Shader m_Shader;
 		Shader gerstener;
-		std::shared_ptr<cuda::StableFluid::Quad> quad;
+		std::shared_ptr<cuda::viz::OriginViz> origin_viz;
+		std::shared_ptr<cuda::viz::Heatmap> heat_map;
 		std::shared_ptr<FPCamera> camera;
 	public:
 

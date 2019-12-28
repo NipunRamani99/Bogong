@@ -173,6 +173,9 @@
     <ClInclude Include="include\FrameBuffer.hpp" />
     <ClInclude Include="include\Surface.hpp" />
     <ClInclude Include="include\StableFluid\StableFluidKernels.h" />
+    <ClInclude Include="include\3DDataViz\OriginViz.hpp" />
+    <ClInclude Include="include\3DDataViz\GaussianHeatMap.hpp" />
+    <ClInclude Include="include\RenderBuffer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Imgui">
