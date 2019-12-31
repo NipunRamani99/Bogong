@@ -176,6 +176,8 @@
     <ClInclude Include="include\3DDataViz\OriginViz.hpp" />
     <ClInclude Include="include\3DDataViz\GaussianHeatMap.hpp" />
     <ClInclude Include="include\RenderBuffer.hpp" />
+    <ClInclude Include="include\FrameBufferTest.hpp" />
+    <ClInclude Include="include\FrameQuad.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Imgui">

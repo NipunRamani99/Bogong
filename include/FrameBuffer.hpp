@@ -8,27 +8,30 @@ namespace bogong {
 		FrameBuffer()
 		{
 			glCreateFramebuffers(1,&id);
+			assert(!error());
 		}
 		void Bind() {
-			glBindBuffer(GL_FRAMEBUFFER, id);
+			glBindFramebuffer(GL_FRAMEBUFFER, id);
+			assert(!error());
 		}
 		void Draw() {
-			glBindBuffer(GL_DRAW_FRAMEBUFFER, id);
 		}
 		void Read() {
 			glBindBuffer(GL_READ_FRAMEBUFFER, id);
 		}
-		void AttachTexture(GLuint texture) {
-			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
+		
+		void AttachTexture(GLuint texture,GLuint attachment) {
+			glFramebufferTexture2D(GL_FRAMEBUFFER, attachment, GL_TEXTURE_2D, texture, 0);
+
 		}
-		void AttachRenderBuffer(GLuint rbo) {
-			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
+		void AttachRenderbuffer(GLuint rbo, GLuint attachment) {
+			glFramebufferRenderbuffer(GL_FRAMEBUFFER,attachment, GL_RENDERBUFFER, rbo);
 		}
 		bool isComplete() {
 			return (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
 		}
 		void Unbind() {
-			glBindBuffer(GL_FRAMEBUFFER,0);
+			glBindFramebuffer(GL_FRAMEBUFFER,0);
 		}
 	};
 }

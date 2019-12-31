@@ -2,6 +2,7 @@
 #include <gl/glew.h>
 #include <gl/GL.h>
 #include "Globals.h"
+#include<vector>
 namespace bogong {
 	class Texture
 	{
@@ -33,18 +34,21 @@ namespace bogong {
 			assert(!error());
 
 		}
-		Texture(size_t p_size, unsigned int p_width, unsigned int p_height, void * p_texturebufferdata, GLuint format,GLuint texture_target) {
+		Texture(size_t p_size, unsigned int p_width, unsigned int p_height, void * p_texturebufferdata, GLuint format,GLuint channels,GLuint texture_target,GLuint datatype) {
 			size = p_size;
 			glGenTextures(1, &m_TexID);
-			glBindTexture(GL_TEXTURE, m_TexID);
+			assert(!error());
+			glBindTexture(texture_target, m_TexID);
 			target = texture_target;
-			glTextureParameteri(m_TexID, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-			glTextureParameteri(m_TexID, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-			glTextureParameteri(m_TexID, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			glTextureParameteri(m_TexID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			glTexImage2D(GL_TEXTURE_2D, 0, format, p_width, p_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, p_texturebufferdata);
-			glGenerateMipmap(GL_TEXTURE_2D);
-			glBindTexture(GL_TEXTURE, 0);
+			assert(!error());
+			glTexParameteri(texture_target, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			assert(!error());
+			glTexParameteri(texture_target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexImage2D(GL_TEXTURE_2D, 0, format, p_width, p_height, 0, channels, datatype, p_texturebufferdata);
+			assert(!error());
+			glBindTexture(GL_TEXTURE_2D, 0);
+			assert(!error());
+
 		}
 		Texture(size_t p_size,unsigned int p_width, unsigned int p_height, unsigned char * p_texturebufferdata)
 		{

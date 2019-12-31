@@ -49,7 +49,6 @@ namespace bogong {
 			void BindBuffer(const std::shared_ptr<T> & cumesh)
 			{
 				m_VAO.Bind();
-				m_Shader.Bind();
 				assert(!error());
 				cumesh->Bind();
 				error();

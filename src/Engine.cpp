@@ -29,11 +29,9 @@ void bogong::Engine::Start()
 	glfwMakeContextCurrent(window);
 	glfwWindowHint(GLFW_SAMPLES, 8);
 	glfwGetFramebufferSize(window, &display_w, &display_h);
-	glViewport(0, 0, display_w, display_h);
 	kbd = std::make_shared<Keyboard>();
 	mouse = std::make_shared<Mouse>();
 	glEnable(GL_MULTISAMPLE);
-	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 	glEnable(GL_LINE_SMOOTH);
 	glEnable(GL_POINT_SMOOTH);
@@ -73,12 +71,11 @@ void bogong::Engine::Loop()
 	currentTime = glfwGetTime();
 	Init::StartImguiFrame();
 	Init::PrepareImguiFrame();
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glfwPollEvents();
 	Update(currentTime - prevTime);
 	float fps = 1 / (currentTime - prevTime);
 	RenderEverything();
-	
+	glfwPollEvents();
+
 }
 
 void bogong::Engine::End()

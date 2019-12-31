@@ -131,6 +131,8 @@
     <ClInclude Include="include\Cube.hpp" />
     <ClInclude Include="include\CudaTexture.hpp" />
     <ClInclude Include="include\FrameBuffer.hpp" />
+    <ClInclude Include="include\FrameBufferTest.hpp" />
+    <ClInclude Include="include\FrameQuad.hpp" />
     <ClInclude Include="include\GerstenerWave.hpp" />
     <ClInclude Include="include\CudaVBO.h" />
     <ClInclude Include="include\Defs.h" />
