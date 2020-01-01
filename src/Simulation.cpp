@@ -2,6 +2,7 @@
 #include "../Imgui/imgui.h"
 #include "../Imgui/imgui_impl_glfw.h"
 #include "../Imgui/imgui_impl_opengl3.h"
+#include "../include/Defs.h"
 bogong::Simulation::Simulation()
 {
 	m_Shader.LoadShader("shaders/BasicVertexShader.glsl", bogong::ShaderType::VERTEX);
@@ -33,11 +34,13 @@ void bogong::Simulation::Update(const std::shared_ptr<bogong::Keyboard> &kbd,con
 	m_Shader.Bind();
 	m_Shader.setMat4("projection", camera->GetProjection());
 	m_Shader.setMat4("view", camera->GetView());
+	camera->InputPos();
 	
 }
 
 void bogong::Simulation::Draw() const
 {
+	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 	glEnable(GL_DEPTH_TEST);
 	fb_test->BindFBO();
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -45,6 +48,7 @@ void bogong::Simulation::Draw() const
 	origin_viz->Draw();
 	heat_map->Draw();
 	fb_test->UnbindFBO();
+	glViewport(0, 0, 1366, 768);
 	glDisable(GL_DEPTH_TEST);
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);

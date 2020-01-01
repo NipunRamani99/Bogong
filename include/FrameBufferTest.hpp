@@ -4,14 +4,15 @@
 #include "RenderBuffer.hpp"
 #include "Texture.h"
 #include "Globals.h"
+#include "Defs.h"
 #include <memory>
 #include<assert.h>
 namespace bogong {
 	class FrameBufferTest {
 	private:
 
-		unsigned int width = 2732;
-		unsigned int height = 1536;
+		unsigned int width = SCREEN_WIDTH;
+		unsigned int height = SCREEN_HEIGHT;
 		FrameBuffer fbo;
 		std::shared_ptr<RenderBuffer> rbo;
 		std::shared_ptr<Texture> colour_tex;

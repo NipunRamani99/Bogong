@@ -39,7 +39,7 @@ void bogong::Engine::Start()
 	glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
+	glViewport(0, 0, 2372, 768 * 2);
 }
 
 void bogong::Engine::Update(float deltime)

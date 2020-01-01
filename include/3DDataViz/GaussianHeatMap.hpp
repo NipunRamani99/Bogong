@@ -1,5 +1,6 @@
 #include "../Rendering/CudaMesh.hpp"
 #include "../Rendering/CudaRenderer.hpp"
+#include "../Defs.h"
 namespace bogong {
 	namespace cuda {
 		namespace viz {
@@ -86,7 +87,7 @@ namespace bogong {
 					renderer->SetShader(shader);
 				}
 				void Draw() {
-					glPointSize(3.0f);
+					glPointSize(POINT_SIZE);
 					renderer->RenderMesh(mesh);
 				}
 			};

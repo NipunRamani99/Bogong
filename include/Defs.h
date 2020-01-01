@@ -11,3 +11,6 @@ namespace bogong
 		typedef glm::mat4 mat4;
 	}
 }
+#define SCREEN_WIDTH 5464
+#define SCREEN_HEIGHT 3072
+#define POINT_SIZE 8
