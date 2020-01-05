@@ -13,15 +13,6 @@ bogong::Simulation::Simulation()
 	quad_shader.LoadProgram();
 
 	assert(!error());
-	fb_test = std::make_shared<FrameBufferTest>();
-	assert(!error());
-	frame_quad = std::make_shared<FrameBufferQuad>();
-	frame_quad->SetShader(quad_shader);
-	origin_viz = std::make_shared<cuda::viz::OriginViz>();
-	origin_viz->SetShader(m_Shader);
-	heat_map = std::make_shared<cuda::viz::Heatmap>();
-	heat_map->SetShader(m_Shader);
-	frame_quad->AddTexture(fb_test->get_texture());
 	assert(!error());
 	camera = std::make_shared<FPCamera>();
 	assert(!error());
@@ -40,17 +31,8 @@ void bogong::Simulation::Update(const std::shared_ptr<bogong::Keyboard> &kbd,con
 
 void bogong::Simulation::Draw() const
 {
-	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-	glEnable(GL_DEPTH_TEST);
-	fb_test->BindFBO();
-	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
-	origin_viz->Draw();
-	heat_map->Draw();
-	fb_test->UnbindFBO();
 	glViewport(0, 0, 1366, 768);
-	glDisable(GL_DEPTH_TEST);
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 	frame_quad->Draw();
 	assert(!error());

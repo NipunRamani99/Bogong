@@ -55,6 +55,9 @@ void QuadMesh::Update(float delT)
 	tex->Map();
 	tex->GetMappedPointer();
 	cudaArray_t p = tex->GetDataPtr();
+	//copy const kernel
+	//blend_kernel
+	//grid to colour
 	WashColor(p,surf_width,surf_height,delT);
 	tex->UnMap();
 }

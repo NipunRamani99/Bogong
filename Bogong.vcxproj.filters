@@ -178,6 +178,8 @@
     <ClInclude Include="include\RenderBuffer.hpp" />
     <ClInclude Include="include\FrameBufferTest.hpp" />
     <ClInclude Include="include\FrameQuad.hpp" />
+    <ClInclude Include="include\StableFluid\CudaBuffer.hpp" />
+    <ClInclude Include="include\StableFluid\cuda_allocations.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Imgui">
@@ -205,5 +207,6 @@
   <ItemGroup>
     <CudaCompile Include="src\kernel.cu" />
     <CudaCompile Include="src\Kernels.cu" />
+    <CudaCompile Include="include\StableFluid\cuda_allocations.cu" />
   </ItemGroup>
 </Project>

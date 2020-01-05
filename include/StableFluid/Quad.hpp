@@ -4,9 +4,10 @@
 #include "../VertexBuffer.hpp"
 #include "../CudaTexture.hpp"
 #include "../Shaders.hpp"
-
+#include "CudaBuffer.hpp"
 namespace bogong {
 	namespace cuda {
+		
 		namespace StableFluid {
 			class QuadMesh : public CudaMesh
 			{
@@ -15,6 +16,7 @@ namespace bogong {
 				std::shared_ptr<cuda::CudaTexture> tex;
 				int surf_width = 0;
 				int surf_height = 0;
+				CudaBuffer<float> grid;
 			public:
 				QuadMesh();
 				void ProcessInput();

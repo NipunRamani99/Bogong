@@ -85,6 +85,7 @@
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <CudaCompile Include="include\StableFluid\cuda_allocations.cu" />
     <CudaCompile Include="src\kernel.cu" />
     <CudaCompile Include="src\Kernels.cu" />
   </ItemGroup>
@@ -151,6 +152,8 @@
     <ClInclude Include="include\Shaders.hpp" />
     <ClInclude Include="include\Simulation.h" />
     <ClInclude Include="include\Sphere.hpp" />
+    <ClInclude Include="include\StableFluid\CudaBuffer.hpp" />
+    <ClInclude Include="include\StableFluid\cuda_allocations.hpp" />
     <ClInclude Include="include\StableFluid\Quad.hpp" />
     <ClInclude Include="include\StableFluid\StableFluidKernels.h" />
     <ClInclude Include="include\stb_image.h" />
