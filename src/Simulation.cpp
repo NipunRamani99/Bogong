@@ -34,6 +34,5 @@ void bogong::Simulation::Draw() const
 	glViewport(0, 0, 1366, 768);
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
-	frame_quad->Draw();
 	assert(!error());
 }

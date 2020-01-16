@@ -85,6 +85,8 @@
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <CudaCompile Include="include\Heat2D\cuda_allocations.cu" />
+    <CudaCompile Include="include\Heat2D\Heat2DKernels.cu" />
     <CudaCompile Include="include\StableFluid\cuda_allocations.cu" />
     <CudaCompile Include="src\kernel.cu" />
     <CudaCompile Include="src\Kernels.cu" />
@@ -139,6 +141,10 @@
     <ClInclude Include="include\Defs.h" />
     <ClInclude Include="include\Engine.h" />
     <ClInclude Include="include\Globals.h" />
+    <ClInclude Include="include\Heat2D\CudaBuffer.hpp" />
+    <ClInclude Include="include\Heat2D\cuda_allocations.hpp" />
+    <ClInclude Include="include\Heat2D\Heat2DKernels.hpp" />
+    <ClInclude Include="include\Heat2D\Quad.hpp" />
     <ClInclude Include="include\Imgui.h" />
     <ClInclude Include="include\IndexBuffer.h" />
     <ClInclude Include="include\Init.hpp" />
@@ -172,6 +178,7 @@
     <ClCompile Include="Imgui\imgui_impl_glfw.cpp" />
     <ClCompile Include="Imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="Imgui\imgui_widgets.cpp" />
+    <ClCompile Include="include\Heat2D\Quad.cpp" />
     <ClCompile Include="include\StableFluid\Quad.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Engine.cpp" />
@@ -190,6 +197,8 @@
     <None Include="shaders\BasicVertexShader.glsl" />
     <None Include="shaders\GerstenerWaveFragment.glsl" />
     <None Include="shaders\GerstenerWaveVertex.glsl" />
+    <None Include="shaders\QuadFragmentShader.glsl" />
+    <None Include="shaders\QuadVertexShader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

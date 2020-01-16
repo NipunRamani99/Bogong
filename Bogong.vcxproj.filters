@@ -30,6 +30,7 @@
     <ClCompile Include="src\Simulation.cpp" />
     <ClCompile Include="src\GerstenerWave.cpp" />
     <ClCompile Include="include\StableFluid\Quad.cpp" />
+    <ClCompile Include="include\Heat2D\Quad.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Imgui\imconfig.h">
@@ -180,6 +181,10 @@
     <ClInclude Include="include\FrameQuad.hpp" />
     <ClInclude Include="include\StableFluid\CudaBuffer.hpp" />
     <ClInclude Include="include\StableFluid\cuda_allocations.hpp" />
+    <ClInclude Include="include\Heat2D\Quad.hpp" />
+    <ClInclude Include="include\Heat2D\CudaBuffer.hpp" />
+    <ClInclude Include="include\Heat2D\cuda_allocations.hpp" />
+    <ClInclude Include="include\Heat2D\Heat2DKernels.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Imgui">
@@ -203,10 +208,14 @@
     <None Include="shaders\GerstenerWaveFragment.glsl" />
     <None Include="shaders\BasicVertexShader.glsl" />
     <None Include="shaders\BasicFragmentShader.glsl" />
+    <None Include="shaders\QuadVertexShader.glsl" />
+    <None Include="shaders\QuadFragmentShader.glsl" />
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="src\kernel.cu" />
     <CudaCompile Include="src\Kernels.cu" />
     <CudaCompile Include="include\StableFluid\cuda_allocations.cu" />
+    <CudaCompile Include="include\Heat2D\cuda_allocations.cu" />
+    <CudaCompile Include="include\Heat2D\Heat2DKernels.cu" />
   </ItemGroup>
 </Project>
