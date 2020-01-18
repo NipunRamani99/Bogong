@@ -30,7 +30,7 @@
     <ClCompile Include="src\Simulation.cpp" />
     <ClCompile Include="src\GerstenerWave.cpp" />
     <ClCompile Include="include\StableFluid\Quad.cpp" />
-    <ClCompile Include="include\Heat2D\Quad.cpp" />
+    <ClCompile Include="include\Heat2D\HeatQuad.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Imgui\imconfig.h">
@@ -181,10 +181,10 @@
     <ClInclude Include="include\FrameQuad.hpp" />
     <ClInclude Include="include\StableFluid\CudaBuffer.hpp" />
     <ClInclude Include="include\StableFluid\cuda_allocations.hpp" />
-    <ClInclude Include="include\Heat2D\Quad.hpp" />
     <ClInclude Include="include\Heat2D\CudaBuffer.hpp" />
     <ClInclude Include="include\Heat2D\cuda_allocations.hpp" />
     <ClInclude Include="include\Heat2D\Heat2DKernels.hpp" />
+    <ClInclude Include="include\Heat2D\HeatQuad.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Imgui">

@@ -18,10 +18,10 @@ __device__ unsigned char value(float n1, float n2, int hue) {
 
 	if (hue < 60)
 		return (unsigned char)(255 * (n1 + (n2 - n1)*hue / 60));
-	if (hue < 180)
+	/*if (hue < 180)
 		return (unsigned char)(255 * n2);
 	if (hue < 240)
-		return (unsigned char)(255 * (n1 + (n2 - n1)*(240 - hue) / 60));
+		return (unsigned char)(255 * (n1 + (n2 - n1)*(240 - hue) / 60));*/
 	return (unsigned char)(255 * n1);
 }
 __global__ void float_to_color(float4 * optr,
@@ -87,7 +87,12 @@ __global__ void WriteToTexture(float4 * frame_data) {
 	surf2Dwrite(frame_data[offset], surf, x * sizeof(float4), y);
 
 }
-
+void RunKernel(cudaArray_t cuArray,float4 * frame_data) {
+	checkCudaErrors(cudaBindSurfaceToArray(surf, cuArray));
+	dim3 blocks(DIM / 16, DIM / 16);
+	dim3 threads(16, 16);
+	WriteToTexture << <blocks, threads >> > (frame_data);
+}
 struct DataBlock {
 	float4 * output_frame;
 	float * dev_inSrc;
@@ -140,9 +145,7 @@ void init_datablock() {
 		int x = i % DIM;
 		int y = i / DIM;
 		if ((x > 100) && (x < 150) && (y > 250) && (y < 300))
-			temp[i] = MAX_TEMP;
-		else if ((x > 200) && (x < 250) && (y > 250) && (y < 300))
-			temp[i] = MAX_TEMP + 1;
+			temp[i] = MAX_TEMP+5.0f;
 		else {
 			temp[i] = 0.0;
 		}
@@ -151,4 +154,8 @@ void init_datablock() {
 	cudaMemcpy(data_block.dev_constSrc, temp,
 		size,
 		cudaMemcpyHostToDevice);
+}
+void UpdateTexture(cudaArray_t data_ptr) {
+	anim_gpu(&data_block, 0.0f);
+	RunKernel(data_ptr, data_block.output_frame);
 }

@@ -1,5 +1,5 @@
 #pragma once
-#include "Quad.hpp"
+#include "HeatQuad.hpp"
 #include "../Shaders.hpp"
 #include "../Vertex.h"
 #include "../Globals.h"
@@ -43,6 +43,7 @@ QuadMesh::QuadMesh()
 	tex = std::make_shared<cuda::CudaTexture>(textureSurf,surf_width,surf_height,GL_RGBA32F,GL_FLOAT,GL_TEXTURE_2D);
 	assert(!error());
 	m_TexVector.push_back(tex);
+	init_datablock();
 }
 
 void QuadMesh::ProcessInput()
@@ -54,9 +55,7 @@ void QuadMesh::Update(float delT)
 	tex->Map();
 	tex->GetMappedPointer();
 	cudaArray_t p = tex->GetDataPtr();
-	//copy const kernel
-	//blend_kernel
-	//grid to colour
+	UpdateTexture(p);
 	tex->UnMap();
 }
 

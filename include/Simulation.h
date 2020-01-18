@@ -7,7 +7,7 @@
 #include "Mouse.h"
 #include "Plane.hpp"
 #include "Camera.h"
-#include "Heat2D/Quad.hpp"
+#include "Heat2D/HeatQuad.hpp"
 namespace bogong{
 	class Simulation
 	{

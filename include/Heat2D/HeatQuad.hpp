@@ -16,7 +16,7 @@ namespace bogong {
 				std::shared_ptr<cuda::CudaTexture> tex;
 				int surf_width  = 512;
 				int surf_height = 512;
-				CudaBuffer<float> grid;
+				
 			public:
 				QuadMesh();
 				void ProcessInput();

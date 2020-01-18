@@ -9,3 +9,4 @@
 #define MIN_TEMP 0.0001f
 #define SPEED   0.25f
 void init_datablock();
+void UpdateTexture(cudaArray_t data_ptr);
