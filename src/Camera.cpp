@@ -61,3 +61,11 @@ void bogong::FPCamera::Update(const std::shared_ptr<Keyboard>& kbd, const std::s
 	cameraFront = glm::normalize(direction);
 	view = lookAt(cameraPos, cameraPos + cameraFront, up);
 }
+
+void bogong::FPCamera::ClearMouse(const std::shared_ptr<Mouse>& mouse)
+{
+	prevMouseX = mouse->x;
+	prevMouseY = mouse->y;
+	currMouseX = mouse->x;
+	currMouseY = mouse->y;
+}

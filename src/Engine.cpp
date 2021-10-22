@@ -39,7 +39,7 @@ void bogong::Engine::Start()
 void bogong::Engine::Update(float deltime)
 {
 	
-	sim->Update(kbd, mouse, static_cast<float>(deltime));
+	sim->Update(kbd, mouse, window, static_cast<float>(deltime));
 }
 
 void bogong::Engine::DrawCalls() const

@@ -20,10 +20,16 @@ namespace bogong{
 		std::shared_ptr<FPCamera> camera;
 		std::shared_ptr<Plane> plane;
 		std::shared_ptr<cuda::GerstnerWave> gwave;
+		bool canToggle = false;
+		bool isMouseEnabled = false;
+		float timer = 0.0f;
 	public:
 
 		Simulation();
-		void Update(const std::shared_ptr<bogong::Keyboard> &kbd,const std::shared_ptr<bogong::Mouse>& mouse, float delta) ;
+		void Update(const std::shared_ptr<bogong::Keyboard> &kbd,
+					const std::shared_ptr<bogong::Mouse>& mouse, 
+					GLFWwindow * glfwWindow, float delta) ;
 		void Draw() const;
+		void toggle(std::shared_ptr<Keyboard> kbd, std::shared_ptr<Mouse> mouse, float delta, GLFWwindow * window);
 	};
 }

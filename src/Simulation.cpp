@@ -23,15 +23,18 @@ bogong::Simulation::Simulation()
 	assert(!error());	
 }
 
-void bogong::Simulation::Update(const std::shared_ptr<bogong::Keyboard> &kbd,const std::shared_ptr<bogong::Mouse> &mouse,
-                                float delta)
+void bogong::Simulation::Update(const std::shared_ptr<bogong::Keyboard> &kbd,
+								const std::shared_ptr<bogong::Mouse> &mouse, 
+								GLFWwindow * glfwWindow, float delta)
 {
-	camera->Update(kbd, mouse, delta);
+	toggle(kbd, mouse, delta, glfwWindow);
 	m_Shader.Bind();
 	assert(!error());
 	m_Shader.setMat4("projection", camera->GetProjection());
 	m_Shader.setMat4("view", camera->GetView());
 	gerstener.Bind();
+	gerstener.setVec3("lightPos", lightPos);
+	gerstener.setVec3("viewPos", camera->cameraPos);
 	gerstener.setMat4("projection", camera->GetProjection());
 	gerstener.setMat4("view", camera->GetView());
 	assert(!error());
@@ -42,4 +45,38 @@ void bogong::Simulation::Draw() const
 {
 	gwave->Draw();
 	assert(!error());
+}
+
+ void bogong::Simulation::toggle(std::shared_ptr<Keyboard> kbd, std::shared_ptr<Mouse> mouse, float delta, GLFWwindow * window) {
+	if (kbd->isKeyPressed(KEY::KEY_K))
+	{
+		if (canToggle) {
+			isMouseEnabled = !isMouseEnabled;
+			canToggle = false;
+			if (!isMouseEnabled) {
+				glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+				glfwSetCursorPos(window, 640, 360);
+				mouse->x = 640;
+				mouse->y = 360;
+				camera->ClearMouse(mouse);
+				ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_NoMouse;
+			}
+			else {
+				glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+
+				ImGui::GetIO().ConfigFlags &= ~ImGuiConfigFlags_NoMouse;
+			}
+		}
+
+	}
+	if (!isMouseEnabled)
+		camera->Update(kbd, mouse, delta);
+	if (!canToggle) {
+		timer += delta;
+		if (timer >= 0.1f) {
+			canToggle = true;
+			timer = 0.0f;
+		}
+	}
+
 }

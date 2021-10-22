@@ -12,7 +12,7 @@ bogong::cuda::GerstnerWaveMesh::GerstnerWaveMesh(int rows, float width):
 	makeMesh();
 	makeVBO();
 	makeLayout();
-	makeIndicesLines();
+	makeIndicesTriangles();
 	makeIBO();
 	m_BufferVertex.push_back(std::make_pair(std::dynamic_pointer_cast<VertexBuffer>(vertex_cvbo), layout1));
 	m_BufferVertex.push_back(std::make_pair(std::dynamic_pointer_cast<VertexBuffer>(color_cvbo), layout2));
@@ -80,6 +80,7 @@ void bogong::cuda::GerstnerWaveMesh::ReadInputs()
 
 void bogong::cuda::GerstnerWaveMesh::Update(float time)
 {
+	ReadInputs();
 	counter += time;
 	vertex_cvbo->Map();
 	vertex_cvbo->GetMappedPointer();
@@ -131,6 +132,27 @@ void bogong::cuda::GerstnerWaveMesh::makeIndicesQuads()
 			indices.push_back(idx + rows);
 			indices.push_back(idx + rows + 1);
 			indices.push_back(idx + 1);
+			idx++;
+		}
+		idx++;
+	}
+	count = indices.size();
+}
+
+void bogong::cuda::GerstnerWaveMesh::makeIndicesTriangles()
+{
+	unsigned int idx = 0;
+
+	for (int j = 0; j < rows - 1; j++)
+	{
+		for (int i = 0; i < rows - 1; i++)
+		{
+			indices.push_back(idx);
+			indices.push_back(idx + rows);
+			indices.push_back(idx + 1);
+			indices.push_back(idx + 1);
+			indices.push_back(idx + rows);
+			indices.push_back(idx + rows + 1);
 			idx++;
 		}
 		idx++;

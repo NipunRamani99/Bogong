@@ -48,6 +48,8 @@ namespace bogong {
 
 			void makeIndicesQuads();
 
+			void makeIndicesTriangles();
+
 			void makeIndicesLines();
 
 			void makeMesh();
@@ -69,7 +71,7 @@ namespace bogong {
 			inline void initRenderer()
 			{
 				linerenderer = std::make_shared<CudaRenderer>();
-				linerenderer->SetDrawMode(GL_LINES);
+				linerenderer->SetDrawMode(GL_TRIANGLES);
 				linerenderer->BindBuffer(grid_mesh);
 				pointrenderer = std::make_shared<CudaRenderer>();
 				pointrenderer->SetDrawMode(GL_POINTS);
