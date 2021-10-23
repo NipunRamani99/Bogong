@@ -189,6 +189,8 @@
     <None Include="shaders\BasicFragmentShader.glsl" />
     <None Include="shaders\BasicVertexShader.glsl" />
     <None Include="shaders\GerstenerWaveFragment.glsl" />
+    <None Include="shaders\GerstenerWaveTessControlShader.glsl" />
+    <None Include="shaders\GerstenerWaveTessEvalShader.glsl" />
     <None Include="shaders\GerstenerWaveVertex.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
@@ -196,4 +198,3 @@
     <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 10.2.targets" />
   </ImportGroup>
 </Project>
-

@@ -7,7 +7,7 @@ bogong::Engine::Engine()
 	int device_count = 0;
 	Init::InitGLFW();
 	window = Init::CreateWindowGL(WIDTH, HEIGHT, "Mic Check.");
-	Init::SetGLFWWindow(*window, 4, 3, 3, GLFW_OPENGL_CORE_PROFILE, true);
+	Init::SetGLFWWindow(*window, 4, 4, 1, GLFW_OPENGL_CORE_PROFILE, true);
 	glewExperimental = true;
 	if (glewInit() != GLEW_OK)
 	{

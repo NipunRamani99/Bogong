@@ -209,6 +209,8 @@
     <None Include="shaders\GerstenerWaveFragment.glsl" />
     <None Include="shaders\BasicVertexShader.glsl" />
     <None Include="shaders\BasicFragmentShader.glsl" />
+    <None Include="shaders\GerstenerWaveTessControlShader.glsl" />
+    <None Include="shaders\GerstenerWaveTessEvalShader.glsl" />
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="src\kernel.cu" />

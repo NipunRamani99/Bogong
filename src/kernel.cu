@@ -103,16 +103,16 @@ __global__ void multiWaveGerstenerKernelWithNormals(float3 * pos, float3 * norms
 		float q = prop[i].q;
 		float wi = prop[i].w;
 		float phi = prop[i].phase;
-		posx += q * amplitude*dix*cos((wi*((dix)) + time * phi) * 180 / 3.141592);
-		posz += q * amplitude*diy*cos((wi*((diy)) + time * phi) * 180 / 3.141592);
-		posy += amplitude * sin((wi*((dix*u) + (diy*v)) + time * phi) * 180 / 3.141592);
-		normx += dix * wi * amplitude * sin((wi*(dix*u + diy * v) + time * phi) * 180 / 3.141592);
-		normz += diy * wi * amplitude * sin(((wi*(dix*u + diy * v)) + time * phi) * 180 / 3.141592);
-		normy += q * wi * amplitude * cos((wi*(dix*u + diy * v) + time * phi) * 180 / 3.141592);
+		posx += q * amplitude*dix*cos((wi*((dix)) + time * phi) * 180.0 / 3.141592);
+		posz += q * amplitude*diy*cos((wi*((diy)) + time * phi) * 180.0 / 3.141592);
+		posy += amplitude * sin((wi*((dix*u) + (diy*v)) + time * phi) * 180.0 / 3.141592);
+		normx += dix * wi * amplitude * sin((wi*(dix*u + diy * v) + time * phi) * 180.0 / 3.141592);
+		normz += diy * wi * amplitude * sin(((wi*(dix*u + diy * v)) + time * phi) * 180.0 / 3.141592);
+		normy += q * wi * amplitude * cos((wi*(dix*u + diy * v) + time * phi) * 180.0 / 3.141592);
 	}
-	normx -= normx;
-	normz -= normz;
-	normy = 1 - normy;
+	//normx -= normx;
+	//normz -= normz;
+	//normy = 1 - normy;
 	pos[x + width * y] = make_float3(posx, posy, posz);
 	norms[x + width * y] = make_float3(normx, normy, normz);
 

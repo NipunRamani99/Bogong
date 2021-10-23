@@ -11,7 +11,9 @@ namespace bogong {
 	{
 		VERTEX,
 		FRAGMENT,
-		GEOMETRY
+		GEOMETRY,
+		TESS_CONTROL,
+		TESS_EVAL
 	};
 	class Shader
 	{
@@ -20,13 +22,17 @@ namespace bogong {
 		unsigned int m_VertID;
 		unsigned int m_FragID;
 		unsigned int m_GeomID;
+		unsigned int m_TessCID;
+		unsigned int m_TessEID;
 	public:
 		Shader()
 			:
 			m_ProgID(0),
 			m_VertID(0),
 			m_FragID(0),
-			m_GeomID(0)
+			m_GeomID(0),
+			m_TessCID(0),
+			m_TessEID(0)
 		{
 
 		}
@@ -41,6 +47,11 @@ namespace bogong {
 				glAttachShader(m_ProgID, m_FragID);
 			if (m_GeomID != 0)
 				glAttachShader(m_ProgID, m_GeomID);
+			if (m_TessCID != 0)
+				glAttachShader(m_ProgID, m_TessCID);
+			if (m_TessEID != 0)
+				glAttachShader(m_ProgID, m_TessEID);
+
 
 			glLinkProgram(m_ProgID);
 
@@ -62,6 +73,10 @@ namespace bogong {
 				glDetachShader(m_ProgID, m_FragID);
 			if (m_GeomID != 0)
 				glDetachShader(m_ProgID, m_GeomID);
+			if (m_TessCID != 0)
+				glDetachShader(m_ProgID, m_TessCID);
+			if (m_TessEID != 0)
+				glDetachShader(m_ProgID, m_TessEID);
 		}
 		//------------------------------------------------------------------------
 		void LoadShader(const char * p_Path, ShaderType p_Type)
@@ -98,6 +113,16 @@ namespace bogong {
 				shader = "Vertex: ";
 				m_VertID = glCreateShader(GL_VERTEX_SHADER);
 				l_ID = &m_VertID;
+				break;
+			case ShaderType::TESS_CONTROL:
+				shader = "Tessellation Control: ";
+				m_TessCID = glCreateShader(GL_TESS_CONTROL_SHADER);
+				l_ID = &m_TessCID;
+				break;
+			case ShaderType::TESS_EVAL:
+				shader = "Tessellation Evaluation: ";
+				m_TessEID = glCreateShader(GL_TESS_EVALUATION_SHADER);
+				l_ID = &m_TessEID;
 				break;
 			}
 			GLint l_Result = GL_FALSE;

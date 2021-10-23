@@ -10,10 +10,15 @@ bogong::Simulation::Simulation()
 	
 	gerstener.LoadShader("shaders/GerstenerWaveVertex.glsl", bogong::ShaderType::VERTEX);
 	gerstener.LoadShader("shaders/GerstenerWaveFragment.glsl", bogong::ShaderType::FRAGMENT);
+//	gerstener.LoadShader("shaders/GerstenerWaveTessControlShader.glsl", bogong::ShaderType::TESS_CONTROL);
+//	gerstener.LoadShader("shaders/GerstenerWaveTessEvalShader.glsl", bogong::ShaderType::TESS_EVAL);
 	gerstener.LoadProgram();
-
+    
+	// One vertex becomes one tessellated triangle.
+   // glPatchParameteri(GL_PATCH_VERTICES,3);
+	
 	assert(!error());
-	gwave = std::make_shared<cuda::GerstnerWave>(128,128);
+	gwave = std::make_shared<cuda::GerstnerWave>(128, 128);
 	gwave->SetShader(gerstener);
 	plane = std::make_shared<Plane>();
 	plane->setShader(m_Shader);
